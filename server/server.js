@@ -1,9 +1,9 @@
 // Importing required modules
-const cors = require('cors');
-const express = require('express');
+const cors = require("cors");
+const express = require("express");
 
 // parse env variables
-require('dotenv').config();
+require("dotenv").config();
 
 require("./helpers/db/mongodb.js")();
 
@@ -16,13 +16,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.set('view engine', 'html');
+app.set("view engine", "html");
 
 // Static folder
-app.use(express.static(__dirname + '/views/'));
+app.use(express.static(__dirname + "/views/"));
 
 // Defining route middleware
-app.use('/api', require('./routes/api'));
+app.use("/api", require("./routes/api"));
 
 // Listening to port
 app.listen(port);
