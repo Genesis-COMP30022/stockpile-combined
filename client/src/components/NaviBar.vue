@@ -14,7 +14,10 @@
                     color="sYellow"
                     size="64"
                 >
-                    <img src="..\src\assets\temp\woman-avatar.jpg" alt="Suzanne">
+                    <img 
+                        src="..\src\assets\temp\woman-avatar.jpg" 
+                        alt="Suzanne"
+                    >
                 </v-avatar>
 
                 <div><b>Suzanne Cowler</b><br>suze@stockpileapp.au</div>
@@ -100,7 +103,7 @@
                 fab
                 @click="drawer = !drawer"
                 
-            > <!--@click.stop="drawer = !drawer" ||| class="hidden-sm-and-up" -->
+            >
                 <v-icon>mdi-menu</v-icon>
             </v-btn>
             
@@ -113,15 +116,15 @@
 //import { defineComponent } from '@vue/composition-api'
 
 export default {
-    data: () => ({ 
-        drawer: null,
-        links: [
-            ['mdi-inbox-arrow-down', 'Dashboard'],
-            ['mdi-send', 'All items'],
-            ['mdi-pencil', 'Create'],
-            ['mdi-cog', 'Settings'],
-            ['mdi-close', 'Logout'],
-        ],
-    })
+  data: () => ({ 
+    drawer: null,
+    links: [
+      ['mdi-inbox-arrow-down', 'Dashboard'],
+      ['mdi-send', 'All items'],
+      ['mdi-pencil', 'Create'],
+      ['mdi-cog', 'Settings'],
+      ['mdi-close', 'Logout'],
+    ],
+  })
 }
 </script>

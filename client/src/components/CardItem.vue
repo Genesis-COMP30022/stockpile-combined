@@ -10,8 +10,14 @@
                         flex-wrap: nowrap
                         "
             >
-                <v-icon class="mr-3 d-inline" style="display: inline">mdi-movie</v-icon>
-                <span style="display: inline; line-height: 24px;">lorde melodrama album lorem ipsum dolor sit amet</span>
+                <v-icon 
+                    class="mr-3 d-inline" 
+                    style="display: inline">
+                    mdi-movie
+                </v-icon>
+                <span style="display: inline; line-height: 24px;">
+                    lorde melodrama album lorem ipsum dolor sit amet
+                </span>
             </v-card-title>
             <v-img
                 class="white--text align-end mb-2"
@@ -29,12 +35,12 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                        color="sYellow"
-                        elevation="0"
-                        v-bind="attrs"
-                        v-on="on"
+                            color="sYellow"
+                            elevation="0"
+                            v-bind="attrs"
+                            v-on="on"
                         >
-                        Expand
+                            Expand
                         </v-btn>
                     </template>
 
@@ -99,15 +105,15 @@
 //import CardModal from './CardModal';
 
 export default {
-    name: 'CardItem',
-    components: {
+  name: 'CardItem',
+  components: {
 
-    },
-    data () {
-      return {
-        dialog: false,
-      }
+  },
+  data () {
+    return {
+      dialog: false,
     }
+  }
 };
 
 
