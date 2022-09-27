@@ -28,17 +28,17 @@
 
             <v-list>
                 <v-list-item
-                v-for="[icon, text] in links"
+                v-for="[icon, text, url] in links"
                 :key="icon"
-                link
+                :to="url"
                 >
-                <v-list-item-icon>
-                    <v-icon>{{ icon }}</v-icon>
-                </v-list-item-icon>
+                    <v-list-item-icon>
+                        <v-icon>{{ icon }}</v-icon>
+                    </v-list-item-icon>
 
-                <v-list-item-content>
-                    <v-list-item-title>{{ text }}</v-list-item-title>
-                </v-list-item-content>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ text }}</v-list-item-title>
+                    </v-list-item-content>
                 </v-list-item>
                 
             </v-list>
@@ -51,14 +51,14 @@
                 <span>STOCKPILE</span>
                 <span class="font-weight-light">APP</span>
             </v-toolbar-title>-->
-            <v-img
+            <router-link to="/dashboard"><v-img
                 src="../assets/nologolargewhite.svg"
                 max-width="12rem"
                 min-width="200px"
                 height="3rem"
                 class="mr-4"
             >
-            </v-img>
+            </v-img></router-link>
             <v-spacer></v-spacer>
             <!--<v-btn 
                 depressed 
@@ -119,11 +119,11 @@ export default {
   data: () => ({ 
     drawer: null,
     links: [
-      ['mdi-inbox-arrow-down', 'Dashboard'],
-      ['mdi-send', 'All items'],
-      ['mdi-pencil', 'Create'],
-      ['mdi-cog', 'Settings'],
-      ['mdi-close', 'Logout'],
+      ['mdi-inbox-arrow-down', 'Dashboard', '/dashboard'],
+      ['mdi-send', 'All items', '/'],
+      ['mdi-pencil', 'Create', '/'],
+      ['mdi-cog', 'Settings', '/'],
+      ['mdi-close', 'Logout', '/'],
     ],
   })
 }

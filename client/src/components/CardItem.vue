@@ -2,7 +2,7 @@
     <div>
         <v-card
             class="mx-auto"
-            max-width="400"	
+            max-width="400"
         >
             <v-card-title 
                 style="word-break: break-word; 
