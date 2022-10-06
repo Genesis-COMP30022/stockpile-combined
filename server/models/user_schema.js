@@ -1,17 +1,17 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, 'name field is required'],
+      required: [true, "name field is required"],
     },
     age: {
       type: Number,
-      required: [true, 'age field is required'],
+      required: [true, "age field is required"],
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-module.exports = model('users', userSchema);
+module.exports = model("users", userSchema);
