@@ -8,15 +8,9 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/dashboard",
-      name: "dashboard",
-      component: () => import("./components/CardBody.vue"),
+      path: "/event", //:id",
+      name: "eventSingle",
+      component: () => import("./views/EventSingle.vue"),
     },
-    {
-        path: "/",
-        name: "home",
-        component: () => import("./views/HomeTemp.vue"),
-      },
   ],
 });
-

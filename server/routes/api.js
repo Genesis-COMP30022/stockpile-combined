@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-const family = "/" + "family";
+const family = ""; //"/" // + "family";
 
 router
   .post(family + "/", createData)
