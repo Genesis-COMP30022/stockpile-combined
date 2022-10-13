@@ -56,7 +56,7 @@ const deleteData = (req, res) => {
       if (!data) {
         throw new Error("User not available");
       }
-      return data.remove();
+      return data.deleteOne(); //data.remove();
     })
     .then((data) => {
       console.log("User removed!");
