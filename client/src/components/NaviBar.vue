@@ -13,7 +13,7 @@
 
       <v-list>
         <v-list-item v-for="[icon, text, url] in links" :key="icon" :to="url">
-          <v-list-item-icon>
+          <v-list-item-icon class="mr-4">
             <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
 
@@ -30,7 +30,7 @@
                 <span>STOCKPILE</span>
                 <span class="font-weight-light">APP</span>
             </v-toolbar-title>-->
-      <router-link to="/dashboard"
+      <router-link to="/"
         ><v-img
           src="../assets/nologolargewhite.svg"
           max-width="12rem"
@@ -92,12 +92,19 @@ export default {
   data: () => ({
     drawer: null,
     links: [
-      ["mdi-inbox-arrow-down", "Dashboard", "/dashboard"],
-      ["mdi-send", "All items", "/"],
-      ["mdi-pencil", "Create", "/"],
-      ["mdi-cog", "Settings", "/"],
-      ["mdi-close", "Logout", "/"],
+      ["mdi-pencil", "Create purchase", "/new"],
+      ["mdi-send", "Recent purchases", "/recent"],
+      ["mdi-cog", "Settings", "/settings"],
+      ["mdi-close", "Logout", "/welcome"],
     ],
   }),
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to) {
+        document.title = to.meta.title || 'Stockpile';
+      }
+    },
+  }
 };
 </script>
