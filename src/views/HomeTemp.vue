@@ -164,7 +164,7 @@ export default {
   },
   methods: {
 loadPosts: async function(){
-  let apiURL = 'http://localhost:4000/api';
+  let apiURL = 'http://localhost:4000/itemAPI';
   axios.get(apiURL).then(res => {
     this.posts = res.data;
   }).catch(error => {

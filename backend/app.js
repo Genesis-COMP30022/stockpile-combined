@@ -17,6 +17,7 @@ mongoose.connect(database.db, {
     })
 
 const postAPI = require('../backend/routes/post.route')
+const itemAPI = require('../backend/routes/item.route')
 const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -25,7 +26,8 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 //API
-app.use('/api', postAPI)
+app.use('/postAPI', postAPI)
+app.use('/itemAPI', itemAPI)
 
 //create port
 const port = process.env.PORT || 4000;
@@ -33,7 +35,7 @@ const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
-//error hanler
+//error handler
 app.use(function(err, req, res, next) {
     console.error(err.message);
     if (!err.statusCode) err.statusCode = 500;

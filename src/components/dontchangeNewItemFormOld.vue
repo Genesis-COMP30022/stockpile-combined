@@ -1,7 +1,7 @@
 <template>
   <v-container fluid> 
     <h1 align="" class="mb-3 ml-2">Create new purchase...</h1>
-    <v-form @submit.prevent="createPost" v-model="valid" ref="itemData">
+    <v-form @submit.prevent="savePost" v-model="valid" ref="itemData">
         <v-container style="max-width=200px">
             <v-row>
                 <v-col
@@ -49,7 +49,7 @@
                         required
                         type="date"
                         filled
-                        v-model="itemData.datePurchased"
+                        v-model="itemData.date"
                     ></v-text-field>
                 </v-col>
 
@@ -64,7 +64,7 @@
                         label="Category"
                         required
                         filled
-                        prepend-icon="mdi-folder-outline"
+                        prepend-icon="mdi-attachment"
                         v-model="itemData.category"
                     ></v-autocomplete>
                 </v-col>
@@ -89,43 +89,27 @@
                     cols="12"
                     md="10"
                 >
-                    <v-file-input
-                        ref="img"
-                        label="Upload image (optional)"
-                        show-size
-                        filled
-                        :rules="imgrules"
-                        accept="image/png, image/jpeg, image/bmp"
-                        v-model = "itemData.img"
-                    ></v-file-input>
-                </v-col>
-
-                <v-col
-                    cols="12"
-                    md="10"
-                >
                     <v-textarea
                         ref="desc"
                         :rules="descrules"
-                        label="Description (optional)"
+                        label="Description"
                         :counter="400"
+                        full-width
                         filled
+                        single-line
                         prepend-icon="mdi-message"
-                        v-model = "itemData.desc"
+                        v-model="itemData.desc"
                     ></v-textarea>
                 </v-col>
             </v-row>
 
-            <v-row class="ml-1 pb-12">
+            <v-row class="ml-1">
 
                 <v-btn
-                    depressed
-                    color="primary"
-                    class="mr-4"
-                    @click = "createItem"
+                    color="sWhiteBlue"
                 >
-                    <v-icon left>mdi-check</v-icon>
-                    Submit
+                    <v-icon left>mdi-check</v-icon>s
+                    Submitasdfnsakdlfnsalkfndaskl
                 </v-btn>
 
                 <v-btn
@@ -146,6 +130,13 @@
 
 <script>
 
+//
+                    // depressed
+                    // color="primary"
+                    // class="mr-4"
+                    // type="submit"
+                    // @submit="createItem"
+//                     #@submit="createItem"
 // https://vuetifyjs.com/en/components/text-fields
 // maxlength: 400
 import axios from "axios";
@@ -158,17 +149,6 @@ export default {
   },
 
   data: () => ({
-    itemData: {
-        name: '',
-        price: 0,
-        desc: '',
-        category: '',
-        buyer: '',
-        image: '',
-        datePurchased: '',
-        dateUpdated: Date.now(),
-        dateCreated: Date.now(),
-    },
     valid: false,
     purchasename: '',
     lastname: '',
@@ -196,20 +176,32 @@ export default {
       buyer => !!buyer || 'Buyer is required',
     ],
   }),
-    methods: {
-      savePost: async function(){
-            //console.log("it is working");
-            this.createItem();
-      },
-      createItem(){
-          let apiURL = 'http://localhost:4000/itemAPI/create-item';
-          //console.log("it is creating");
-          axios.post(apiURL, this.itemData).then(() => {
-          }).catch(error => {
-              console.log(error)
-          }); 
-      }, 
-    }
+  methods: {
+    savePost: async function(){
+          console.log("it is working");
+          this.createItem();
+    },
+    createItem(){
+        let apiURL = 'http://localhost:4000/api/create-item';
+        console.log("it is creating");
+        axios.post(apiURL, this.itemData).then(() => {
+            this.itemData = {
+                name: ' ',
+                price: 0.05,
+                description: '',
+                category: '',
+                buyer: '',
+                image: '',
+                datePurchased: '',
+                dateUpdated: '',
+                dateCreated: '',
+            } 
+            //this.createItem();
+        }).catch(error => {
+            console.log(error)
+        }); 
+    }, 
+  }
 };
 
 </script>

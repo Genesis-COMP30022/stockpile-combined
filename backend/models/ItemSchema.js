@@ -5,12 +5,12 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: [true, 'name field is required'],
     },
-    cost: {
+    price: {
         type: Number,
         required: [true, 'cost field is required'],
         min: 0.05
     },
-    description: String,
+    desc: String,
     category: String,
     buyer: String,
     image: {
