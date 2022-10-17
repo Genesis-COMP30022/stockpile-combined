@@ -128,6 +128,7 @@
 
 // https://vuetifyjs.com/en/components/text-fields
 // maxlength: 400
+import axios from "axios";
 
 export default {
   name: 'NewItemForm',
@@ -164,6 +165,23 @@ export default {
       buyer => !!buyer || 'Buyer is required',
     ],
   }),
+
+    createPost(){
+        let apiURL = 'http://localhost:4000/api/create-post';
+        axios.post(apiURL, this.postData).then(() => {
+            this.postData = {
+            name: '',
+            description: '',
+            }
+            this.close();
+            this.loadPosts();
+            this.color = 'success'
+            this.text ='Post has been successfully saved.'
+            this.snackbar = true;
+        }).catch(error => {
+            console.log(error)
+        }); 
+    }, 
 };
 
 </script>
