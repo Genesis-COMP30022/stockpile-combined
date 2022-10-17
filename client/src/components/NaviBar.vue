@@ -6,7 +6,7 @@
           <img src="../assets/temp/woman-avatar.jpg" alt="Suzanne" />
         </v-avatar>
 
-        <div><b>Suzanne Cowler</b><br />suze@stockpileapp.au</div>
+        <div><b>Suzanne Cowler</b> [A]<br />Cowler family group</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -58,6 +58,7 @@
         <v-container>
           <v-text-field
             label="Search..."
+            placeholder="Search..."
             hide-details
             solo-inverted
             flat

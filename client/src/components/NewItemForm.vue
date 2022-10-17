@@ -61,7 +61,7 @@
                         label="Category"
                         required
                         filled
-                        prepend-icon="mdi-attachment"
+                        prepend-icon="mdi-folder-outline"
                     ></v-autocomplete>
                 </v-col>
 
@@ -84,20 +84,32 @@
                     cols="12"
                     md="10"
                 >
+                    <v-file-input
+                        ref="img"
+                        label="Upload image (optional)"
+                        show-size
+                        filled
+                        :rules="imgrules"
+                        accept="image/png, image/jpeg, image/bmp"
+                    ></v-file-input>
+                </v-col>
+
+                <v-col
+                    cols="12"
+                    md="10"
+                >
                     <v-textarea
                         ref="desc"
                         :rules="descrules"
-                        label="Description"
+                        label="Description (optional)"
                         :counter="400"
-                        full-width
                         filled
-                        single-line
                         prepend-icon="mdi-message"
                     ></v-textarea>
                 </v-col>
             </v-row>
 
-            <v-row class="ml-1">
+            <v-row class="ml-1 pb-12">
 
                 <v-btn
                     depressed
@@ -138,17 +150,16 @@ export default {
 
   data: () => ({
     valid: false,
-    purchasename: '',
-    lastname: '',
     categories: ['Entertainment', 'Furniture', 'Food'],
     buyers: ['Alister', 'Brad', 'Changmin', 'Lachlan'],
     nameRules: [
       name => !!name || 'Name is required',
-      name => (name.length <= 50) || 'Name must be 10 characters or less',
+      name => (name && name.length <= 50) || 'Name must be 10 characters or less',
     ],
     pricerules: [
       price => !!price || 'Price is required',
       price => (price && price.length <= 10) || 'Price must be 10 digits or less',
+      price => !price || price >= 0 || 'Non-negative prices only',
       price => (isNaN(price) == false) || "Price must be numeric",
     ],
     daterules: [
@@ -158,10 +169,13 @@ export default {
       category => !!category || 'Category is required',
     ],
     descrules: [
-      desc => (desc.length <= 400) || 'Description must be 400 characters or less',
+      desc => desc ? (desc.length <= 400) || 'Description must be 400 characters or less' : true,
     ],
     buyrules: [
       buyer => !!buyer || 'Buyer is required',
+    ],
+    imgrules: [
+      value => !value || value.size < 20 || 'Image size must be less than 2 MB!',
     ],
   }),
 };

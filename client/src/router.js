@@ -30,7 +30,7 @@ export default new Router({
     {
         path: "/settings",
         name: "settings",
-        component: () => import("./views/HomeTemp.vue"),
+        component: () => import("./components/UserSettingsForm.vue"),
         meta: { title: 'Settings' + SUFFIX },
     },
   ],

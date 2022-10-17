@@ -26,6 +26,12 @@
             >
             </v-img>
 
+            <v-card-text class="text--primary pt-2 pb-2">
+                <div>Information</div>
+
+                <div>Lorde is good, probably</div>
+            </v-card-text>
+
             <v-card-actions style="display: flex; 
                             flex-wrap; nowrap;
                             justify-content: space-around;">
@@ -40,32 +46,13 @@
                             v-bind="attrs"
                             v-on="on"
                         >
-                            Expand
+                            <v-icon left>mdi-wrench</v-icon>
+                            Edit
                         </v-btn>
                     </template>
 
-                    <v-card>
-                        <v-card-title class="text-h5 grey lighten-2">
-                        more info on lorde
-                        </v-card-title>
-
-                        <v-card-text>
-                        she is from the country new zealand. she makes music that is enjoyed by many people. 
-                        </v-card-text>
-
-                        <v-divider></v-divider>
-
-                        <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            color="sLightBlue"
-                            text
-                            @click="dialog = false"
-                        >
-                            I accept
-                        </v-btn>
-                        </v-card-actions>
-                    </v-card>
+                    <CardModal @exit="closeModal"/>
+                    
                 </v-dialog>
 
                 <v-btn
@@ -83,15 +70,6 @@
                 </v-btn>
             </v-card-actions>
 
-            <v-card-subtitle class="pb-0">
-                Replace later based on sketch
-            </v-card-subtitle>
-
-            <v-card-text class="text--primary">
-                <div>Information</div>
-
-                <div>Lorde is good, probably</div>
-            </v-card-text>
         </v-card>
         <!--<CardModal
             v-show="isModalVisible"
@@ -102,35 +80,31 @@
 
 <script>
 
-//import CardModal from './CardModal';
+import CardModal from './CardModal';
 
 export default {
   name: 'CardItem',
+  itemNames: ['lorde melodrama album lorem ipsum dolor sit amet'],
+  itemPrices: [20],
+  itemDates: ['06/06/2022'],
+  itemCats: ['Entertainment'],
+  itemBuyers: ['Lachlan'],
+  itemImages: ['https://i.ytimg.com/vi/ee5eakyG8c0/maxresdefault.jpg'],
+  itemDescs: ['lorde melodrama is an album. lorde is a new zealand artist who is liked by many people.'],
   components: {
-
+    CardModal
   },
   data () {
     return {
       dialog: false,
     }
-  }
+  },
+  methods: {
+      closeModal() {
+        
+      }
+    }
 };
 
 
 </script>
-
-<!--
-data() {
-      return {
-        isModalVisible: false,
-      };
-    },
-    methods: {
-      showModal() {
-        this.isModalVisible = true;
-      },
-      closeModal() {
-        this.isModalVisible = false;
-      }
-    }
--->
