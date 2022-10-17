@@ -20,7 +20,7 @@
                         prepend-icon="mdi-face-man-shimmer"
                         required
                         filled
-                        value="Suzanne Cowler"
+                        :value="loginuser.fullName"
                     ></v-text-field>
                 </v-col>
 
@@ -32,13 +32,23 @@
                         ref="fullname"
                         :rules="familyrules"
                         :items="families"
+                        item-text="name"
+                        item-value="id"
                         :counter="50"
-                        label="Family group"
+                        label="Family group ID number"
                         prepend-icon="mdi-human-male-female-child"
                         required
+                        :return-object="false"
                         filled
-                        value="Cowler family"
-                    ></v-combobox>
+                        :value="loginuser.familyGroupID"
+                    >
+                        <template v-slot:item="data">
+                            <v-list-item-content>
+                                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                <v-list-item-subtitle v-html="'ID: ' + data.item.id"></v-list-item-subtitle>
+                            </v-list-item-content>
+                        </template>
+                    </v-combobox>
                 </v-col>
 
                 <v-col
@@ -53,7 +63,7 @@
                         prepend-icon="mdi-ray-start-vertex-end"
                         required
                         filled
-                        value="25"
+                        :value="loginuser.age"
                     ></v-text-field>
                 </v-col>
 
@@ -69,7 +79,7 @@
                         required
                         filled
                         prepend-icon="mdi-star-circle"
-                        value="Admin"
+                        :value="loginuser.role"
                     ></v-autocomplete>
                 </v-col>
 
@@ -77,13 +87,13 @@
                     cols="12"
                     md="4"
                 >
-                    <v-text-field
+                    <v-text-field   
                         ref="id"
                         label="User ID number"
                         prepend-icon="mdi-fingerprint"
                         required
                         filled
-                        value="464395350250360440505555"
+                        :value="loginuser.userID"
                         disabled
                     ></v-text-field>
                 </v-col>
@@ -104,7 +114,6 @@
                     md="3"
                 >
                     <v-checkbox
-                        :label="name"
                         class="mt-1"
                         input-value="true"
                     >
@@ -170,14 +179,19 @@ export default {
 
   data: () => ({
     valid: false,
-    families: ['Smith family', 'Bloggs family', 'Jones family', 'Cowler family'],
+    families: [
+        {name: 'Smith family',  id: '359821094206097491489543'}, 
+        {name: 'Bloggs family', id: '249356045784918402938462'}, 
+        {name: 'Jones family', id: '697804589141350971094068'}, 
+        {name: 'Cowler family', id: '954395350396936044050687'}
+    ],
     roles: ['Regular', 'Admin'],
     nameRules: [
       name => !!name || 'Name is required',
       name => (name && name.length <= 60) || 'Name must be 50 characters or less',
     ],
     familyrules: [
-      fam => fam ? (fam.length <= 50) || 'Family must be 50 characters or less' : true,
+      fam => fam ? ((fam.length <= 50) || 'Family must be 50 characters or less') : true,
     ],
     agerules: [
       age => !!age || 'Age is required',
@@ -187,17 +201,25 @@ export default {
     rolerules: [
       role => !!role || 'A role is required',
     ],
-    userlinks: [
-        [478563954, 'John Smith'],
-        [194256982, 'Andy Anderson'],
-        [901240464, 'Jacinta Clark'],
-        [368203507, 'Natalie Bassingthwaighte'],
-        [347323259, 'Anthony Albanese'],
-        [112947802, 'Gabriella Cilmi'],
-    ],
     newuserrules: [
-        newu => newu ? newu.match(/^\d{24}(, \d{24})*$/) || 'Does not contain comma-plus-space-separated UIDs (contain 24 digits)' : true,
-    ]
+        newu => newu ? ( /^\d{24}(, \d{24})*$/.test(newu) || 'Does not contain comma-plus-space-separated UIDs (contain 24 digits)') : true,
+    ],
+    loginuser: {
+        fullName: 'Suzanne Cowler',
+        userID: '464395350250360440505555',
+        familyGroup: 'Cowler family',
+        familyGroupID: '954395350396936044050687',
+        age: 25,
+        role: 'Admin',
+    },
+    userlinks: [
+        ['478563954', 'John Smith'],
+        ['194256982', 'Andy Anderson'],
+        ['901240464', 'Jacinta Clark'],
+        ['368203507', 'Natalie Bassingthwaighte'],
+        ['347323259', 'Anthony Albanese'],
+        ['112947802', 'Gabriella Cilmi'],
+    ],
   }),
 };
 
