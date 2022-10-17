@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-        Privacy Policy
+            Privacy Policy
         </v-card-title>
 
         <v-card-text>
@@ -12,13 +12,30 @@
 
         <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn
-            color="primary"
-            text
-            @click="dialog = false"
-        >
-            I accept
-        </v-btn>
+        <p>test</p>
         </v-card-actions>
     </v-card>
 </template>
+
+<script>
+
+export default {
+  name: 'UserSettingsForm',
+
+  components: {
+    
+  },
+
+  data: () => ({
+    valid: false,
+    families: ['Smith family', 'Bloggs family', 'Jones family', 'Cowler family'],
+    roles: ['Regular', 'Admin'],
+  }),
+  methods: {      
+    close () {
+      this.$emit('close');        
+    }
+  }
+};
+
+</script>

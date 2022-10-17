@@ -61,7 +61,7 @@
                         label="Category"
                         required
                         filled
-                        prepend-icon="mdi-attachment"
+                        prepend-icon="mdi-folder-outline"
                     ></v-autocomplete>
                 </v-col>
 
@@ -84,20 +84,32 @@
                     cols="12"
                     md="10"
                 >
+                    <v-file-input
+                        ref="img"
+                        label="Upload image (optional)"
+                        show-size
+                        filled
+                        :rules="imgrules"
+                        accept="image/png, image/jpeg, image/bmp"
+                    ></v-file-input>
+                </v-col>
+
+                <v-col
+                    cols="12"
+                    md="10"
+                >
                     <v-textarea
                         ref="desc"
                         :rules="descrules"
-                        label="Description"
+                        label="Description (optional)"
                         :counter="400"
-                        full-width
                         filled
-                        single-line
                         prepend-icon="mdi-message"
                     ></v-textarea>
                 </v-col>
             </v-row>
 
-            <v-row class="ml-1">
+            <v-row class="ml-1 pb-12">
 
                 <v-btn
                     depressed
