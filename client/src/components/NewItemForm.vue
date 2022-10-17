@@ -90,7 +90,7 @@
                         show-size
                         filled
                         :rules="imgrules"
-                        accept="image/png, image/jpeg, image/bmp"
+                        accept="image/png, image/jpeg, image/bmp, image/gif"
                     ></v-file-input>
                 </v-col>
 
@@ -175,7 +175,7 @@ export default {
       buyer => !!buyer || 'Buyer is required',
     ],
     imgrules: [
-      value => !value || value.size < 20 || 'Image size must be less than 2 MB!',
+      value => !value || value.size < 2000000 || 'Image size must be less than 2 MB!',
     ],
   }),
 };

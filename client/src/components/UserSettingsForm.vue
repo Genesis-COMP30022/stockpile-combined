@@ -33,14 +33,14 @@
                         :rules="familyrules"
                         :items="families"
                         item-text="name"
-                        item-value="id"
+                        item-value="name"
                         :counter="50"
-                        label="Family group ID number"
+                        label="Family group"
                         prepend-icon="mdi-human-male-female-child"
                         required
                         :return-object="false"
                         filled
-                        :value="loginuser.familyGroupID"
+                        :value="loginuser.familyGroup"
                     >
                         <template v-slot:item="data">
                             <v-list-item-content>
@@ -98,11 +98,26 @@
                     ></v-text-field>
                 </v-col>
 
+                <v-col
+                    cols="12"
+                    md="10"
+                >
+                    <v-file-input
+                        ref="img"
+                        label="Upload avatar (optional)"
+                        show-size
+                        filled
+                        :rules="imgrules"
+                        prepend-icon="mdi-image"
+                        accept="image/png, image/jpeg, image/bmp, image/gif"
+                    ></v-file-input>
+                </v-col>
+
 
             </v-row>
 
             <v-row class="ml-0">
-                <p>(The following settings appear because you are an Admin.) You can remove users from your group by unchecking them.</p>
+                <p><b>Admin settings</b>: You can remove users from <em>{{loginuser.familyGroup}}</em> by unchecking them.</p>
             </v-row>
 
             <v-row>
@@ -195,7 +210,7 @@ export default {
     ],
     agerules: [
       age => !!age || 'Age is required',
-      age => (age && age.length <= 60) || 'Age must be 10 characters or less',
+      age => (age && age.length <= 10) || 'Age must be 10 characters or less',
       age => (age < 150 && age > 4) || 'Please give your real age',
     ],
     rolerules: [
@@ -204,12 +219,15 @@ export default {
     newuserrules: [
         newu => newu ? ( /^\d{24}(, \d{24})*$/.test(newu) || 'Does not contain comma-plus-space-separated UIDs (contain 24 digits)') : true,
     ],
+    imgrules: [
+      value => !value || value.size < 2000000 || 'Image size must be less than 2 MB!',
+    ],
     loginuser: {
         fullName: 'Suzanne Cowler',
         userID: '464395350250360440505555',
         familyGroup: 'Cowler family',
         familyGroupID: '954395350396936044050687',
-        age: 25,
+        age: '25',
         role: 'Admin',
     },
     userlinks: [

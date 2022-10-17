@@ -31,6 +31,17 @@ export default {
     families: ['Smith family', 'Bloggs family', 'Jones family', 'Cowler family'],
     roles: ['Regular', 'Admin'],
   }),
+  props: {
+    itemName: String,
+    id: String,
+    price: Number,
+    date: String,
+    cat: String,
+    buyer: String,
+    buyerID: String,
+    img: String,
+    desc: String,
+  },
   methods: {      
     close () {
       this.$emit('close');        
