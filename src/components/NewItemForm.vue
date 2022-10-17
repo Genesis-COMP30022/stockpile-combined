@@ -132,6 +132,7 @@
                     depressed
                     color="sWhiteBlue"
                     class="mr-4"
+                    @click = "resetForm('Form is reset')"
                 >
                     <v-icon left>mdi-eraser-variant</v-icon>
                     Clear
@@ -140,7 +141,27 @@
             </v-row>
         </v-container>
     </v-form>
+
+      <v-snackbar
+        v-model="snackbar"
+        color="sDarkBlue"
+        :timeout="timeout"
+      > 
+        {{ text }}
+  
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="white"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
   </v-container>
+  
 </template>
 
 
@@ -158,9 +179,10 @@ export default {
   },
 
   data: () => ({
+    snackbar: false,
     itemData: {
         name: '',
-        price: 0,
+        price: '',
         desc: '',
         category: '',
         buyer: '',
@@ -201,6 +223,11 @@ export default {
             //console.log("it is working");
             this.createItem();
       },
+      resetForm (newText) {
+      this.text = newText;
+      this.snackbar = true;
+      this.$refs.itemData.reset();
+    },
       createItem(){
           let apiURL = 'http://localhost:4000/itemAPI/create-item';
           //console.log("it is creating");
@@ -208,6 +235,7 @@ export default {
           }).catch(error => {
               console.log(error)
           }); 
+          this.resetForm('Item has been successfully saved.');
       }, 
     }
 };
