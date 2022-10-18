@@ -89,15 +89,18 @@
                     cols="12"
                     md="10"
                 >
-                    <v-file-input
-                        ref="img"
-                        label="Upload image (optional)"
-                        show-size
-                        filled
-                        :rules="imgrules"
-                        accept="image/png, image/jpeg, image/bmp"
-                        v-model = "itemData.img"
-                    ></v-file-input>
+                    <handy-uploader
+    :documentAttachment.sync="handyAttachments"
+    :fileUploaderType= "'simple'"
+    :fileAccept= "'image/png,image/gif,image/jpeg'"
+    :maxFileSize= "10240"
+    :imageCompressor= "false"
+    :maxFileCount= "1"
+    :badgeCounter= "true"
+    :thumb= "false"
+    :changeFileName="true"
+>
+</handy-uploader>
                 </v-col>
 
                 <v-col
@@ -170,15 +173,18 @@
 // https://vuetifyjs.com/en/components/text-fields
 // maxlength: 400
 import axios from "axios";
+import handyUploader from 'handy-uploader/src/components/handyUploader';
+
 
 export default {
   name: 'NewItemForm',
 
   components: {
-    
+    handyUploader,
   },
 
   data: () => ({
+    handyAttachments: [],
     snackbar: false,
     itemData: {
         name: '',
@@ -231,11 +237,13 @@ export default {
       createItem(){
           let apiURL = 'http://localhost:4000/itemAPI/create-item';
           //console.log("it is creating");
+          this.itemData.image = this.handyAttachments[0].file.base64
           axios.post(apiURL, this.itemData).then(() => {
           }).catch(error => {
               console.log(error)
           }); 
-          this.resetForm('Item has been successfully saved.');
+          this.resetForm(this.handyAttachments[0].file.base64);
+
       }, 
     }
 };

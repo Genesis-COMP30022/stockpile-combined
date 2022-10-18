@@ -14,8 +14,7 @@ const itemSchema = new mongoose.Schema({
     category: String,
     buyer: String,
     image: {
-        data: Buffer,
-        contentType: String
+        type: String
     },
     datePurchased: {
         type: Date,
