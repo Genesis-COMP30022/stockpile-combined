@@ -237,7 +237,7 @@ export default {
       this.$refs.itemData.reset();
     },
       createItem(){
-          let apiURL = 'http://localhost:4000/itemAPI/create-item';
+          let apiURL = 'https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item';
           //console.log("it is creating");
           
           this.itemData.image = this.handyAttachments[0].file.base64
