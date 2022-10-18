@@ -92,7 +92,7 @@
                     <handy-uploader
     :documentAttachment.sync="handyAttachments"
     :fileUploaderType= "'simple'"
-    :fileAccept= "'image/png,image/gif,image/jpeg'"
+    :fileAccept= "'image/png,image/jpeg'"
     :maxFileSize= "10240"
     :imageCompressor= "false"
     :maxFileCount= "1"
@@ -237,6 +237,7 @@ export default {
       createItem(){
           let apiURL = 'http://localhost:4000/itemAPI/create-item';
           //console.log("it is creating");
+          
           this.itemData.image = this.handyAttachments[0].file.base64
           axios.post(apiURL, this.itemData).then(() => {
           }).catch(error => {

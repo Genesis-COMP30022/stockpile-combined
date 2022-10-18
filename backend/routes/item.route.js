@@ -3,6 +3,8 @@ const itemRoute = express.Router();
 
 let ItemModel = require('../models/ItemSchema');
 
+
+
 //index
 itemRoute.route('/').get((req, res) => {
     ItemModel.find((error, data) => {
@@ -17,6 +19,8 @@ itemRoute.route('/').get((req, res) => {
 
 //create post
 itemRoute.route('/create-item').post((req, res, next) => {
+    console.log(req.body);
+    
     ItemModel.create(req.body, (error, data) => {
         if (error) {
             return next(error)
