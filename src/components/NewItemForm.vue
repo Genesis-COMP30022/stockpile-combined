@@ -101,6 +101,7 @@
     :changeFileName="true"
 >
 </handy-uploader>
+
                 </v-col>
 
                 <v-col
@@ -193,6 +194,7 @@ export default {
         category: '',
         buyer: '',
         image: '',
+        imagetype: '',
         datePurchased: '',
         dateUpdated: Date.now(),
         dateCreated: Date.now(),
@@ -239,11 +241,12 @@ export default {
           //console.log("it is creating");
           
           this.itemData.image = this.handyAttachments[0].file.base64
+          this.itemData.imagetype = this.handyAttachments[0].file.format
           axios.post(apiURL, this.itemData).then(() => {
           }).catch(error => {
               console.log(error)
           }); 
-          this.resetForm(this.handyAttachments[0].file.base64);
+          this.resetForm("New item saved");
 
       }, 
     }

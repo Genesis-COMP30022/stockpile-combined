@@ -16,6 +16,9 @@ const itemSchema = new mongoose.Schema({
     image: {
         type: String
     },
+    imagetype: {
+        type: String
+    },
     datePurchased: {
         type: Date,
         default: () => Date.now(),

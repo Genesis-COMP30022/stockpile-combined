@@ -1,9 +1,9 @@
 const express = require('express');
 const itemRoute = express.Router();
+var uuid = require('uuid');
+const Storage = require('upload-cloud-storage')
 
 let ItemModel = require('../models/ItemSchema');
-
-
 
 //index
 itemRoute.route('/').get((req, res) => {
@@ -19,15 +19,60 @@ itemRoute.route('/').get((req, res) => {
 
 //create post
 itemRoute.route('/create-item').post((req, res, next) => {
-    console.log(req.body);
+    //console.log(finalstring)
+
+    var fileext = ""
+    var mimetype = ""
+    if (req.body.imagetype == "image/png;base64"){
+        fileext = ".png"
+        mimetype = "image/png"
+    }
+    else if (req.body.imagetype == "image/jpg;base64" || req.body.imagetype == "image/jpeg;base64"){
+        fileext = ".jpg"
+        mimetype = "image/jpg"
+    }
+    var filename = ((uuid.v4().replace(/-/g, ''))).concat(fileext)
+    var filepath = ("uploaded/" + filename)
     
-    ItemModel.create(req.body, (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.json(data)
-        }
+    require("fs").writeFile(filepath, req.body.image, 'base64', function(err) {
+        console.log(err);
+      });
+
+      //UPLOAD HERE
+      var testpath
+
+      const Google = Storage.init({
+
+        type: 'google',
+        keyFilename: 'unique-bonbon-364702-49a30afecdd5.json',
+        bucketName: 'stockpileapp',
+        projectId: 'unique-bonbon-364702',
     })
+    
+    Google.upload(filepath, {
+        deleteSource: true,
+        contentType: mimetype,
+        newName: filename,
+        dest: 'uploaded'
+    
+    }).then(result => {
+        req.body.image = result.slice()
+        console.log(result) //result contain metadata of file
+
+        ItemModel.create(req.body, (error, data) => {
+            if (error) {
+                return next(error)
+            } else {
+                res.json(data)
+            }
+        })
+    
+    }).catch(err => console.log(err))
+
+
+    
+    
+
 })
 
 //update post

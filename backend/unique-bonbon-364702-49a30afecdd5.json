@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "unique-bonbon-364702",
+  "private_key_id": "49a30afecdd50ab7f58bb16dd9dc1f77389cb5e6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDHZFq/1EDju39s\nSgOtCnBPaBHtVLjEL/4DLyMDGPtBM7hgDtSJIVYBAr9awaAHMF5wT2E4+lNnMXSK\nwRC3GPyUE7vxsoKC7KekUAM+yD1mJJb1l6YPP7eFRheqO3bCBBAILdXlrCwXgw+A\nBl+APAUsStSzI8hPWH1WZ6tlo7BVoyU8TJ2AeTTSHS/znjhi9EExKKGJGraDFeOH\nt2fQa1u+RyWFqFXm6PoR9zMPiWYemFhRbahgec3pIxX4MHl7pb+fRpFZCl78NEvr\nOfESTJj/o1w0SeHuJ2p2eDLLI3BnJX7lbeoFN0iwK/CynBvgIZVZqFgoTJO4ETNY\nAAGjrImlAgMBAAECggEABAMPlbneRGF1bZG1A+T94DB74TFJ4R4GF7z5u1+Oo//i\nadcNN7p6pzKNnx8zlRwdX60j4P2dx/8av9/6nMndQILVI/EvkcApRLPHckVH1vz4\nJ0uR2noHEKDEa8xz1fDhpwh6ZqX8N8zkoZ1/Nm6pZqbAI4qeG9qaoFkdqGyOvmpX\nfwcm8rPBx7FINhqdr0psgYABW08DjCOsc43Z1Cv9jjD/y8nszuwD2cieYLWv7Twk\nmXsyfhknXVOoUhxVwzhja98RY5MTvMcHPGsodmDyRexUEdrDmbABETQzKqwS13kE\noeCZ9Cir42CrDCKfx8Q44P8cO3rGQ+a2tPRTDslngQKBgQD1ujmVLEnpvYTi7U8y\nswGOlj1GYvIwWHTY0+XL3eQNdicOQnTEMBe/WMiGJISGDl72K9V1tN5Rh2GiKFOH\ntanFNg7OIB22YqXd8scjiUKFIjKwcmSSN/ZrWHWEKKzxhwUcg0KWZfvP4dV/ClIl\nIQY/thIaKCH2jDlURg1vwRC6GQKBgQDPuj9t9GdemdMT8EaFclJAd+AwUEdKR0Dl\nD4V/mWQGrNa1yG66tNh036jR7yXiV+lNYfIF5ahnMUhAN4iVtcbrWPHjUvpAkkoX\nXTFm/gYRfvk22jHoFchnt0LN6k+iKrOl5fEeaSQqn+Vf5li8CrCQa2tLN35mjX9b\nYZoKrjtVbQKBgBGnAyP4PocQGk/DBIF74oy/tj8sNIHMmPhKoKN4mT1uU3fuxjyh\nx9LzKdSZIvwOZDwDAh6mk6H/u7/ObdG99yg3rfCY1gmYJJpBKpUe8yxlPIb4cMkg\nRA+KF0cbNPFU5cUamNn9EY3ph1DNCQGp0a0aA0rlvyra//NR5P02PWFhAoGAdIpp\nS6by14A1i9ohtnyM6N5YSMLBPEr9fYVXwF6uX5BYZWQtu1H6npdcf2tMNdBcc62f\nuu89q6dagaymVFfHYgJkssS64b8xEiqWrNGXVfmGl9+SYELYTFfkguISC0kpwMlg\nnU8fm0pZxZPV9KmKpXuelnRr1d1MtlfrtFJLt4ECgYBpITWzWWiNZpPOuXGgzbZY\no0Ya9p7lZU7xLmvovyRR+gLcQXdWtCKYilF/unuHfmtTrJMu82yWAAklCTCHR3LN\nRgkadWQ65S26IIgZ4D/+YGgelHYGLBhJ2eHAZ3CI1SvzpPTiINFgYEHyjWiY1E5+\nV2kwrccYidWKfWQAgiz+/A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "stockpileappservice@unique-bonbon-364702.iam.gserviceaccount.com",
+  "client_id": "109028017326600664365",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/stockpileappservice%40unique-bonbon-364702.iam.gserviceaccount.com"
+}
