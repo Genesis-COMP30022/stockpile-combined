@@ -27,7 +27,6 @@
       </template>
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
-          {{item.name}}:
           <v-img
           max-height="10rem"
           max-width="10rem"
