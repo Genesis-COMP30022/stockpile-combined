@@ -1,6 +1,8 @@
 const express = require('express');
 const itemRoute = express.Router();
 var uuid = require('uuid');
+const moment = require('moment')
+var tz = require('moment-timezone');
 const Storage = require('upload-cloud-storage')
 
 let ItemModel = require('../models/ItemSchema');
@@ -19,7 +21,10 @@ itemRoute.route('/').get((req, res) => {
 
 //create post
 itemRoute.route('/create-item').post((req, res, next) => {
-    //console.log(finalstring)
+    if (req.body.datePurchased == null){
+        req.body.datePurchased = moment(Date.now()).tz('Australia/Melbourne').format("YYYY-MM-DD")
+    }
+
 
     var fileext = ""
     var mimetype = ""
@@ -39,7 +44,6 @@ itemRoute.route('/create-item').post((req, res, next) => {
       });
 
       //UPLOAD HERE
-      var testpath
 
       const Google = Storage.init({
 
