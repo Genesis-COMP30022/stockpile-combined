@@ -1,10 +1,6 @@
 <template>
-  <v-app id="inspire">
   <v-container fluid> 
-  <h1 align="" class="mb-3 ml-2">Welcome to Stockpile</h1>
-  <h2 align="" class="mb-3 ml-2">Here is a list of all your family's items</h2>
-    <v-main>
-    <div class="d-flex flex-column">
+      <h1 align="" class="mb-3 ml-2">Welcome to Stockpile</h1>
     <v-data-table 
       :headers="headers"
       :items="posts"
@@ -35,30 +31,11 @@
         </td>
       </template>
     </v-data-table>
-    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    </v-main>
-    </v-container>
-  </v-app>
+  </v-container>
+  
 </template>
+
 
 <script>
 import axios from "axios";
@@ -98,10 +75,3 @@ loadPosts: async function(){
   },
 };
 </script>
-
-
-
-
-
-
-
