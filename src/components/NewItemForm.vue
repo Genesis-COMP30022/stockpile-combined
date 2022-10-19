@@ -192,7 +192,8 @@ export default {
       this.handyAttachments = [];
     },
     createItem() {
-      let apiURL = "http://localhost:4000/itemAPI/create-item";
+      let apiURL =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item";
       //console.log("it is creating");
 
       if (this.handyAttachments.length === 0) {

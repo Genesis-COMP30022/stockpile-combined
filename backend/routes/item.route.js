@@ -46,7 +46,6 @@ itemRoute.route("/create-item").post((req, res, next) => {
       .tz("Australia/Melbourne")
       .format("YYYY-MM-DD");
   }
-  console.log("currentdate" + req.body.datePurchased);
 
   var fileext = "";
   var mimetype = "";
