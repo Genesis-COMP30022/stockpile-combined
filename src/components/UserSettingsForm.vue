@@ -198,7 +198,7 @@ export default {
         {name: 'Smith family',  id: '359821094206097491489543'}, 
         {name: 'Bloggs family', id: '249356045784918402938462'}, 
         {name: 'Jones family', id: '697804589141350971094068'}, 
-        {name: 'Cowler family', id: '954395350396936044050687'}
+        {name: 'British royal family', id: '954395350396936044050687'}
     ],
     roles: ['Regular', 'Admin'],
     nameRules: [
@@ -223,11 +223,11 @@ export default {
       value => !value || value.size < 2000000 || 'Image size must be less than 2 MB!',
     ],
     loginuser: {
-        fullName: 'Suzanne Cowler',
+        fullName: 'Queen Elizabeth II',
         userID: '464395350250360440505555',
-        familyGroup: 'Cowler family',
+        familyGroup: 'British royal family',
         familyGroupID: '954395350396936044050687',
-        age: '25',
+        age: '96',
         role: 'Admin',
     },
     userlinks: [
