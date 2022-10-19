@@ -1,17 +1,37 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Dashboard</h1>
-    <v-card color="#385F73" dark>
-      <v-card-title class="text-h5"> All items </v-card-title>
-
-      <v-card-subtitle
-        >Listen to your favorite artists and albums whenever and wherever,
-        online and offline.</v-card-subtitle
-      >
-
-      <v-card-actions>
-        <v-btn text> Listen Now </v-btn>
-      </v-card-actions>
+<v-card
+      class="text-center"
+      color="#54a3eb"
+      dark
+      max-width="30rem"
+    >
+      <v-card-text>
+        <v-sheet color="rgba(0, 0, 0, .12)">
+          <v-sparkline
+            :value="value"
+            color="rgba(255, 255, 255, .7)"
+            height="100rem"
+            padding="24"
+            stroke-linecap="round"
+            smooth
+          >
+            <template v-slot:label="item">
+              {{ item.value }}
+            </template>
+          </v-sparkline>
+        </v-sheet>
+      </v-card-text>
+  
+      <v-card-text>
+        <div class="text-h">
+          Item additions (past 7 days)
+        </div>
+      </v-card-text>
+  
+      <v-divider></v-divider>
+  
     </v-card>
 
     <v-data-table
@@ -124,6 +144,15 @@ export default {
 
   name: "HomeTemp",
   data: () => ({
+        value: [
+      8,
+      4,
+      7,
+      25,
+      1,
+      2,
+      56,
+    ],
     snackbar: false,
     search: "",
     desserts: [],
