@@ -2,7 +2,7 @@
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Dashboard</h1>
     <v-card color="#385F73" dark>
-      <v-card-title class="text-h5"> Unlimited music now </v-card-title>
+      <v-card-title class="text-h5"> All items </v-card-title>
 
       <v-card-subtitle
         >Listen to your favorite artists and albums whenever and wherever,
@@ -78,6 +78,13 @@
       </template>
       <template v-slot:no-data>
         <p>No Data Available</p>
+        <v-row justify="center">
+          <br />
+          <v-img
+            max-width="5rem"
+            src="../assets/SquareNoBG_animated.svg"
+          ></v-img>
+        </v-row>
       </template>
     </v-data-table>
     <v-spacer></v-spacer>
