@@ -27,12 +27,12 @@ export default new Router({
         component: () => import("./components/NewItemForm.vue"),
         meta: { title: 'New purchase' + SUFFIX },
     },
-    {
-        path: "/settings",
-        name: "settings",
-        component: () => import("./views/HomeTemp.vue"),
-        meta: { title: 'Settings' + SUFFIX },
-    },
+    // {
+    //     path: "/settings",
+    //     name: "settings",
+    //     component: () => import("./views/Settings.vue"),
+    //     meta: { title: 'Settings' + SUFFIX },
+    // },
   ],
 });
 

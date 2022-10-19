@@ -18,6 +18,29 @@ itemRoute.route('/').get((req, res) => {
     })
 })
 
+itemRoute.route('/:id').get((req, res) => {
+    console.log(req.params.id)
+    ItemModel.findOne({ _id: req.params.id })
+    .then((result) => {
+    return res.json(result);
+    })
+    .catch((err) => {
+        return next(err);
+    });
+})
+
+
+
+itemRoute.route('/').get((req, res) => {
+    ItemModel.find((error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
 
 //create post
 itemRoute.route('/create-item').post((req, res, next) => {

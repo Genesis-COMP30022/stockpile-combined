@@ -93,6 +93,7 @@ export default {
   data: () => ({
     drawer: null,
     links: [
+      ["mdi-grid", "Dashboard", "/"],
       ["mdi-pencil", "Create purchase", "/new"],
       ["mdi-send", "Recent purchases", "/recent"],
       ["mdi-cog", "Settings", "/settings"],
