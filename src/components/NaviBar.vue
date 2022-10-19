@@ -6,7 +6,7 @@
           <img src="../assets/temp/liz.png" alt="Suzanne" />
         </v-avatar>
 
-        <div><b>Queen Elizabeth II</b> [A]<br />Family: British royals</div>
+        <div><b>Queen Elizabeth II</b> [A]<br />British royal family</div>
       </v-sheet>
 
       <v-divider></v-divider>
