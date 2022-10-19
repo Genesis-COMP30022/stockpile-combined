@@ -4,6 +4,7 @@
             class="mx-auto"
             max-width="400"
         >
+
             <v-card-title 
                 style="word-break: break-word; 
                         display: flex;
@@ -13,23 +14,35 @@
                 <v-icon 
                     class="mr-3 d-inline" 
                     style="display: inline">
-                    mdi-movie
+                    {{mdiIcons[cat]}}
                 </v-icon>
                 <span style="display: inline; line-height: 24px;">
-                    lorde melodrama album lorem ipsum dolor sit amet
+                    {{itemName}}
                 </span>
             </v-card-title>
+
             <v-img
                 class="white--text align-end mb-2"
                 height="200px"
-                src="https://i.ytimg.com/vi/ee5eakyG8c0/maxresdefault.jpg"
+                :src="img"
             >
             </v-img>
 
-            <v-card-text class="text--primary pt-2 pb-2">
-                <div>Information</div>
+            <div style="display: flex; 
+                        justify-content: space-around"
+            >
+                <v-chip color="sWhiteBlue" class="">
+                    <v-icon left>mdi-currency-usd</v-icon>
+                    {{numberWithCommas(parseFloat(price).toFixed(2))}}
+                </v-chip>
+                <v-chip color="sWhiteBlue">
+                    <v-icon left>mdi-calendar</v-icon>
+                    {{date}}
+                </v-chip>
+            </div>
 
-                <div>Lorde is good, probably</div>
+            <v-card-text class="text--primary pt-2 pb-2">
+                <p class="mb-0">{{desc}}</p>
             </v-card-text>
 
             <v-card-actions style="display: flex; 
@@ -51,22 +64,17 @@
                         </v-btn>
                     </template>
 
-                    <CardModal @exit="closeModal"/>
+                    <CardModal />
                     
                 </v-dialog>
 
-                <v-btn
-                    color="sYellow"
-                    elevation="0"
-                >
-                    Hello
-                </v-btn>
                 <v-btn
                     color="sLightBlue"
                     elevation="0"
                     class="mx-0"
                 >
-                    World
+                    <v-icon left>mdi-account</v-icon>
+                    {{buyer}}
                 </v-btn>
             </v-card-actions>
 
@@ -84,26 +92,32 @@ import CardModal from './CardModal';
 
 export default {
   name: 'CardItem',
-  itemNames: ['lorde melodrama album lorem ipsum dolor sit amet'],
-  itemPrices: [20],
-  itemDates: ['06/06/2022'],
-  itemCats: ['Entertainment'],
-  itemBuyers: ['Lachlan'],
-  itemImages: ['https://i.ytimg.com/vi/ee5eakyG8c0/maxresdefault.jpg'],
-  itemDescs: ['lorde melodrama is an album. lorde is a new zealand artist who is liked by many people.'],
+
   components: {
     CardModal
   },
   data () {
     return {
       dialog: false,
+      mdiIcons: {Entertainment: 'mdi-movie', Furniture: 'mdi-seat', Food: 'mdi-food'},
     }
   },
+  props: {
+    itemName: String,
+    id: String,
+    price: String,
+    date: String,
+    cat: String,
+    buyer: String,
+    buyerID: String,
+    img: String,
+    desc: String,
+  },
   methods: {
-      closeModal() {
-        
-      }
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+  }
 };
 
 
