@@ -1,23 +1,54 @@
 <template>
   <v-container fluid> 
       <h1 align="" class="mb-3 ml-2">Dashboard</h1>
+      <v-card
+              color="#385F73"
+              dark
+            >
+              <v-card-title class="text-h5">
+                Unlimited music now
+              </v-card-title>
+  
+              <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-subtitle>
+  
+              <v-card-actions>
+                <v-btn text>
+                  Listen Now
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+      
           <v-data-table
       :headers="headers"
       :items="posts"
-      sort-by="calories"
+      :search="search"
+      sort-by="name"
       class="elevation-1"
     >
+    
+    <template v-slot:[`item.datePurchased`]="{ item }">
+    <span>{{ new Date(item.datePurchased).toLocaleDateString('en-AU') }}</span>
+  </template>
       <template v-slot:top>
         <v-toolbar
           flat
         >
+        
           <v-toolbar-title>All Items</v-toolbar-title>
+          
           <v-divider
             class="mx-4"
             inset
             vertical
           ></v-divider>
           <v-spacer></v-spacer>
+                  <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
           <v-dialog
           persistent
             v-model="dialog"
@@ -106,6 +137,7 @@ export default {
   
   name: "HomeTemp",
   data: () => ({
+    search: '',
     desserts: [],
     editedIndex: -1,
     editedItem: {
