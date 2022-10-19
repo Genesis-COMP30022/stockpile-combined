@@ -192,12 +192,17 @@ export default {
       this.handyAttachments = [];
     },
     createItem() {
-      let apiURL =
-        "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item";
+      let apiURL = "http://localhost:4000/itemAPI/create-item";
       //console.log("it is creating");
 
-      this.itemData.image = this.handyAttachments[0].file.base64;
-      this.itemData.imagetype = this.handyAttachments[0].file.format;
+      if (this.handyAttachments.length === 0) {
+        this.itemData.image = "NULL";
+        this.itemData.imagetype = "NULL";
+      } else {
+        this.itemData.image = this.handyAttachments[0].file.base64;
+        this.itemData.imagetype = this.handyAttachments[0].file.format;
+      }
+
       axios
         .post(apiURL, this.itemData)
         .then(() => {})

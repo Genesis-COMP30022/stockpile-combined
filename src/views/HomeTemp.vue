@@ -77,7 +77,7 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+        <p>No Data Available</p>
       </template>
     </v-data-table>
     <v-spacer></v-spacer>
@@ -165,12 +165,29 @@ export default {
       axios
         .delete(toDeleteURL)
         .then(() => {
-          // CODE REFESH HERE
+          //this.updatePost(toDeleteID);
+          location.reload();
+          // REFESH HERE
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    // updatePost(toDeleteID){
+    //   let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/update-item/" + toDeleteID;
+    //   axios.post(apiURL, this.itemData).then((res) => {
+    //     console.log(res)
+    //     this.close();
+    //     this.loadPosts();
+    //     this.color ='info'
+    //     this.text = 'Post has been modified.'
+    //     this.snackbar = true;
+    //   }).catch(error => {
+    //     console.log(error)
+    //     console.log(this.$route.params.id)
+    //   })
+    // },
 
     loadPosts: async function () {
       let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
