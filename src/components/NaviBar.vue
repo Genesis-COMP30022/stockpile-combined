@@ -95,6 +95,7 @@ export default {
     links: [
       ["mdi-pencil", "Create purchase", "/new"],
       ["mdi-send", "Recent purchases", "/recent"],
+      ["mdi-grid", "Dashboard", "/"],
       ["mdi-cog", "Settings", "/settings"],
       ["mdi-close", "Logout", "/welcome"],
     ],
