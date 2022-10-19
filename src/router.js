@@ -16,6 +16,12 @@ export default new Router({
       meta: { title: 'Recent purchases' + SUFFIX },
     },
     {
+      path: "/settings",
+      name: "settings",
+      component: () => import("./components/UserSettingsForm.vue"),
+      meta: { title: 'Settings' + SUFFIX },
+    },
+    {
         path: "/",
         name: "home",
         component: () => import("./views/HomeTemp.vue"),
