@@ -3,10 +3,10 @@
     <v-navigation-drawer v-model="drawer" right app>
       <v-sheet color="sLightBlue" class="pa-4">
         <v-avatar class="mb-2" color="sYellow" size="64">
-          <img src="../assets/temp/woman-avatar.jpg" alt="Suzanne" />
+          <img src="../assets/temp/liz.png" alt="Suzanne" />
         </v-avatar>
 
-        <div><b>Suzanne Cowler</b> [A]<br />Cowler family group</div>
+        <div><b>Queen Elizabeth II</b> [A]<br />Family: British royals</div>
       </v-sheet>
 
       <v-divider></v-divider>

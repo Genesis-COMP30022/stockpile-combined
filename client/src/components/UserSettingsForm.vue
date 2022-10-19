@@ -231,12 +231,12 @@ export default {
         role: 'Admin',
     },
     userlinks: [
-        ['478563954', 'John Smith'],
-        ['194256982', 'Andy Anderson'],
-        ['901240464', 'Jacinta Clark'],
-        ['368203507', 'Natalie Bassingthwaighte'],
-        ['347323259', 'Anthony Albanese'],
-        ['112947802', 'Gabriella Cilmi'],
+        ['478563954', 'King Charles III'],
+        ['194256982', 'Catherine, Princess of Wales'],
+        ['901240464', 'William, Prince of Wales'],
+        ['368203507', 'Prince Harry, Duke of Sussex'],
+        ['347323259', 'Anne, Princess Royal'],
+        ['112947802', 'Prince Andrew, Duke of York'],
     ],
   }),
 };
