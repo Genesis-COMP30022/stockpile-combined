@@ -235,6 +235,7 @@ export default {
       this.text = newText;
       this.snackbar = true;
       this.$refs.itemData.reset();
+      this.handyAttachments = []
     },
       createItem(){
           let apiURL = 'https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item';
