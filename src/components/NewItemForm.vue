@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Create new purchase...</h1>
-    <v-form @submit.prevent="createPost" v-model="valid" ref="itemData">
+    <v-form @submit.prevent="savePost" v-model="valid" ref="itemData">
       <v-container style="max-width=200px">
         <v-row>
           <v-col cols="12" md="6">
@@ -205,23 +205,6 @@ export default {
           console.log(error);
         });
       this.resetForm("New item saved");
-    },
-    deletePost: async function () {
-      this.deleteItem();
-    },
-    deleteItem() {
-      //let toDeleteID = "634fc47a416e5982decd74ac";
-      this.resetForm("maybe deleted!");
-      let toDeleteURL =
-        "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/delete-item/634fcb74416e5982decd74d4"; // +
-      //toDeleteID;
-
-      axios
-        .delete(toDeleteURL)
-        .then(() => {})
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 };
