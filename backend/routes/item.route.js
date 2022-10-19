@@ -47,53 +47,63 @@ itemRoute.route("/create-item").post((req, res, next) => {
       .format("YYYY-MM-DD");
   }
 
-  var fileext = "";
-  var mimetype = "";
-  if (req.body.imagetype == "image/png;base64") {
-    fileext = ".png";
-    mimetype = "image/png";
-  } else if (
-    req.body.imagetype == "image/jpg;base64" ||
-    req.body.imagetype == "image/jpeg;base64"
-  ) {
-    fileext = ".jpg";
-    mimetype = "image/jpg";
-  }
-  var filename = uuid.v4().replace(/-/g, "").concat(fileext);
-  var filepath = "uploaded/" + filename;
+  if (req.body.image == "NULL") {
+    ItemModel.create(req.body, (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    var fileext = "";
+    var mimetype = "";
+    if (req.body.imagetype == "image/png;base64") {
+      fileext = ".png";
+      mimetype = "image/png";
+    } else if (
+      req.body.imagetype == "image/jpg;base64" ||
+      req.body.imagetype == "image/jpeg;base64"
+    ) {
+      fileext = ".jpg";
+      mimetype = "image/jpg";
+    }
+    var filename = uuid.v4().replace(/-/g, "").concat(fileext);
+    var filepath = "uploaded/" + filename;
 
-  require("fs").writeFile(filepath, req.body.image, "base64", function (err) {
-    console.log(err);
-  });
+    require("fs").writeFile(filepath, req.body.image, "base64", function (err) {
+      console.log(err);
+    });
 
-  //UPLOAD HERE
+    //UPLOAD HERE
 
-  const Google = Storage.init({
-    type: "google",
-    keyFilename: "unique-bonbon-364702-49a30afecdd5.json",
-    bucketName: "stockpileapp",
-    projectId: "unique-bonbon-364702",
-  });
+    const Google = Storage.init({
+      type: "google",
+      keyFilename: "unique-bonbon-364702-49a30afecdd5.json",
+      bucketName: "stockpileapp",
+      projectId: "unique-bonbon-364702",
+    });
 
-  Google.upload(filepath, {
-    deleteSource: true,
-    contentType: mimetype,
-    newName: filename,
-    dest: "uploaded",
-  })
-    .then((result) => {
-      req.body.image = result.slice();
-      console.log(result); //result contain metadata of file
-
-      ItemModel.create(req.body, (error, data) => {
-        if (error) {
-          return next(error);
-        } else {
-          res.json(data);
-        }
-      });
+    Google.upload(filepath, {
+      deleteSource: true,
+      contentType: mimetype,
+      newName: filename,
+      dest: "uploaded",
     })
-    .catch((err) => console.log(err));
+      .then((result) => {
+        req.body.image = result.slice();
+        console.log(result); //result contain metadata of file
+
+        ItemModel.create(req.body, (error, data) => {
+          if (error) {
+            return next(error);
+          } else {
+            res.json(data);
+          }
+        });
+      })
+      .catch((err) => console.log(err));
+  }
 });
 
 //update post

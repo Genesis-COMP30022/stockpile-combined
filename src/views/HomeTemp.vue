@@ -89,6 +89,16 @@
     </v-data-table>
     <v-spacer></v-spacer>
     <br />
+
+    <v-snackbar v-model="snackbar" color="sDarkBlue" :timeout="timeout">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -114,6 +124,7 @@ export default {
 
   name: "HomeTemp",
   data: () => ({
+    snackbar: false,
     search: "",
     desserts: [],
     editedIndex: -1,
@@ -179,6 +190,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+      this.text = "Item deleted!";
+      this.snackbar = true;
     },
 
     // updatePost(toDeleteID){
