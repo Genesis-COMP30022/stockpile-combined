@@ -25,7 +25,6 @@ itemRoute.route('/create-item').post((req, res, next) => {
         req.body.datePurchased = moment(Date.now()).tz('Australia/Melbourne').format("YYYY-MM-DD")
     }
 
-
     var fileext = ""
     var mimetype = ""
     if (req.body.imagetype == "image/png;base64"){

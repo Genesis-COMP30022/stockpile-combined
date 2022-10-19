@@ -4,25 +4,24 @@
   <h1 align="" class="mb-3 ml-2">Welcome to Stockpile</h1>
   <h2 align="" class="mb-3 ml-2">Here is a list of all your family's items</h2>
     <v-main>
-    
-    <v-data-table
+    <div class="d-flex flex-column">
+    <v-data-table 
       :headers="headers"
       :items="posts"
       :single-expand="singleExpand"
       :expanded.sync="expanded"
       item-key="name"
       show-expand
+
       class="elevation-1"
     >
+    <template v-slot:[`item.datePurchased`]="{ item }">
+    <span>{{ new Date(item.datePurchased).toLocaleDateString('en-AU') }}</span>
+  </template>
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Expandable Table</v-toolbar-title>
+          <v-toolbar-title>All Items</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-switch
-            v-model="singleExpand"
-            label="Single expand"
-            class="mt-2"
-          ></v-switch>
         </v-toolbar>
       </template>
       <template v-slot:expanded-item="{ headers, item }">
@@ -36,7 +35,21 @@
         </td>
       </template>
     </v-data-table>
-    
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -49,6 +62,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   
   name: "HomeTemp",
@@ -64,8 +78,7 @@ export default {
       { text: 'Price', value: 'price' },
       { text: 'Description', value: 'desc' },
       { text: 'Category', value: 'category' },
-      { text: 'Image', value: 'image', align: ' d-none' },
-      { text: 'Purchase date', value: 'datePurchased' },
+      { text: 'Purchase date', value: 'datePurchased'},
       { text: 'Buyer', value: 'buyer' },
     ],
   }),
