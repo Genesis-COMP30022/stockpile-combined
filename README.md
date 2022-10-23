@@ -20,7 +20,7 @@ npm install
 ```
 
 ## Locally hosting the front-end
-Run in directory ```src```:
+Run in directory ```/src```:
 
 ### Compiles and hot-reloads for development
 
