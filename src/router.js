@@ -14,7 +14,7 @@ var router = new Router({
       path: "/",
       name: "landingpage",
       component: () => import("./views/LandingPage.vue"),
-      meta: { title: 'Landing page' + SUFFIX },
+      meta: { title: 'Home' + SUFFIX },
     },
     {
       path: "/auth",

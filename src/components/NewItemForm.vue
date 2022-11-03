@@ -58,16 +58,15 @@
           </v-col>
 
           <v-col cols="12" md="4">
-            <v-autocomplete
+            <v-text-field
               ref="buyer"
-              :items="buyers"
-              :rules="buyrules"
               label="Buyer"
               required
+              disabled
               filled
               prepend-icon="mdi-account-check"
-              v-model="itemData.buyer"
-            ></v-autocomplete>
+              :value="this.$auth.state.user.name"
+            ></v-text-field>
           </v-col>
 
           <v-col cols="12" md="10">
@@ -203,6 +202,8 @@ export default {
         this.itemData.image = this.handyAttachments[0].file.base64;
         this.itemData.imagetype = this.handyAttachments[0].file.format;
       }
+
+      this.itemData.buyer = this.$auth.state.user.name;
 
       axios
         .post(apiURL, this.itemData)

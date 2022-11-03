@@ -1,7 +1,8 @@
 <template>
     <v-app>
-    
+        <div v-if="$auth.state.isAuthenticated">
         <NaviBar/>
+        </div>
         <v-main>
             <router-view />
         </v-main>

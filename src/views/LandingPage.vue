@@ -1,5 +1,29 @@
 <template>
 <v-container fluid>
+<div v-if="!$auth.state.isAuthenticated">
+    <v-app-bar app dark color="sDarkBlue">
+      <!--<v-toolbar-title 
+                class="font-weight-black display-1 sWhiteBlue--text"
+            >
+                <span>STOCKPILE</span>
+                <span class="font-weight-light">APP</span>
+            </v-toolbar-title>-->
+      <router-link to="/"
+        ><v-img
+          src="../assets/nologolargewhite.svg"
+          max-width="12rem"
+          min-width="200px"
+          height="3rem"
+          class="mr-4"
+        >
+        </v-img
+      ></router-link>
+      <v-spacer></v-spacer>
+            <v-btn text color="sWhite"  @click="login()">
+        <v-icon>mdi-login-variant</v-icon>&nbsp; Login
+      </v-btn>
+    </v-app-bar>
+    </div>
         <v-row dense align="stretch" >
           <v-col
             align="center"

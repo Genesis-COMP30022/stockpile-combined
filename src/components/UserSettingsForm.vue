@@ -8,47 +8,26 @@
                     into the "Family group" box and submit the form.</p>
             </v-row>
             <v-row>
+                            <v-img
+                    :lazy-src="this.$auth.state.user.picture"
+                    max-height="5rem"
+                    max-width="5rem"
+                    :src="this.$auth.state.user.picture"
+                    ></v-img>
+
                 <v-col
                     cols="12"
                     md="5"
                 >
-                    <v-text-field
-                        ref="fullname"
-                        :rules="nameRules"
-                        :counter="50"
-                        label="Full name"
-                        prepend-icon="mdi-face-man-shimmer"
-                        required
-                        filled
-                        :value="this.$auth.state.user.name"
-                    ></v-text-field>
+                    <v-text
+                    >{{this.$auth.state.user.name}}</v-text>
                 </v-col>
 
                 <v-col
                     cols="12"
                     md="5"
                 >
-                    <v-combobox
-                        ref="fullname"
-                        :rules="familyrules"
-                        :items="families"
-                        item-text="name"
-                        item-value="name"
-                        :counter="50"
-                        label="Family group"
-                        prepend-icon="mdi-human-male-female-child"
-                        required
-                        :return-object="false"
-                        filled
-                        value="Unknown"
-                    >
-                        <template v-slot:item="data">
-                            <v-list-item-content>
-                                <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                                <v-list-item-subtitle v-html="'ID: ' + data.item.id"></v-list-item-subtitle>
-                            </v-list-item-content>
-                        </template>
-                    </v-combobox>
+                    
                 </v-col>
 
                 <v-col
@@ -58,10 +37,10 @@
                     <v-text-field
                         ref="signupdate"
                         disabled
-                        label="Sign up date"
+                        label="Last Login"
                         prepend-icon="mdi-ray-start-vertex-end"
                         filled
-                        :value="this.$auth.state.user.created_at"
+                        :value="new Date(this.$auth.state.user.updated_at).toLocaleDateString('en-AU')"
                     ></v-text-field>
                 </v-col>
 
@@ -95,30 +74,6 @@
                         disabled
                     ></v-text-field>
                 </v-col>
-
-                <v-col
-                    cols="12"
-                    md="10"
-                >
-                <p>Current picture</p>
-                <v-img
-                    :lazy-src="this.$auth.state.user.picture"
-                    max-height="5rem"
-                    max-width="5rem"
-                    :src="this.$auth.state.user.picture"
-                    ></v-img>
-                    <br>
-                    <v-file-input
-                        ref="img"
-                        label="Upload avatar (optional)"
-                        show-size
-                        filled
-                        :rules="imgrules"
-                        prepend-icon="mdi-image"
-                        accept="image/png, image/jpeg, image/bmp, image/gif"
-                    ></v-file-input>
-                </v-col>
-
 
             </v-row>
 

@@ -118,9 +118,10 @@ export default {
     
     drawer: null,
     links: [
+      ["mdi-home", "Home", "/"],
+      ["mdi-grid", "Dashboard", "/dashboard"],
       ["mdi-pencil", "Create purchase", "/new"],
       ["mdi-send", "Recent purchases", "/recent"],
-      ["mdi-grid", "Dashboard", "/dashboard"],
       ["mdi-cog", "Settings", "/settings"],
     ],
   }),
