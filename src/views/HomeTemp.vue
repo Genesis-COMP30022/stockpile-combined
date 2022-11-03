@@ -223,7 +223,8 @@ logout() {
         .delete(toDeleteURL)
         .then(() => {
           //this.updatePost(toDeleteID);
-          location.reload();
+          this.loadPosts()
+          //location.reload();
           // REFESH HERE
         })
         .catch((error) => {

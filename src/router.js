@@ -6,6 +6,9 @@ Vue.use(Router);
 
 const SUFFIX = ' | Stockpile';
 
+const DEFAULT_TITLE = 'Stockpile';
+
+
 var router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -30,12 +33,6 @@ var router = new Router({
       meta: { title: 'Settings' + SUFFIX },
       beforeEnter: authGuard
     },
-  //   {
-  //     path: "/",
-  //     name: "home",
-  //     component: () => import("./views/Home.vue"),
-  //     meta: { title: 'Home' + SUFFIX },
-  // },
     {
         path: "/dashboard",
         name: "dashboard",
@@ -50,12 +47,14 @@ var router = new Router({
         meta: { title: 'New purchase' + SUFFIX },
         beforeEnter: authGuard
     },
-    // {
-    //     path: "/settings",
-    //     name: "settings",
-    //     component: () => import("./views/Settings.vue"),
-    //     meta: { title: 'Settings' + SUFFIX },
-    // },
   ],
 });
 export default router;
+// eslint-disable-next-line
+router.afterEach((to, from) => {
+  // Use next tick to handle router history correctly
+  // see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
+  Vue.nextTick(() => {
+      document.title = to.meta.title || DEFAULT_TITLE;
+  });
+});
