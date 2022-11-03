@@ -6,7 +6,7 @@
           <img :src="this.$auth.state.user.picture"/>
         </v-avatar>
 
-        <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b> [?]<br />? family</div>
+        <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b><br />Administrator</div>
         <div v-if="!$auth.state.isAuthenticated"><b><br></b>Stockpile App</div>
       </v-sheet>
 

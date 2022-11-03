@@ -78,7 +78,7 @@
             </v-row>
 
             <v-row class="ml-0">
-                <p><b>Admin settings</b>: You can remove users from <em>{{loginuser.familyGroup}}</em> by unchecking them.</p>
+                <p><b>Admin settings</b>: You can remove users from your family by unchecking them.</p>
             </v-row>
 
             <v-row>
@@ -145,12 +145,22 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: 'UserSettingsForm',
 
-  components: {
-    
+  methods: {
+    loadPosts: async function () {
+      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/usersAPI";
+      axios
+        .get(apiURL)
+        .then((res) => {
+          this.items = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   data: () => ({
