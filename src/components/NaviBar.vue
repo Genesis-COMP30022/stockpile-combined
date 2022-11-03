@@ -21,6 +21,17 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+         <v-list-item>
+          <v-list-item-icon class="mr-4">
+            <v-icon>icon</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+
+          
+          </v-list-item-content>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app dark color="sDarkBlue">
@@ -89,8 +100,12 @@
 <script>
 //import { defineComponent } from '@vue/composition-api'
 
+
 export default {
+  
+
   data: () => ({
+    
     drawer: null,
     links: [
       ["mdi-pencil", "Create purchase", "/new"],

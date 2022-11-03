@@ -8,6 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^2.0.0",
+    "@marketredesign/auth0-spa-vue": "^1.2.1",
+    "auth0-js": "^9.19.1",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "fs": "^0.0.1-security",

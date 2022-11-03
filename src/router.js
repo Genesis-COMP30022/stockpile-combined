@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import {authGuard} from "@marketredesign/auth0-spa-vue";
 
 Vue.use(Router);
 
@@ -20,12 +21,19 @@ export default new Router({
       name: "settings",
       component: () => import("./components/UserSettingsForm.vue"),
       meta: { title: 'Settings' + SUFFIX },
+      beforeEnter: authGuard
     },
+  //   {
+  //     path: "/",
+  //     name: "home",
+  //     component: () => import("./views/Home.vue"),
+  //     meta: { title: 'Home' + SUFFIX },
+  // },
     {
         path: "/",
-        name: "home",
+        name: "dashboard",
         component: () => import("./views/HomeTemp.vue"),
-        meta: { title: 'Home' + SUFFIX },
+        meta: { title: 'Dashboard' + SUFFIX },
     },
     {
         path: "/new",

@@ -1,6 +1,15 @@
 <template>
   <v-container fluid>
+    <!-- Check that the SDK client is not currently loading before accessing is methods -->
+    <div v-if="!$auth.state.loading">
+      <!-- show login when not authenticated -->
+      <button v-if="!$auth.state.isAuthenticated" @click="login">Login</button>
+      <!-- show logout when authenticated -->
+      <button v-if="$auth.state.isAuthenticated" @click="logout">Logout</button>
+    </div>
     <h1 align="" class="mb-3 ml-2">Dashboard</h1>
+    <h2 align="" class="mb-3 ml-2">Welcome, {{this.$auth.state.user.name}}</h2>
+
 <v-card
       class="text-center"
       color="#54a3eb"
@@ -190,6 +199,15 @@ export default {
   }),
 
   methods: {
+login() {
+  this.$auth.loginWithRedirect();
+},
+
+logout() {
+  this.$auth.logout({
+    returnTo: window.location.origin
+  });
+},
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
