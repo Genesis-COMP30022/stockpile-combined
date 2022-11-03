@@ -11,10 +11,24 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "/",
+      name: "landingpage",
+      component: () => import("./views/LandingPage.vue"),
+      meta: { title: 'Landing page' + SUFFIX },
+    },
+    {
+      path: "/auth",
+      name: "auth",
+      component: () => import("./views/AuthPage.vue"),
+      meta: { title: 'Auth' + SUFFIX },
+      beforeEnter: authGuard
+    },
+    {
       path: "/recent",
       name: "recent",
       component: () => import("./components/CardBody.vue"),
       meta: { title: 'Recent purchases' + SUFFIX },
+      beforeEnter: authGuard
     },
     {
       path: "/settings",
@@ -30,16 +44,18 @@ export default new Router({
   //     meta: { title: 'Home' + SUFFIX },
   // },
     {
-        path: "/",
+        path: "/dashboard",
         name: "dashboard",
         component: () => import("./views/HomeTemp.vue"),
         meta: { title: 'Dashboard' + SUFFIX },
+        beforeEnter: authGuard
     },
     {
         path: "/new",
         name: "new",
         component: () => import("./components/NewItemForm.vue"),
         meta: { title: 'New purchase' + SUFFIX },
+        beforeEnter: authGuard
     },
     // {
     //     path: "/settings",

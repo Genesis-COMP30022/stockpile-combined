@@ -12,7 +12,7 @@ Vue.use(Auth0Plugin, {
     router.push(
       appState && appState.targetUrl
         ? appState.targetUrl
-        : 'default redirect'
+        : 'dashboard'
     );
   }
 });

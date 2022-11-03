@@ -20,7 +20,17 @@ export default {
   },
 
   data: () => ({
-    //
+          methods: {
+login() {
+  this.$auth.loginWithRedirect();
+},
+
+logout() {
+  this.$auth.logout({
+    returnTo: "/"
+  });
+},
+},
   }),
 };
 </script>

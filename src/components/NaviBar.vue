@@ -6,7 +6,8 @@
           <img src="../assets/temp/liz.png" alt="Suzanne" />
         </v-avatar>
 
-        <div><b>Queen Elizabeth II</b> [A]<br />British royal family</div>
+        <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b> [A]<br />British royal family</div>
+        <div v-if="!$auth.state.isAuthenticated"><b><br></b>Stockpile App</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -23,10 +24,19 @@
         </v-list-item>
          <v-list-item>
           <v-list-item-icon class="mr-4">
-            <v-icon>icon</v-icon>
+            <v-icon v-if="!$auth.state.isAuthenticated">mdi-login-variant</v-icon>
+            <v-icon v-if="$auth.state.isAuthenticated">mdi-close</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
+          <a v-if="!$auth.state.isAuthenticated" href="/dashboard">Login</a>
+          <div v-if="!$auth.state.loading">
+          
+      <!-- show login when not authenticated -->
+      
+      <a v-if="$auth.state.isAuthenticated" href="/auth">Logout</a>
+
+    </div>
 
           
           </v-list-item-content>
@@ -110,9 +120,8 @@ export default {
     links: [
       ["mdi-pencil", "Create purchase", "/new"],
       ["mdi-send", "Recent purchases", "/recent"],
-      ["mdi-grid", "Dashboard", "/"],
+      ["mdi-grid", "Dashboard", "/dashboard"],
       ["mdi-cog", "Settings", "/settings"],
-      ["mdi-close", "Logout", "/welcome"],
     ],
   }),
   watch: {
