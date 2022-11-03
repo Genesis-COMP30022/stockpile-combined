@@ -17,13 +17,6 @@ var router = new Router({
       meta: { title: 'Home' + SUFFIX },
     },
     {
-      path: "/auth",
-      name: "auth",
-      component: () => import("./views/AuthPage.vue"),
-      meta: { title: 'Auth' + SUFFIX },
-      beforeEnter: authGuard
-    },
-    {
       path: "/recent",
       name: "recent",
       component: () => import("./components/CardBody.vue"),

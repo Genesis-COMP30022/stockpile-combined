@@ -29,13 +29,11 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-          <a v-if="!$auth.state.isAuthenticated" href="/dashboard">Login</a>
-          <div v-if="!$auth.state.loading">
-          
+                  <div v-if="!$auth.state.loading">
       <!-- show login when not authenticated -->
-      
-      <a v-if="$auth.state.isAuthenticated" href="/auth">Logout</a>
-
+      <!-- show logout when authenticated -->
+      <v-btn v-if="$auth.state.isAuthenticated" @click="logout">Logout</v-btn>
+      <v-btn v-if="!$auth.state.isAuthenticated" @click="login">Login</v-btn>
     </div>
 
           
@@ -112,6 +110,18 @@
 
 
 export default {
+    methods: {
+login() {
+  this.$auth.loginWithRedirect();
+},
+
+logout() {
+  this.$auth.logout({
+    returnTo: "https://app.stockpileapp.au"
+  });
+},
+
+  },
   
 
   data: () => ({
