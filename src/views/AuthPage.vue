@@ -22,7 +22,7 @@ login() {
 
 logout() {
   this.$auth.logout({
-    returnTo: "http://localhost:8080"
+    returnTo: "https://app.stockpileapp.au"
   });
 },
 

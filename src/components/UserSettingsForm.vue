@@ -20,7 +20,7 @@
                         prepend-icon="mdi-face-man-shimmer"
                         required
                         filled
-                        :value="loginuser.fullName"
+                        :value="this.$auth.state.user.name"
                     ></v-text-field>
                 </v-col>
 
@@ -40,7 +40,7 @@
                         required
                         :return-object="false"
                         filled
-                        :value="loginuser.familyGroup"
+                        value="Unknown"
                     >
                         <template v-slot:item="data">
                             <v-list-item-content>
@@ -56,14 +56,12 @@
                     md="3"
                 >
                     <v-text-field
-                        ref="age"
-                        :rules="agerules"
-                        :counter="10"
-                        label="Age"
+                        ref="signupdate"
+                        disabled
+                        label="Sign up date"
                         prepend-icon="mdi-ray-start-vertex-end"
-                        required
                         filled
-                        :value="loginuser.age"
+                        :value="this.$auth.state.user.created_at"
                     ></v-text-field>
                 </v-col>
 
@@ -89,11 +87,11 @@
                 >
                     <v-text-field   
                         ref="id"
-                        label="User ID number"
+                        label="Email"
                         prepend-icon="mdi-fingerprint"
                         required
                         filled
-                        :value="loginuser.userID"
+                        :value="this.$auth.state.user.email"
                         disabled
                     ></v-text-field>
                 </v-col>
@@ -102,6 +100,14 @@
                     cols="12"
                     md="10"
                 >
+                <p>Current picture</p>
+                <v-img
+                    :lazy-src="this.$auth.state.user.picture"
+                    max-height="5rem"
+                    max-width="5rem"
+                    :src="this.$auth.state.user.picture"
+                    ></v-img>
+                    <br>
                     <v-file-input
                         ref="img"
                         label="Upload avatar (optional)"
@@ -198,7 +204,7 @@ export default {
         {name: 'Smith family',  id: '359821094206097491489543'}, 
         {name: 'Bloggs family', id: '249356045784918402938462'}, 
         {name: 'Jones family', id: '697804589141350971094068'}, 
-        {name: 'British royal family', id: '954395350396936044050687'}
+        {name: 'Unknown family', id: '954395350396936044050687'}
     ],
     roles: ['Regular', 'Admin'],
     nameRules: [
@@ -225,7 +231,7 @@ export default {
     loginuser: {
         fullName: 'Queen Elizabeth II',
         userID: '464395350250360440505555',
-        familyGroup: 'British royal family',
+        familyGroup: 'Unknown family',
         familyGroupID: '954395350396936044050687',
         age: '96',
         role: 'Admin',
