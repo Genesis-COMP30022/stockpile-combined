@@ -47,6 +47,13 @@ var router = new Router({
         meta: { title: 'New purchase' + SUFFIX },
         beforeEnter: authGuard
     },
+    {
+        path: "/search",
+        name: "search",
+        component: () => import("./components/AdvancedSearch.vue"),
+        meta: { title: 'Search' + SUFFIX },
+        beforeEnter: authGuard
+    },
   ],
 });
 export default router;
