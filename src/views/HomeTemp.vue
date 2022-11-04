@@ -24,6 +24,7 @@
           </v-sparkline>
         </v-sheet>
       </v-card-text>
+      
   
       <v-card-text>
         <div class="text-h">
@@ -34,6 +35,7 @@
       <v-divider></v-divider>
   
     </v-card>
+
 
     <v-data-table
       :headers="headers"
@@ -59,6 +61,7 @@
             label="Search"
             single-line
             hide-details
+            
           ></v-text-field>
           <v-dialog persistent v-model="dialog" max-width="20rem">
             <v-card>
@@ -165,9 +168,6 @@ export default {
     },
   },
 
-  created() {
-    this.loadPosts();
-  },
 
   dialog: false,
   dialogDelete: false,
@@ -223,16 +223,18 @@ export default {
 
   methods: {
 
-    loadUser: async function () {
+    loadUser() {
       let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
-      await axios
+       axios
         .get(oneUserAPI)
         .then((res) => {
           this.currentuser = res.data;
+          this.loadPosts();
         })
         .catch((error) => {
           console.log(error);
         });
+        
   },
 
 login() {
@@ -258,19 +260,17 @@ logout() {
       });
     },
 
-    deleteItem: async function (toDeleteID) {
+    deleteItem(toDeleteID) {
       this.dialogone = true
       let toDeleteURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/delete-item/" +
         toDeleteID;
 
-      await axios
+      axios
         .delete(toDeleteURL)
         .then(() => {
           //this.updatePost(toDeleteID);
           this.loadPosts()
-          //location.reload();
-          // REFESH HERE
         })
         .catch((error) => {
           console.log(error);
@@ -295,10 +295,9 @@ logout() {
     //   })
     // },
 
-    loadPosts: async function () {
-      
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
-      await axios
+    loadPosts () {
+      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/"+this.currentuser.family;
+      axios
         .get(apiURL)
         .then((res) => {
           this.posts = res.data;

@@ -15,6 +15,7 @@
           :id="a._id"
           :price="a.price"
           :date="new Date(a.datePurchased).toLocaleDateString('en-AU')"
+          :rawDate="a.datePurchased"
           :cat="a.category"
           :buyer="a.buyer"
           :buyerID="a.buyer"
@@ -52,8 +53,13 @@ import axios from "axios";
 export default {
   name: "CardBody",
 
-  created() {
-    this.loadPosts();
+    watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.loadUser();
+      },
+    },
   },
 
   components: {
@@ -61,13 +67,26 @@ export default {
   },
 
   methods: {
+    loadUser() {
+      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+       axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+          this.loadPosts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        
+  },
     replaceBlankImages(image) {
       return image == "NULL"
         ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
         : image;
     },
     loadPosts: async function () {
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
+      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/"+this.currentuser.family;
       await axios
         .get(apiURL)
         .then((res) => {

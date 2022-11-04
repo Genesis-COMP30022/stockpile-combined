@@ -18,6 +18,20 @@ itemRoute.route("/").get((req, res) => {
   });
 });
 
+itemRoute.route("/getfamilyitems/:family").get((req, res) => {
+  let query = {family:req.params.family};
+
+  let mongoDbQuery = { family: { $in: query.family.split(',') } }
+
+  ItemModel.find(mongoDbQuery).then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
+
 itemRoute.route("/:id").get((req, res) => {
   console.log(req.params.id);
   ItemModel.findOne({ _id: req.params.id })
@@ -107,7 +121,7 @@ itemRoute.route("/create-item").post((req, res, next) => {
 });
 
 //update post
-itemRoute.route("/update-item/:id").post((req, res, next) => {
+itemRoute.route("/update-item/:id").put((req, res, next) => {
   ItemModel.findByIdAndUpdate(
     req.params.id,
     {

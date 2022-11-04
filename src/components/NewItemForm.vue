@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Create new purchase...</h1>
-    <v-form @submit.prevent="savePost" v-model="valid" ref="itemData">
+    <v-form @submit.prevent="createItem" v-model="valid" ref="itemData">
       <v-container style="max-width=200px">
         <v-row>
           <v-col cols="12" md="6">
@@ -165,6 +165,7 @@ export default {
     dialogone: false,
     handyAttachments: [],
     snackbar: false,
+    currentuser: [],
     itemData: {
       name: "",
       price: "",
@@ -201,20 +202,33 @@ export default {
     ],
     buyrules: [(buyer) => !!buyer || "Buyer is required"],
   }),
-  methods: {
-    savePost: async function () {
-      //console.log("it is working");
-      this.createItem();
+    watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.loadUser();
+      },
     },
+  },
+  methods: {
     resetForm(newText) {
       this.text = newText;
       this.snackbar = true;
       this.$refs.itemData.reset();
       this.handyAttachments = [];
     },
+    loadUser: async function () {
+      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+      await axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  },
     createItem() {
-
-
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item";
 
@@ -230,6 +244,7 @@ export default {
       }
 
       this.itemData.buyer = this.$auth.state.user.name;
+      this.itemData.family = this.currentuser.family;
 
       axios
         .post(apiURL, this.itemData)

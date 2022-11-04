@@ -74,18 +74,19 @@
                         :buyerID="buyer"
                         :img="img"
                         :desc="desc"
+                        :rawDate="rawDate"
                     />
                     
                 </v-dialog>
 
-                <v-btn
+                <v-chip
                     color="sLightBlue"
                     elevation="0"
                     class="mx-0"
                 >
                     <v-icon left>mdi-account</v-icon>
                     {{buyer}}
-                </v-btn>
+                </v-chip>
             </v-card-actions>
 
         </v-card>
@@ -122,6 +123,7 @@ export default {
     buyerID: String,
     img: String,
     desc: String,
+    rawDate: String,
   },
   methods: {
     numberWithCommas(x) {

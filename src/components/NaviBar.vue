@@ -23,21 +23,12 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item>
+        <v-list-item v-for="[icon, text] in links2" :key="icon" @click="logout">
           <v-list-item-icon class="mr-4">
-            <v-icon v-if="!$auth.state.isAuthenticated">mdi-login-variant</v-icon>
-            <v-icon v-if="$auth.state.isAuthenticated">mdi-close</v-icon>
+            <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
-
           <v-list-item-content>
-                  <div v-if="!$auth.state.loading">
-      <!-- show login when not authenticated -->
-      <!-- show logout when authenticated -->
-      <v-btn v-if="$auth.state.isAuthenticated" @click="logout">Logout</v-btn>
-      <v-btn v-if="!$auth.state.isAuthenticated" @click="login">Login</v-btn>
-    </div>
-
-          
+            <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -151,6 +142,7 @@ logout() {
       ["mdi-send", "Recent submissions", "/recent"],
       ["mdi-cog", "Settings", "/settings"],
     ],
+    links2: [["mdi-close", "Logout"]]
   }),
   watch: {
     $route: {
