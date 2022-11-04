@@ -1,10 +1,10 @@
 <template>
   <v-container fluid>
-    <h1 align="" class="mb-3 ml-2">Recent purchases</h1>
+    <h1 align="" class="mb-3 ml-2">Recent submissions</h1>
     <v-row>
       <v-col
         v-bind:key="a._id"
-        v-for="a in items"
+        v-for="a in items.slice().reverse()"
         cols="12"
         sm="6"
         md="4"
