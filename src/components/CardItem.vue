@@ -50,7 +50,7 @@
                             justify-content: space-around;">
                 <v-dialog
                     v-model="dialog"
-                    width="500"
+                    width="800"
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -64,7 +64,17 @@
                         </v-btn>
                     </template>
 
-                    <CardModal />
+                    <CardModal 
+                        :itemName="itemName"
+                        :id="id"
+                        :price="price"
+                        :date="date"
+                        :cat="cat"
+                        :buyer="buyer"
+                        :buyerID="buyer"
+                        :img="img"
+                        :desc="desc"
+                    />
                     
                 </v-dialog>
 
@@ -116,7 +126,11 @@ export default {
   methods: {
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    }, replaceBlankImages(image) {
+      return image == "NULL"
+        ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
+        : image;
+    },
   }
 };
 
