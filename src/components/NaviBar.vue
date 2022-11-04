@@ -8,7 +8,7 @@
         
         <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b></div>
         <div v-if="$auth.state.isAuthenticated">{{this.currentuser.role}}<br /></div>
-        <div v-if="$auth.state.isAuthenticated">{{this.currentuser.familyname}}<br /></div>
+        <div v-if="$auth.state.isAuthenticated">{{this.currentuser.family_name}}<br /></div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -148,7 +148,7 @@ logout() {
       ["mdi-home", "Home", "/"],
       ["mdi-grid", "Dashboard", "/dashboard"],
       ["mdi-pencil", "Create purchase", "/new"],
-      ["mdi-send", "Recent purchases", "/recent"],
+      ["mdi-send", "Recent submissions", "/recent"],
       ["mdi-cog", "Settings", "/settings"],
     ],
   }),

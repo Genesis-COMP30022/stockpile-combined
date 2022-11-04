@@ -125,6 +125,26 @@
         </v-btn>
       </template>
     </v-snackbar>
+            <v-dialog
+        v-model="dialogone"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Submitting...
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -142,6 +162,7 @@ export default {
   },
 
   data: () => ({
+    dialogone: false,
     handyAttachments: [],
     snackbar: false,
     itemData: {
@@ -149,6 +170,7 @@ export default {
       price: "",
       desc: "",
       category: "",
+      email: "",
       buyer: "",
       image: "",
       imagetype: "",
@@ -191,9 +213,13 @@ export default {
       this.handyAttachments = [];
     },
     createItem() {
+
+
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item";
-      //console.log("it is creating");
+
+
+      this.itemData.email = this.$auth.state.user.email
 
       if (this.handyAttachments.length === 0) {
         this.itemData.image = "NULL";
@@ -211,7 +237,16 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.resetForm("New item saved");
+      let waittime = 1
+      if (this.itemData.image != "NULL"){
+        waittime = (((this.itemData.image.length) * (3/4)) - 1)/1000
+      }
+      this.dialogone = true
+      setTimeout(() => { 
+        this.dialogone = false 
+        this.resetForm("New item saved");
+      }, waittime);
+      
     },
   },
 };

@@ -1,13 +1,13 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Dashboard</h1>
-
 <v-card
       class="text-center"
       color="#54a3eb"
       dark
       max-width="30rem"
     >
+
       <v-card-text>
         <v-sheet color="rgba(0, 0, 0, .12)">
           <v-sparkline
@@ -93,10 +93,11 @@
         <v-icon small class="mr-2" @click="editItem(item)">
           mdi-file-image
         </v-icon>
-        <v-icon small class="mr-2" @click="deleteItem(item._id)">
+        <v-icon v-if="item.email==currentuser.email" small class="mr-2" @click="deleteItem(item._id)">
           mdi-trash-can
         </v-icon>
       </template>
+      
       <template v-slot:no-data>
         <p>No Data Available</p>
         <v-row justify="center">
@@ -148,9 +149,14 @@
 import axios from "axios";
 
 export default {
-  
 
   watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.loadUser();
+      },
+    },
     dialog(val) {
       val || this.close();
     },
@@ -168,6 +174,7 @@ export default {
 
   name: "HomeTemp",
   data: () => ({
+    currentuser: [],
     dialogone: true,
         value: [
       8,
@@ -210,11 +217,24 @@ export default {
       { text: "Category", value: "category" },
       { text: "Purchase date", value: "datePurchased" },
       { text: "Buyer", value: "buyer" },
-      { text: "Image", value: "actions", sortable: false },
+      { text: "Actions", value: "actions", sortable: false },
     ],
   }),
 
   methods: {
+
+    loadUser: async function () {
+      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+      await axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  },
+
 login() {
   this.$auth.loginWithRedirect();
 },

@@ -1,7 +1,9 @@
 <template>
     <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-            Privacy Policy
+          <span style="display: inline; line-height: 24px;">
+              {{itemName}} test
+          </span>
         </v-card-title>
 
         <v-card-text>

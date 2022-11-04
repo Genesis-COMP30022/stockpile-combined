@@ -17,8 +17,8 @@ mongoose.connect(database.db, {
         console.log("Database could't be connected to: " + error)
     })
 const app = express()
-app.use(bodyParser.json({limit: '10mb'}));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({limit: '60mb'}));
+app.use(bodyParser.urlencoded({limit: '60mb', extended: true}));
 
 const postAPI = require('./routes/post.route')
 const itemAPI = require('./routes/item.route')

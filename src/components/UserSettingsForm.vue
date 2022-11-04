@@ -47,16 +47,17 @@
                     cols="12"
                     md="3"
                 >
-                    <v-autocomplete
+                    <v-text-field
                         ref="role"
                         :items="roles"
                         :rules="rolerules"
                         label="Role"
                         required
                         filled
+                        disabled
                         prepend-icon="mdi-star-circle"
                         :value="this.currentuser.role"
-                    ></v-autocomplete>
+                    ></v-text-field>
                 </v-col>
 
                 <v-col
@@ -95,7 +96,7 @@
                         label="Family name"
                         prepend-icon="mdi-ray-start-vertex-end"
                         filled
-                        :value="this.currentuser.familyname"
+                        :value="this.currentuser.family_name"
                     ></v-text-field>
                 </v-col>
                 
@@ -134,7 +135,7 @@
                     class="pl-0"
                 >
                     <v-text-field
-                        label="User IDs to join group (comma-plus-space separated)"
+                        label="User emails to join group (comma-plus-space separated)"
                         filled
                         ref="newusers"
                         :rules="newuserrules"
@@ -199,6 +200,9 @@ created() {
   },
 
   methods: {
+    isAdmin(){
+        return (this.currentuser.role == "Admin")
+    },
     loadPosts: async function () {
       let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
       await axios
