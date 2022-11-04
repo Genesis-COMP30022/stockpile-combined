@@ -6,7 +6,7 @@ const userSchema = new Schema(
       type: String,
     },
     created_at: {
-      type: Date,
+      type: String,
     },
     family_name: {
       type: String,
@@ -21,7 +21,7 @@ const userSchema = new Schema(
       type: String,
     },
     updated_at: {
-      type: Date,
+      type: String,
     },
     user_id: {
       type: String,
