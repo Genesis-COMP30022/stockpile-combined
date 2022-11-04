@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 const postAPI = require('./routes/post.route')
 const itemAPI = require('./routes/item.route')
+const userAPI = require('./routes/user.route')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -33,6 +34,7 @@ app.use(cors());
 //API
 app.use('/postAPI', postAPI)
 app.use('/itemAPI', itemAPI)
+app.use('/userAPI', userAPI)
 
 //create port
 const port = process.env.PORT || 4000;

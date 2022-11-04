@@ -4,8 +4,7 @@
     <v-form v-model="valid">
         <v-container style="max-width=200px">
             <v-row class="ml-0">
-                <p>To create a new family group, simply type an unused name 
-                    into the "Family group" box and submit the form.</p>
+                <p>To update personal information such as name or email, please visit <a href="https://accounts.google.com">Google Accounts</a>.</p>
             </v-row>
             <v-row>
                             <v-img
@@ -35,7 +34,7 @@
                     md="3"
                 >
                     <v-text-field
-                        ref="signupdate"
+                        ref="updated_at"
                         disabled
                         label="Last Login"
                         prepend-icon="mdi-ray-start-vertex-end"
@@ -56,7 +55,7 @@
                         required
                         filled
                         prepend-icon="mdi-star-circle"
-                        :value="loginuser.role"
+                        :value="this.currentuser.role"
                     ></v-autocomplete>
                 </v-col>
 
@@ -74,6 +73,32 @@
                         disabled
                     ></v-text-field>
                 </v-col>
+                                <v-col
+                    cols="12"
+                    md="3"
+                >
+                    <v-text-field
+                        ref="family_id"
+                        disabled
+                        label="Family ID"
+                        prepend-icon="mdi-ray-start-vertex-end"
+                        filled
+                        :value="this.currentuser.family"
+                    ></v-text-field>
+                </v-col>
+                                                <v-col
+                    cols="12"
+                    md="4"
+                >
+                    <v-text-field
+                        ref="family_name"
+                        label="Family name"
+                        prepend-icon="mdi-ray-start-vertex-end"
+                        filled
+                        :value="this.currentuser.familyname"
+                    ></v-text-field>
+                </v-col>
+                
 
             </v-row>
 
@@ -83,8 +108,8 @@
 
             <v-row>
                 <v-col
-                    v-bind:key="id"
-                    v-for="[id,name] in userlinks"
+                    v-bind:key="item"
+                    v-for="item in this.familyinfo"
                     class="shrink mr-2 mt-0 py-0"
                     cols="12"
                     md="3"
@@ -94,14 +119,14 @@
                         input-value="true"
                     >
                         <template v-slot:label>
-                            <span>{{name}}<br><span style="font-size: 12px">UID: {{id}}</span></span>
+                            <span>{{item.name}}<br><span style="font-size: 12px">Email: {{item.email}}</span></span>
                         </template>
                     </v-checkbox>
                 </v-col>
             </v-row>
 
             <v-row class="ml-0">
-                <p>You can add users by adding their user ID numbers, separated by comma-plus-space, to this field.</p>
+                <p>You can add users to your family by adding their user ID numbers, separated by comma-plus-space, to this field.</p>
                 <v-col
                     cols="12"
                     md="10"
@@ -149,13 +174,26 @@ import axios from "axios";
 export default {
   name: 'UserSettingsForm',
 
+created() {
+    this.loadPosts();
+  },
+
   methods: {
     loadPosts: async function () {
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/usersAPI";
-      axios
-        .get(apiURL)
+      let oneUserAPI = "http://localhost:4000/userAPI/getusermail/"+this.$auth.state.user.email;
+      await axios
+        .get(oneUserAPI)
         .then((res) => {
-          this.items = res.data;
+          this.currentuser = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        let familyUserAPI = "http://localhost:4000/userAPI/getpeopleinfamily/"+this.currentuser.family;
+    axios
+        .get(familyUserAPI)
+        .then((res) => {
+          this.familyinfo = res.data;
         })
         .catch((error) => {
           console.log(error);
@@ -164,6 +202,8 @@ export default {
   },
 
   data: () => ({
+    currentuser: [],
+    familyinfo: [],
     valid: false,
     families: [
         {name: 'Smith family',  id: '359821094206097491489543'}, 
