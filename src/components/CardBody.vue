@@ -23,6 +23,26 @@
         />
       </v-col>
     </v-row>
+    <v-dialog
+        v-model="dialogone"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Loading... Please stand by
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -48,7 +68,7 @@ export default {
     },
     loadPosts: async function () {
       let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
-      axios
+      await axios
         .get(apiURL)
         .then((res) => {
           this.items = res.data;
@@ -56,9 +76,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        this.dialogone = false;
     },
   },
   data: () => ({
+    dialogone: true,
     items: [],
   }),
 };

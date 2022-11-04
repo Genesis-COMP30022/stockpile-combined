@@ -120,6 +120,27 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+        <v-dialog
+        v-model="dialogone"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Loading... Please stand by
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -127,6 +148,8 @@
 import axios from "axios";
 
 export default {
+  
+
   watch: {
     dialog(val) {
       val || this.close();
@@ -145,6 +168,7 @@ export default {
 
   name: "HomeTemp",
   data: () => ({
+    dialogone: true,
         value: [
       8,
       4,
@@ -215,11 +239,12 @@ logout() {
     },
 
     deleteItem: async function (toDeleteID) {
+      this.dialogone = true
       let toDeleteURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/delete-item/" +
         toDeleteID;
 
-      axios
+      await axios
         .delete(toDeleteURL)
         .then(() => {
           //this.updatePost(toDeleteID);
@@ -251,8 +276,9 @@ logout() {
     // },
 
     loadPosts: async function () {
+      
       let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
-      axios
+      await axios
         .get(apiURL)
         .then((res) => {
           this.posts = res.data;
@@ -260,6 +286,7 @@ logout() {
         .catch((error) => {
           console.log(error);
         });
+        this.dialogone= false;
     },
   },
 };

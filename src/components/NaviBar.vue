@@ -5,9 +5,10 @@
         <v-avatar class="mb-2" color="sYellow" size="64">
           <img :src="this.$auth.state.user.picture"/>
         </v-avatar>
-
-        <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b><br />Administrator</div>
-        <div v-if="!$auth.state.isAuthenticated"><b><br></b>Stockpile App</div>
+        
+        <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b></div>
+        <div v-if="$auth.state.isAuthenticated">{{this.currentuser.role}}<br /></div>
+        <div v-if="$auth.state.isAuthenticated">{{this.currentuser.familyname}}<br /></div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -102,14 +103,18 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
+
   </nav>
+  
 </template>
 
 <script>
 //import { defineComponent } from '@vue/composition-api'
-
+import axios from "axios";
 
 export default {
+
+
     methods: {
 login() {
   this.$auth.loginWithRedirect();
@@ -121,11 +126,23 @@ logout() {
   });
 },
 
+    loadUser: async function () {
+      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+      await axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   },
+
+    },
   
 
   data: () => ({
-    
+    currentuser: [],
     drawer: null,
     links: [
       ["mdi-home", "Home", "/"],
@@ -139,6 +156,7 @@ logout() {
     $route: {
       immediate: true,
       handler(to) {
+        this.loadUser();
         document.title = to.meta.title || "Stockpile";
       },
     },

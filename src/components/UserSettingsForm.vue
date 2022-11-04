@@ -166,6 +166,26 @@
             
         </v-container>
     </v-form>
+    <v-dialog
+        v-model="dialog"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Loading... Please stand by
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -180,7 +200,7 @@ created() {
 
   methods: {
     loadPosts: async function () {
-      let oneUserAPI = "http://localhost:4000/userAPI/getusermail/"+this.$auth.state.user.email;
+      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
       await axios
         .get(oneUserAPI)
         .then((res) => {
@@ -189,7 +209,7 @@ created() {
         .catch((error) => {
           console.log(error);
         });
-        let familyUserAPI = "http://localhost:4000/userAPI/getpeopleinfamily/"+this.currentuser.family;
+        let familyUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getpeopleinfamily/"+this.currentuser.family;
     axios
         .get(familyUserAPI)
         .then((res) => {
@@ -198,10 +218,12 @@ created() {
         .catch((error) => {
           console.log(error);
         });
+        this.dialog = false
     },
   },
 
   data: () => ({
+    dialog: true,
     currentuser: [],
     familyinfo: [],
     valid: false,

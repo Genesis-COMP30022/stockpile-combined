@@ -16,6 +16,7 @@ import NaviBar from './components/NaviBar';
 export default {
   name: 'App',
 
+
   components: {
     NaviBar,
   },
