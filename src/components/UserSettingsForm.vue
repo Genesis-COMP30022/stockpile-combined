@@ -7,26 +7,28 @@
                 <p>To update personal information such as name or email, please visit <a href="https://myaccount.google.com/personal-info">Google Accounts</a>.</p>
             </v-row>
             <v-row>
-                            <v-img
-                    :lazy-src="this.$auth.state.user.picture"
-                    max-height="5rem"
-                    max-width="5rem"
-                    :src="this.$auth.state.user.picture"
-                    ></v-img>
 
                 <v-col
                     cols="12"
-                    md="5"
+                    md="12"
+                    style="display: flex; align-items: center"
                 >
-                    <v-text
-                    >{{this.$auth.state.user.name}}</v-text>
+                    <v-avatar class="mr-3" color="sYellow" size="40">
+                        <v-img
+                            :lazy-src="this.$auth.state.user.picture"
+                            :src="this.$auth.state.user.picture"
+                            rounded
+                        ></v-img>
+                    </v-avatar>
+                    <v-text style="font-size: 20px;"><b>{{this.$auth.state.user.name}}</b></v-text>
+                    
                 </v-col>
 
                 <v-col
                     cols="12"
-                    md="5"
+                    md="12"
                 >
-                    
+                    <v-divider class="pb-2"></v-divider>
                 </v-col>
 
                 <v-col
@@ -37,19 +39,20 @@
                         ref="updated_at"
                         disabled
                         label="Last Login"
-                        prepend-icon="mdi-ray-start-vertex-end"
+                        prepend-icon="mdi-clock-outline"
                         filled
                         :value="new Date(this.$auth.state.user.updated_at).toLocaleDateString('en-AU')"
                     ></v-text-field>
                 </v-col>
-                                <v-col
+
+                <v-col
                     cols="12"
                     md="4"
                 >
                     <v-text-field   
                         ref="id"
                         label="Email"
-                        prepend-icon="mdi-fingerprint"
+                        prepend-icon="mdi-at"
                         required
                         filled
                         :value="this.$auth.state.user.email"
@@ -75,21 +78,6 @@
                     ></v-text-field>
                 </v-col>
 
-
-                                <v-col
-                    cols="12"
-                    md="5"
-                >
-                    <v-text-field
-                        ref="family_id"
-                        disabled
-                        label="Family ID"
-                        prepend-icon="mdi-ray-start-vertex-end"
-                        filled
-                        :value="this.currentuser.family"
-                        v-if="this.currentuser.family != 'null'"
-                    ></v-text-field>
-                </v-col>
                 <v-col
                     cols="12"
                     md="4"
@@ -97,7 +85,7 @@
                     <v-text-field
                         ref="family_name"
                         label="Family name"
-                        prepend-icon="mdi-ray-start-vertex-end"
+                        prepend-icon="mdi-human-male-female-child"
                         filled
                         :value="this.currentuser.family_name"
                         v-if="this.currentuser.family != 'null' && this.currentuser.role == 'Admin'"
@@ -105,114 +93,127 @@
                     <v-text-field
                         ref="family_name"
                         label="Family name"
-                        prepend-icon="mdi-ray-start-vertex-end"
+                        prepend-icon="mdi-human-male-female-child"
                         filled
                         disabled
                         :value="this.currentuser.family_name"
                         v-if="this.currentuser.family != 'null' && this.currentuser.role == 'User'"
                     ></v-text-field>
                 </v-col>
-                
 
-            </v-row>
-
-            <div v-if="this.currentuser.family == 'null'">
-            <v-row class="ml-0">
-                <p><b>Attention</b>: You are not currently assigned to a family. Ask an admin to add you to their family, or create one by clicking the button below</p>
-            </v-row>
-
-            <v-row>
                 <v-col
-
-                    class="shrink mr-2 mt-0 py-0"
                     cols="12"
-                    md="3"
+                    md="5"
                 >
- 
+                    <v-text-field
+                        ref="family_id"
+                        disabled
+                        label="Family ID"
+                        prepend-icon="mdi-fingerprint"
+                        filled
+                        :value="this.currentuser.family"
+                        v-if="this.currentuser.family != 'null'"
+                    ></v-text-field>
                 </v-col>
             </v-row>
 
-            <v-row class="ml-0">
-                            <v-col
-                    cols="12"
-                    md="12"
-                    align="left"
-                    class="pl-0"
-                >
-                    <p>More options will be available once you are assigned to a family.</p>
-                </v-col>
-            </v-row>
+            <div class="pt-4" v-if="this.currentuser.family == 'null'">
+                <v-row class="ml-0">
+                    <p><b>Attention</b>: You are not currently assigned to a family. Ask an admin to add you to their family, or create one by clicking the button below</p>
+                </v-row>
+
+                <v-row>
+                    <v-col
+                        class="shrink mr-2 mt-0 py-0"
+                        cols="12"
+                        md="3"
+                    ></v-col>
+                </v-row>
+
+                <v-row class="ml-0">
+                    <v-col
+                        cols="12"
+                        md="12"
+                        align="left"
+                        class="pl-0"
+                    >
+                        <p>More options will be available once you are assigned to a family.</p>
+                    </v-col>
+                </v-row>
             </div>
 
 
             <div v-if="this.currentuser.role == 'Admin'">
-            <v-row class="ml-0">
-                <p>You can remove users from your family here.</p>
-            </v-row>
 
-            <v-row>
-                <v-col
-                    class="shrink mr-2 mt-0 py-0"
-                    cols="12"
-                    md="10"
-                >
-                    <v-combobox
-      v-model="itemData.peopleinfamily"
-      chips
-      clearable
-      label="Your family"
-      multiple
-      prepend-icon="mdi-account-group"
-      solo
-    >
-      <template v-slot:selection="{ peopleinfamily, item, selected }">
-        <v-chip
-          v-bind="peopleinfamily"
-          :input-value="selected"
-          close
-          @click:close="remove(item)"
-        >
-          <strong>{{ item }}</strong>&nbsp;
-        </v-chip>
-      </template>
-    </v-combobox>
-                </v-col>
-            </v-row>
-
-            <v-row>
-
-                <p>You can add users to your family by adding their emails here</p>
-                                <v-col
-                    class="shrink mr-2 mt-0 py-0"
-                    cols="12"
-                    md="10"
-                >
-                    <v-combobox
-                    v-model="itemData.addtofamily"
-                    chips
-                    clearable
-                    label="Type user email, then press enter to confirm"
-                    multiple
-                    prepend-icon="mdi-account-group"
-                    solo
+                <v-row class="pt-3 ml-0">
+                    <p>You can remove users from your family here.</p>
+                </v-row>
+                <v-row>
+                    <v-col
+                        class="shrink mr-2 mt-0 py-0"
+                        cols="12"
+                        md="10"
                     >
-                    <template v-slot:selection="{ addtofamily, item, selected }">
-                        <v-chip
-                        v-bind="addtofamily"
-                        :input-value="selected"
-                        close
-                        @click:close="remove(item)"
+                        <v-combobox
+                            v-model="itemData.peopleinfamily"
+                            chips
+                            clearable
+                            label="Your family"
+                            multiple
+                            prepend-icon="mdi-plus-circle-outline"
+                            solo
                         >
-                        <strong>{{ item }}</strong>&nbsp;
-                        </v-chip>
-                    </template>
-                    </v-combobox>
-                </v-col>
-            </v-row>
+                            <template v-slot:selection="{ peopleinfamily, item, selected }">
+                                <v-chip
+                                    v-bind="peopleinfamily"
+                                    :input-value="selected"
+                                    close
+                                    @click:close="remove(item)"
+                                >
+                                    <strong>{{ item }}</strong>&nbsp;
+                                </v-chip>
+                            </template>
+                        </v-combobox>
+                    </v-col>
+                </v-row>
+
+                <v-row  class="pt-3 ml-0">
+                    <p>You can add users to your family by adding their emails here.</p>
+                </v-row>
+                <v-row>
+                    <v-col
+                        class="shrink mr-2 mt-0 py-0"
+                        cols="12"
+                        md="10"
+                    >
+                        <v-combobox
+                            v-model="itemData.addtofamily"
+                            chips
+                            clearable
+                            label="Type user email, then press enter to confirm"
+                            multiple
+                            prepend-icon="mdi-minus-circle-outline"
+                            solo
+                        >
+                            <template v-slot:selection="{ addtofamily, item, selected }">
+                                <v-chip
+                                    v-bind="addtofamily"
+                                    :input-value="selected"
+                                    close
+                                    @click:close="remove(item)"
+                                >
+                                    <strong>{{ item }}</strong>&nbsp;
+                                </v-chip>
+                            </template>
+                        </v-combobox>
+                    </v-col>
+                </v-row>
             </div>
 
-            <v-row v-if="this.currentuser.role == 'Admin'" class="ml-1 pb-12">
-
+            <v-row 
+                v-if="this.currentuser.role == 'Admin'" 
+                class="ml-1 mt-6 pb-12"
+            >
                 <v-btn
                     depressed
                     color="primary"
@@ -231,10 +232,9 @@
                     <v-icon left>mdi-eraser-variant</v-icon>
                     Clear
                 </v-btn>
-
             </v-row>
-            <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
 
+            <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
                 <v-col
                     cols="10"
                     md="4"
@@ -242,16 +242,15 @@
                     <v-text-field
                         ref="family_name"
                         label="Family name"
-                        prepend-icon="mdi-ray-start-vertex-end"
+                        prepend-icon="mdi-human-male-female-child"
                         filled
                         :value="this.currentuser.family_name"
                         v-if="this.currentuser.family == 'null'"
                     ></v-text-field>
                 </v-col>
-
             </v-row>
-            <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
 
+            <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
                 <v-btn
                     depressed
                     color="primary"
@@ -260,11 +259,10 @@
                     <v-icon left>mdi-check</v-icon>
                     Create new family
                 </v-btn>
-
             </v-row>
 
-            
         </v-container>
+
     </v-form>
     <v-dialog
         v-model="dialog"
@@ -288,11 +286,11 @@
       </v-dialog>
 
         <v-dialog
-        v-model="dialogone"
-        hide-overlay
-        persistent
-        width="300"
-      >
+            v-model="dialogone"
+            hide-overlay
+            persistent
+            width="300"
+        >
         <v-card
           color="primary"
           dark

@@ -69,7 +69,8 @@
             ></v-text-field>
           </v-col>
 
-          <v-col cols="12" md="10">
+          <v-col cols="12" class="col-md-10 pt-2 pb-5 mt-n4" style="display: flex;">
+            <v-icon>mdi-image-size-select-actual</v-icon>
             <handy-uploader
               :documentAttachment.sync="handyAttachments"
               :fileUploaderType="'simple'"
@@ -80,6 +81,9 @@
               :badgeCounter="true"
               :thumb="false"
               :changeFileName="true"
+              class="pb-8"
+              btnColor="sYellow"
+              depressed
             >
             </handy-uploader>
           </v-col>
@@ -179,6 +183,13 @@ export default {
       dateUpdated: Date.now(),
       dateCreated: Date.now(),
     },
+    huCustom : {
+              custom : {
+                insertFile: 'Insert File',
+                insertNewFile: 'Insert New File1',
+                add: 'Add',
+                }
+            },
     valid: false,
     purchasename: "",
     lastname: "",

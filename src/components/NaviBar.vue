@@ -6,10 +6,13 @@
           <img :src="this.$auth.state.user.picture"/>
         </v-avatar>
         
-        <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b></div>
-        <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'">{{this.currentuser.role}}<br /></div>
-        <div v-if="$auth.state.isAuthenticated && this.currentuser.family == 'null'">Unassigned user<br /></div>
-        <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'">{{this.currentuser.family_name}}<br /></div>
+        <div v-if="$auth.state.isAuthenticated" style="padding-bottom: 2px;"><b>{{this.$auth.state.user.name}} </b>
+        <span v-if="$auth.state.isAuthenticated && this.currentuser.role == 'Admin'"
+        >[{{this.currentuser.role.charAt(0)}}]</span></div>
+        <div v-if="$auth.state.isAuthenticated && this.currentuser.family == 'null'">Unassigned user</div>
+        <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'"
+             style="font-size: 14px" 
+        >{{this.currentuser.family_name}}<br /></div>
       </v-sheet>
 
       <v-divider></v-divider>
