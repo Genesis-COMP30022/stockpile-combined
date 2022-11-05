@@ -7,8 +7,9 @@
         </v-avatar>
         
         <div v-if="$auth.state.isAuthenticated"><b>{{this.$auth.state.user.name}}</b></div>
-        <div v-if="$auth.state.isAuthenticated">{{this.currentuser.role}}<br /></div>
-        <div v-if="$auth.state.isAuthenticated">{{this.currentuser.family_name}}<br /></div>
+        <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'">{{this.currentuser.role}}<br /></div>
+        <div v-if="$auth.state.isAuthenticated && this.currentuser.family == 'null'">Unassigned user<br /></div>
+        <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'">{{this.currentuser.family_name}}<br /></div>
       </v-sheet>
 
       <v-divider></v-divider>

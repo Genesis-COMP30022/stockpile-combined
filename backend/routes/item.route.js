@@ -137,8 +137,9 @@ itemRoute.route("/update-item/:id").put((req, res, next) => {
     }
   );
 });
-// delete post
 
+
+// delete post
 itemRoute.route("/delete-item/:id").delete((req, res, next) => {
   ItemModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {

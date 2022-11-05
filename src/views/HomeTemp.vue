@@ -96,7 +96,7 @@
         <v-icon small class="mr-2" @click="editItem(item)">
           mdi-file-image
         </v-icon>
-        <v-icon v-if="item.email==currentuser.email" small class="mr-2" @click="deleteItem(item._id)">
+        <v-icon v-if="item.email==currentuser.email || currentuser.role=='Admin'" small class="mr-2" @click="deleteItem(item._id)">
           mdi-trash-can
         </v-icon>
       </template>

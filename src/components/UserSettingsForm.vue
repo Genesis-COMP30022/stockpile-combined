@@ -4,7 +4,7 @@
     <v-form @submit.prevent="saveUser" v-model="valid">
         <v-container style="max-width=200px">
             <v-row class="ml-0">
-                <p>To update personal information such as name or email, please visit <a href="https://accounts.google.com">Google Accounts</a>.</p>
+                <p>To update personal information such as name or email, please visit <a href="https://myaccount.google.com/personal-info">Google Accounts</a>.</p>
             </v-row>
             <v-row>
                             <v-img
@@ -100,7 +100,16 @@
                         prepend-icon="mdi-ray-start-vertex-end"
                         filled
                         :value="this.currentuser.family_name"
-                        v-if="this.currentuser.family != 'null'"
+                        v-if="this.currentuser.family != 'null' && this.currentuser.role == 'Admin'"
+                    ></v-text-field>
+                    <v-text-field
+                        ref="family_name"
+                        label="Family name"
+                        prepend-icon="mdi-ray-start-vertex-end"
+                        filled
+                        disabled
+                        :value="this.currentuser.family_name"
+                        v-if="this.currentuser.family != 'null' && this.currentuser.role == 'User'"
                     ></v-text-field>
                 </v-col>
                 
@@ -138,7 +147,7 @@
 
             <div v-if="this.currentuser.role == 'Admin'">
             <v-row class="ml-0">
-                <p><b>Admin settings</b>: You can remove users from your family by unchecking them.</p>
+                <p>You can remove users from your family here.</p>
             </v-row>
 
             <v-row>
@@ -156,12 +165,11 @@
       prepend-icon="mdi-account-group"
       solo
     >
-      <template v-slot:selection="{ attrs, item, select, selected }">
+      <template v-slot:selection="{ peopleinfamily, item, selected }">
         <v-chip
-          v-bind="attrs"
+          v-bind="peopleinfamily"
           :input-value="selected"
           close
-          @click="select"
           @click:close="remove(item)"
         >
           <strong>{{ item }}</strong>&nbsp;
@@ -171,21 +179,34 @@
                 </v-col>
             </v-row>
 
-            <v-row class="ml-0">
+            <v-row>
 
-                <p>You can add users to your family by adding their emails, separated by comma-plus-space, to this field.</p>
-                <v-col
+                <p>You can add users to your family by adding their emails here</p>
+                                <v-col
+                    class="shrink mr-2 mt-0 py-0"
                     cols="12"
                     md="10"
-                    align="center"
-                    class="pl-0"
                 >
-                    <v-text-field
-                        label="User emails to join group (comma-plus-space separated)"
-                        filled
-                        ref="newusers"
-                        :rules="newuserrules"
-                    ></v-text-field>
+                    <v-combobox
+                    v-model="itemData.addtofamily"
+                    chips
+                    clearable
+                    label="Type user email, then press enter to confirm"
+                    multiple
+                    prepend-icon="mdi-account-group"
+                    solo
+                    >
+                    <template v-slot:selection="{ addtofamily, item, selected }">
+                        <v-chip
+                        v-bind="addtofamily"
+                        :input-value="selected"
+                        close
+                        @click:close="remove(item)"
+                        >
+                        <strong>{{ item }}</strong>&nbsp;
+                        </v-chip>
+                    </template>
+                    </v-combobox>
                 </v-col>
             </v-row>
             </div>
@@ -196,6 +217,7 @@
                     depressed
                     color="primary"
                     class="mr-4"
+                    @click="saveUser"
                 >
                     <v-icon left>mdi-check</v-icon>
                     Submit
@@ -211,7 +233,23 @@
                 </v-btn>
 
             </v-row>
+            <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
 
+                <v-col
+                    cols="10"
+                    md="4"
+                >
+                    <v-text-field
+                        ref="family_name"
+                        label="Family name"
+                        prepend-icon="mdi-ray-start-vertex-end"
+                        filled
+                        :value="this.currentuser.family_name"
+                        v-if="this.currentuser.family == 'null'"
+                    ></v-text-field>
+                </v-col>
+
+            </v-row>
             <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
 
                 <v-btn
@@ -224,11 +262,33 @@
                 </v-btn>
 
             </v-row>
+
             
         </v-container>
     </v-form>
     <v-dialog
         v-model="dialog"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Loading... Please stand by
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
+        <v-dialog
+        v-model="dialogone"
         hide-overlay
         persistent
         width="300"
@@ -268,12 +328,20 @@ export default {
 
 
   methods: {
-    removeChip (item) {
-      this.this.itemData.peopleinfamily.splice(this.chips.indexOf(item), 1)
+    remove(item) {
+      const index = this.itemData.peopleinfamily.indexOf(item);
+      if (index > -1) { // only splice array when item is found
+        this.itemData.peopleinfamily.splice(index, 1); // 2nd parameter means remove one item only
+        //this.itemData.peopleinfamilyID.splice(index, 1)
+        this.itemData.removefromfamily.push(this.itemData.peopleinfamilyID[index])
+      }
     },
     getCurrentFamilyEmails(){
         for (var item in this.familyinfo){
-            this.itemData.peopleinfamily.push(this.familyinfo[item].email)
+            if(this.familyinfo[item].email != this.currentuser.email){
+                this.itemData.peopleinfamily.push(this.familyinfo[item].email)
+                this.itemData.peopleinfamilyID.push(this.familyinfo[item])
+            }
         }
     },
     isAdmin(){
@@ -303,24 +371,31 @@ export default {
 
         
     },
-        savePost: async function () {
-      //console.log("it is working");
-      this.updateUser();
+    saveUser() {
+     this.dialogone = true;
+    this.addUserToFamily();
+    this.removeUserFromFamily();
+    console.log("reached")
+    setTimeout(() => { 
+      this.dialogone = false 
+        window.location.reload()
+    }, 1000);
+    
     },
     resetForm(newText) {
       this.text = newText;
       this.snackbar = true;
       this.$refs.itemData.reset();
     },
-    updateUser() {
+    // for new user where family == null
+    newFamily() {
 
     if (this.currentuser.family == "null"){
         this.itemData.family = uuid.v4().replace(/-/g, "")
     }
 
-
       let apiURL =
-        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user";
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/new-family"+this.currentuser._id;
 
       axios
         .post(apiURL, this.itemData)
@@ -329,14 +404,114 @@ export default {
           console.log(error);
         });
     },
+
+
+
+// EDIT THIS FOR UPDATING FAMILY 
+    async addUserToFamily(){
+      for (var index in this.itemData.addtofamily) {
+        let userEmail = this.itemData.addtofamily[index];
+
+        let apiURL =
+          "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"
+          + userEmail;
+
+        console.log(apiURL);
+        //var user;
+        let userID = "123";
+        await axios
+          .get(apiURL)
+          .then((res) => {
+            userID = res.data._id;
+            // console.log("in axios")
+            // console.log(userID);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+
+
+        if (userID == "123"){
+          return; // user not registered in database
+        }
+
+        console.log("passed check")
+
+        apiURL =
+          "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/"
+          + userID;
+
+
+        console.log("outside axios")
+        console.log(apiURL)
+        
+        await axios
+          .put(apiURL, {
+            family: this.currentuser.family,
+            family_name: this.currentuser.family_name,
+            //addtofamily: this.itemData.addtofamily,
+          })
+          .then(() => {})
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      return
+
+        
+      // this.text = this.id + "yeah";
+      // this.snackbar = true;
+      // this.dialogone = false;
+      // this.$refs.itemData.reset();
+    },
+
+    removeUserFromFamily() {
+      for (var index in this.itemData.removefromfamily){
+        let userID = this.itemData.removefromfamily[index]._id;
+        console.log(userID);
+        let apiURL =
+          "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/"
+          + userID;
+      
+        axios
+          .put(apiURL, {
+            family: "null",//this.itemData.family,
+            family_name: "null",//this.itemData.family_name,
+            //addtofamily: this.itemData.addtofamily,
+          })
+          .then(() => {})
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+
+    return
+
+    // console.log("yeah")
+    
+    
+    
+    //   this.text = this.id + "yeah";
+    //   this.snackbar = true;
+    //   this.dialogone = false;
+    //   this.$refs.itemData.reset();
+      
+    },
   },
 
+
+
   data: () => ({
+    dialogone: false,
     itemData: {
       family: "",
       family_name: "",
       peopleinfamily: [],
+      peopleinfamilyID: [],
       addtofamily: [],
+      removefromfamily:[],
     },
     dialog: true,
     currentuser: [],

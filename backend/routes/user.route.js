@@ -36,9 +36,7 @@ userRoute.route("/getusermail/:email").get((req, res) => {
       });
   });
 
-
   userRoute.route("/getpeopleinfamily/:family").get((req, res) => {
-    console.log(req.params.family);
     let query = {family:req.params.family};
 
     let mongoDbQuery = { family: { $in: query.family.split(',') } }
@@ -51,7 +49,6 @@ userRoute.route("/getusermail/:email").get((req, res) => {
       });
   });
 
-
 userRoute.route("/").get((req, res) => {
   UserModel.find((error, data) => {
     if (error) {
@@ -63,7 +60,8 @@ userRoute.route("/").get((req, res) => {
 });
 
 //update post
-userRoute.route("/update-user/:id").post((req, res, next) => {
+userRoute.route("/update-user/:id").put((req, res, next) => {
+  console.log(req.params._id);
   UserModel.findByIdAndUpdate(
     req.params.id,
     {
@@ -79,8 +77,9 @@ userRoute.route("/update-user/:id").post((req, res, next) => {
     }
   );
 });
-// delete post
 
+
+// delete post
 userRoute.route("/delete-user/:id").delete((req, res, next) => {
   UserModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
