@@ -10,7 +10,7 @@
       
 
       <v-form @submit.prevent="editItem" v-model="valid" class="pt-4 px-2" ref="itemData">
-          <p>{{buyer}}, {{itemData.name}} {{itemData.price}} </p>
+          <p>{{buyer}}, {{itemData.name}} {{date}} {{rawDate}} </p>
           <v-container style="max-width=200px">
               <v-row>
                   <v-col cols="12" md="8">
@@ -23,6 +23,7 @@
                       filled
                       v-model="itemData.name"
                       :placeholder="itemName"
+                     :value="itemName"
                       ></v-text-field>
                   </v-col>
 
@@ -37,6 +38,7 @@
                       filled
                       v-model="itemData.price"
                       :placeholder="price"
+                      :value="price"
                       ></v-text-field>
                   </v-col>
 
@@ -49,7 +51,7 @@
                       type="date"
                       filled
                       v-model="itemData.datePurchased"
-                      :placeholder="new Date(rawDate).toISOString().substr(0, 10)"
+                      :value="new Date(rawDate).toISOString().split('T')[0]"
                       ></v-text-field>
                   </v-col>
 
@@ -61,7 +63,8 @@
                       label="Category"
                       filled
                       prepend-icon="mdi-folder-outline"
-                      :v-model="itemData.category"
+                      v-model="itemData.category"
+                      :value="cat"
                       :placeholder="cat"
                       ></v-autocomplete>
                   </v-col>
@@ -73,7 +76,7 @@
                       disabled
                       filled
                       prepend-icon="mdi-account-check"
-                      :value="this.$auth.state.user.name"
+                      :value="itemData.buyer"
                       ></v-text-field>
                   </v-col>
 
@@ -92,8 +95,9 @@
                       :counter="400"
                       filled
                       prepend-icon="mdi-message"
-                      :v-model="itemData.desc"
+                      v-model="itemData.desc"
                       :placeholder="desc"
+                      :value="desc"
                       height="150"
                       ></v-textarea>
                   </v-col>
@@ -135,20 +139,27 @@
 <script>
 /* eslint-disable */
 import axios from "axios";
+const moment = require("moment");
+var tz = require("moment-timezone");
 //import handyUploader from "handy-uploader/src/components/handyUploader";
 
 export default {
-name: 'UserSettingsForm',
-
+name: 'CardModal',
+mounted() {
+  this.copyItemData()
+},
 components: {
   //handyUploader
 },
 
+
 data: () => ({
+  
   valid: false,
   families: ['Smith family', 'Bloggs family', 'Jones family', 'Cowler family'],
   roles: ['Regular', 'Admin'],
   snackbar: false,
+  nametest: "not changed",
   itemData: {
     name: "",
     price: "",
@@ -162,6 +173,7 @@ data: () => ({
     dateCreated: "",
     family: "",
   },
+
   purchasename: "",
   lastname: "",
   categories: ["Entertainment", "Furniture", "Food"],
@@ -174,7 +186,7 @@ data: () => ({
   pricerules: [
     (price) => !!price || "Price is required",
     (price) =>
-      (price && price.length <= 10) || "Price must be 10 digits or less",
+      (price && price.toString().length <= 10) || "Price must be 10 digits or less",
     (price) => isNaN(price) == false || "Price must be numeric",
   ],
   daterules: [(date) => !!date || "Date is required"],
@@ -199,6 +211,16 @@ props: {
   rawDate: String,
 },
 methods: {     
+  copyItemData(){
+    // console.log(this.itemName)
+    this.itemData.name = this.itemName
+    this.itemData.price = this.price
+    this.itemData.desc = this.desc
+    this.itemData.datePurchased = new Date(this.rawDate).toISOString().split('T')[0]
+    this.itemData.category = this.cat
+    this.itemData.buyer = this.buyer
+    this.itemData.img = this.image
+  },
   resetForm(newText) {
     this.text = newText;
     this.snackbar = true;
@@ -208,7 +230,7 @@ methods: {
 
   editItem() {
     //this.$refs.form.validate();
-
+    console.log(this.itemData.datePurchased)
 
     let apiURL =
       "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/update-item/"
@@ -243,7 +265,7 @@ methods: {
         //buyer: this.buyer,
         //image: this.image,
         //imagetype: this.imagetype,
-        //datePurchased: newItem.datePurchased,
+        datePurchased: this.itemData.datePurchased,
         dateUpdated: Date.now(),
         //dateCreated: "",
       })

@@ -160,7 +160,7 @@
                             clearable
                             label="Your family"
                             multiple
-                            prepend-icon="mdi-plus-circle-outline"
+                            prepend-icon="mdi-minus-circle-outline"
                             solo
                         >
                             <template v-slot:selection="{ peopleinfamily, item, selected }">
@@ -192,7 +192,7 @@
                             clearable
                             label="Type user email, then press enter to confirm"
                             multiple
-                            prepend-icon="mdi-minus-circle-outline"
+                            prepend-icon="mdi-plus-circle-outline"
                             solo
                         >
                             <template v-slot:selection="{ addtofamily, item, selected }">

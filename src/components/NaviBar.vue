@@ -1,7 +1,7 @@
 <template>
   <nav>
     <v-navigation-drawer v-model="drawer" right app>
-      <v-sheet color="sLightBlue" class="pa-4">
+      <v-sheet color="#027fd1" class="pa-4">
         <v-avatar class="mb-2" color="sYellow" size="64">
           <img :src="this.$auth.state.user.picture"/>
         </v-avatar>
@@ -38,7 +38,7 @@
 
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app dark color="sDarkBlue">
+    <v-app-bar app dark color="#004d80">
       <!--<v-toolbar-title 
                 class="font-weight-black display-1 sWhiteBlue--text"
             >
@@ -49,8 +49,8 @@
         ><v-img
           src="../assets/nologolargewhite.svg"
           max-width="12rem"
-          min-width="200px"
-          height="3rem"
+          min-width="150px"
+          height="2rem"
           class="mr-4"
         >
         </v-img

@@ -202,7 +202,7 @@ export default {
     pricerules: [
       (price) => !!price || "Price is required",
       (price) =>
-        (price && price.length <= 10) || "Price must be 10 digits or less",
+        (price && price.toString().length <= 10) || "Price must be 10 digits or less",
       (price) => isNaN(price) == false || "Price must be numeric",
     ],
     daterules: [(date) => !!date || "Date is required"],
