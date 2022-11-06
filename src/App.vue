@@ -17,12 +17,12 @@ export default {
   name: 'App',
 
 
+
   components: {
     NaviBar,
   },
 
   data: () => ({
-
   }),
 };
 </script>

@@ -200,7 +200,7 @@
                                     v-bind="addtofamily"
                                     :input-value="selected"
                                     close
-                                    @click:close="remove(item)"
+                                    @click:close="removeAddUserChip(item)"
                                 >
                                     <strong>{{ item }}</strong>&nbsp;
                                 </v-chip>
@@ -228,11 +228,38 @@
                     depressed
                     color="sWhiteBlue"
                     class="mr-4"
+                    @click="resetForm"
                 >
                     <v-icon left>mdi-eraser-variant</v-icon>
-                    Clear
+                    Reset Form
                 </v-btn>
             </v-row>
+            <div v-if="this.currentuser.family != 'null'">
+            <v-row  class="pt-1 ml-0">
+                    <p>You can leave the family by using the button below</p>
+                </v-row>
+                     <v-row v-if="this.currentuser.role == 'Admin'" class="pt-1 ml-0">
+                    <p><b>Warning: </b>As an admin, if you leave your family, your family will be deleted.</p>
+                </v-row>
+                <v-row>
+                    <v-col
+                        class="shrink mr-2 mt-0 py-0"
+                        cols="12"
+                        md="10"
+                    >
+                        <v-btn
+                    depressed
+                    color="red"
+                    class="mr-4"
+                    @click="leaveFamily"
+                >
+                    <v-icon left>mdi-logout-variant</v-icon>
+                    Leave Family
+                </v-btn>
+                    </v-col>
+                </v-row>
+                </div>
+                <br><br>
 
             <v-row v-if="this.currentuser.family == 'null'" class="ml-1 pb-12">
                 <v-col
@@ -240,11 +267,11 @@
                     md="4"
                 >
                     <v-text-field
-                        ref="family_name"
+                        ref="new_family_name"
                         label="Family name"
                         prepend-icon="mdi-human-male-female-child"
                         filled
-                        :value="this.currentuser.family_name"
+                        v-model= "itemData.family_name" 
                         v-if="this.currentuser.family == 'null'"
                     ></v-text-field>
                 </v-col>
@@ -255,6 +282,7 @@
                     depressed
                     color="primary"
                     class="mr-4"
+                    @click="saveUser"
                 >
                     <v-icon left>mdi-check</v-icon>
                     Create new family
@@ -310,7 +338,7 @@
 
 <script>
 import axios from "axios";
-import uuid from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 export default {
     
   name: 'UserSettingsForm',
@@ -326,12 +354,24 @@ export default {
 
 
   methods: {
+    reload(value) {
+      setTimeout(() => { 
+        this.dialogone = false 
+        window.location.reload()
+      }, value);
+    },
     remove(item) {
       const index = this.itemData.peopleinfamily.indexOf(item);
       if (index > -1) { // only splice array when item is found
         this.itemData.peopleinfamily.splice(index, 1); // 2nd parameter means remove one item only
         //this.itemData.peopleinfamilyID.splice(index, 1)
         this.itemData.removefromfamily.push(this.itemData.peopleinfamilyID[index])
+      }
+    },
+    removeAddUserChip(item) {
+      const index = this.itemData.addtofamily.indexOf(item);
+      if (index > -1) { // only splice array when item is found
+        this.itemData.addtofamily.splice(index, 1); // 2nd parameter means remove one item only
       }
     },
     getCurrentFamilyEmails(){
@@ -366,44 +406,101 @@ export default {
           console.log(error);
         });
         this.dialog = false
-
-        
     },
     saveUser() {
-     this.dialogone = true;
-    this.addUserToFamily();
-    this.removeUserFromFamily();
-    console.log("reached")
-    setTimeout(() => { 
-      this.dialogone = false 
-        window.location.reload()
-    }, 1000);
-    
+      if (this.currentuser.family == 'null'){
+        console.log("yeah its null")
+        this.newFamily();
+        return;
+      }
+      console.log("null check failed")
+      this.dialogone = true;
+      this.addUserToFamily();
+      this.removeUserFromFamily();
+      console.log("reached")
+      this.reload(1000)      
     },
-    resetForm(newText) {
-      this.text = newText;
-      this.snackbar = true;
-      this.$refs.itemData.reset();
+
+    resetForm(){
+      this.dialogone = true;
+      this.reload(1)
     },
-    // for new user where family == null
-    newFamily() {
 
-    if (this.currentuser.family == "null"){
-        this.itemData.family = uuid.v4().replace(/-/g, "")
-    }
+    // resetForm(newText) {
+    //   this.text = newText;
+    //   this.snackbar = true;
+    //   this.$refs.itemData.reset();
+    // },
+    leaveFamily() {
+      this.dialogone = true 
+      if (this.currentuser.role == 'Admin'){
+        console.log("admin detected")
+        for (var index in this.itemData.peopleinfamilyID){
+          let userToLeave = this.itemData.peopleinfamilyID[index];
+          console.log(userToLeave);
+          let apiURL =
+            "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/" 
+              + userToLeave._id;
 
+          axios
+            .put(apiURL, {
+              family: 'null',
+              family_name: 'null',
+              role: "User",
+            })
+            .then(() => {})
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+      
       let apiURL =
-        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/new-family"+this.currentuser._id;
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/"+this.currentuser._id;
 
       axios
-        .post(apiURL, this.itemData)
+        .put(apiURL, {
+          family: 'null',
+          family_name: 'null',
+          role: "User",
+        })
         .then(() => {})
         .catch((error) => {
           console.log(error);
         });
+
+      this.reload(1000);
+      
     },
 
+    
+    // for new user where family == null
+    newFamily() {
+      this.dialogone = true 
+      this.itemData.family = uuidv4().replace(/-/g, "");
 
+      console.log(this.itemData)
+
+      this.itemData.role="Admin";
+
+      
+
+        let apiURL =
+          "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/"+this.currentuser._id;
+
+        axios
+          .put(apiURL, {
+            family: this.itemData.family,
+            family_name: this.itemData.family_name,
+            role: "Admin",
+          })
+          .then(() => {})
+          .catch((error) => {
+            console.log(error);
+          });
+
+      this.reload(1000);
+    },
 
 // EDIT THIS FOR UPDATING FAMILY 
     async addUserToFamily(){

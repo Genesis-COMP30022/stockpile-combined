@@ -153,21 +153,14 @@ import axios from "axios";
 
 export default {
 
-  watch: {
+    watch: {
     $route: {
       immediate: true,
       handler() {
         this.loadUser();
       },
     },
-    dialog(val) {
-      val || this.close();
-    },
-    dialogDelete(val) {
-      val || this.closeDelete();
-    },
   },
-
 
   dialog: false,
   dialogDelete: false,
@@ -301,11 +294,13 @@ logout() {
         .get(apiURL)
         .then((res) => {
           this.posts = res.data;
+          
         })
         .catch((error) => {
           console.log(error);
         });
-        this.dialogone= false;
+      this.dialogone= false;
+        
     },
   },
 };

@@ -1,6 +1,10 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Recent submissions</h1>
+    <div v-if="this.loaded == true && this.items.length == 0">
+    <p align="" class="mb-3 ml-2">There are no purchases in your family group</p>
+    <p align="" class="mb-3 ml-2">Click <a href="/new">here</a> to add a purchase </p>
+    </div>
     <v-row>
       <v-col
         v-bind:key="a._id"
@@ -96,10 +100,12 @@ export default {
           console.log(error);
         });
         this.dialogone = false;
+        this.loaded = true;
     },
   },
   data: () => ({
     dialogone: true,
+    loaded: false,
     items: [],
   }),
 };

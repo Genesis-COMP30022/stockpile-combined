@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import {authGuard} from "@marketredesign/auth0-spa-vue";
 
+
 Vue.use(Router);
 
 const SUFFIX = ' | Stockpile';

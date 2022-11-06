@@ -9,10 +9,12 @@ Vue.use(Auth0Plugin, {
   domain: 'stockpileapp.au.auth0.com',
   clientId: '3JsGVywVUSMpZWdt230wRMNnWyohkkZC',
   onRedirectCallback: appState => {
+
+    
     router.push(
       appState && appState.targetUrl
         ? appState.targetUrl
-        : 'dashboard'
+        : 'settings'
     );
   }
 });
