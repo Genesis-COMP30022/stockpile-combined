@@ -222,6 +222,7 @@ export default {
         .get(oneUserAPI)
         .then((res) => {
           this.currentuser = res.data;
+          this.checkNullFamily()
           this.loadPosts();
         })
         .catch((error) => {
@@ -229,6 +230,12 @@ export default {
         });
         
   },
+
+checkNullFamily(){
+  if (this.currentuser.family == "null"){
+    window.location.href = "/settings";
+  }
+},
 
 login() {
   this.$auth.loginWithRedirect();
