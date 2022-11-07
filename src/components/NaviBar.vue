@@ -69,7 +69,7 @@
                 Settings
                 <v-icon right>mdi-cog</v-icon>
             </v-btn>-->
-      <v-form class="hidden-xs-only">
+      <v-form class="hidden-xs-only" @submit.prevent="submitSearch()"> 
         <v-container>
           <v-text-field
             label="Search..."
@@ -80,6 +80,7 @@
             text
             dense
             append-icon="mdi-magnify"
+            v-model="searchTerm"
           >
           </v-text-field>
         </v-container>
@@ -111,15 +112,19 @@ export default {
 
 
     methods: {
-login() {
-  this.$auth.loginWithRedirect();
-},
+    login() {
+        this.$auth.loginWithRedirect();
+    },
 
-logout() {
-  this.$auth.logout({
-    returnTo: "https://app.stockpileapp.au"
-  });
-},
+    logout() {
+    this.$auth.logout({
+        returnTo: "https://app.stockpileapp.au"
+    });
+    },
+
+    submitSearch() {
+        this.$router.push("/search?"+this.searchTerm);
+    },
 
     loadUser: async function () {
       let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
@@ -131,12 +136,13 @@ logout() {
         .catch((error) => {
           console.log(error);
         });
-  },
+    },
 
     },
   
 
   data: () => ({
+    searchTerm: null,
     currentuser: [],
     drawer: null,
     links: [
