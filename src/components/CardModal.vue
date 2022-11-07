@@ -105,6 +105,26 @@
 
           </v-container>
       </v-form>
+      <v-dialog
+        v-model="dialogone"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Loading... Please wait
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
       <v-snackbar v-model="snackbar" color="sDarkBlue" :timeout="timeout">
         {{ text }}
 
@@ -127,13 +147,14 @@
           depressed
           color="sWhiteBlue"
           class="mr-0"
-          @click="resetForm('Form is reset')"
+          @click="copyItemData('Item reset.')"
         >
-          <v-icon left>mdi-eraser-variant</v-icon>
-          Clear
+          <v-icon left>mdi-reload</v-icon>
+          Reset
         </v-btn>
       </v-card-actions>
   </v-card>
+  
 </template>
 
 <script>
@@ -146,7 +167,7 @@ var tz = require("moment-timezone");
 export default {
 name: 'CardModal',
 mounted() {
-  this.copyItemData()
+  this.copyItemData("init")
 },
 components: {
   //handyUploader
@@ -211,7 +232,13 @@ props: {
   rawDate: String,
 },
 methods: {     
-  copyItemData(){
+  reload(value) {
+      setTimeout(() => { 
+        this.dialogone = false 
+        window.location.reload()
+      }, value);
+    },
+  copyItemData(message){
     // console.log(this.itemName)
     this.itemData.name = this.itemName
     this.itemData.price = this.price
@@ -220,6 +247,13 @@ methods: {
     this.itemData.category = this.cat
     this.itemData.buyer = this.buyer
     this.itemData.img = this.image
+
+    if (message == "init"){
+      return;
+    }
+
+    this.text = message;
+    this.snackbar = true;
   },
   resetForm(newText) {
     this.text = newText;
@@ -230,6 +264,7 @@ methods: {
 
   editItem() {
     //this.$refs.form.validate();
+    this.dialogone = true;
     console.log(this.itemData.datePurchased)
 
     let apiURL =
@@ -275,12 +310,17 @@ methods: {
       });
 
     if (isNaN(this.itemData.price)) {
+      this.dialogone = false;
       this.text = "Price must be numeric"
+      
     } else {
       this.text = "Submission sent";
+      this.reload(1000);
+      
     }
+    
     this.snackbar = true;
-    this.$refs.itemData.reset();
+    
 
   },
 

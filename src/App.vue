@@ -36,7 +36,6 @@ export default {
         .then((res) => {
           this.currentuser = res.data;
           this.checkNullFamily()
-          this.loadPosts();
         })
         .catch((error) => {
           console.log(error);

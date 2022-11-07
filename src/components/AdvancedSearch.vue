@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <div id="results">
     <h1 align="" class="mb-3 ml-2">Advanced search...</h1>
     <v-form @submit.prevent="savePost" v-model="valid" ref="itemData">
       <v-container style="max-width=200px">
@@ -94,7 +95,15 @@
             <v-icon left>mdi-check</v-icon>
             Submit
           </v-btn>
+                  
+          <v-btn depressed color="sWhiteBlue" class="mr-4" @click="print">
+            <v-icon left>mdi-printer</v-icon>
+            Print
+          </v-btn>
+
         </v-row>
+
+
       </v-container>
     </v-form>
 
@@ -142,6 +151,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+  </div>
   </v-container>
   
 </template>
@@ -154,11 +164,39 @@
 
 import CardItem from "./CardItem";
 import axios from "axios";
+import {Querier} from 'array-querier/lib/orbiter';
+
+// print related
+import Vue from 'vue';
+import VueHtmlToPaper from 'vue-html-to-paper';
+Vue.use(VueHtmlToPaper);
+
+const fastDecode = require('fast-decode-uri-component')
+
+
 export default {
   name: "CardBody",
 
+
   created() {
-    this.loadPosts();
+    this.loadPosts()
+    this.dialogone = false;
+  },
+
+  mounted(){
+
+    if (window.location.href.split('?').pop() == window.location.href){
+      this.sTerm = ""
+    }
+    else{
+      this.sTerm = window.location.href.split('?').pop()
+      this.submitAdvancedSearch();
+      
+    }
+    
+    this.sTerm = fastDecode(this.sTerm)
+    
+    
   },
 
   components: {
@@ -166,33 +204,72 @@ export default {
   },
 
   methods: {
+    loadPosts(){
+      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
+      axios
+        .get(apiURL)
+        .then((res) => {
+          this.items = res.data;
+          this.itemsCopy = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    print () {
+      this.$htmlToPaper('results');
+    },
     replaceBlankImages(image) {
       return image == "NULL"
         ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
         : image;
     },
-    loadPosts: async function () {
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
-      await axios
-        .get(apiURL)
-        .then((res) => {
-          this.items = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        this.dialogone = false;
-    },
+
 
     submitAdvancedSearch() {
+      this.items = this.itemsCopy;
+
+      if (this.sTerm == ""){
+        this.sTerm = []
+      }
+      if (this.sTerm != ""){
+        this.sTerm = [this.sTerm]
+      }
+      if (this.sBuyer == ""){
+        this.sBuyer = []
+      }
+      if (this.sBuyer != ""){
+        this.sBuyer = [this.sBuyer]
+      }
+      if (this.sCat == ""){
+        this.sCat = []
+      }
+      if (this.sCat != ""){
+        this.sCat = [this.sCat]
+      }
+
+      var filters = {
+        name: this.sTerm,
+        buyer: this.sBuyer,
+        category: this.sCat,
+      };
+      
+      const MyFilteredResult = Querier.filterSimpleArray(this.items, filters);
+      this.items = MyFilteredResult
+      console.log(MyFilteredResult)
+
+
+      // this.items = searched
+      // console.log(searched)
+      
         // should do processing on the cards based on what the user entered
     }
   },
   data: () => ({
     dialogone: true,
+    itemsCopy: [],
     categories: ["Entertainment", "Furniture", "Food"],
     items: [],
-
     sTerm: "",
     sDate: [],
     sCat: "",
@@ -213,5 +290,6 @@ export default {
         return this.sDate.join(' ~ ')
     },
   },
+
 };
 </script>

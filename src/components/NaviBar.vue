@@ -69,7 +69,23 @@
                 Settings
                 <v-icon right>mdi-cog</v-icon>
             </v-btn>-->
-      <v-form class="hidden-xs-only" @submit.prevent="submitSearch()"> 
+      <v-form v-if="this.currentpathname == '/search'" class="hidden-xs-only" @submit.prevent="submitSearch()"> 
+        <v-container>
+          <v-text-field
+            label="Search..."
+            placeholder="Search..."
+            hide-details
+            solo-inverted
+            flat
+            text
+            dense
+            append-icon="mdi-magnify"
+            disabled
+          >
+          </v-text-field>
+        </v-container>
+      </v-form>
+      <v-form v-if="this.currentpathname != '/search'" class="hidden-xs-only" @submit.prevent="submitSearch()"> 
         <v-container>
           <v-text-field
             label="Search..."
@@ -85,6 +101,7 @@
           </v-text-field>
         </v-container>
       </v-form>
+
       <!--<v-btn 
                 depressed 
                 class="hidden-xs-only" 
@@ -119,11 +136,14 @@ export default {
     logout() {
     this.$auth.logout({
         returnTo: "https://app.stockpileapp.au"
-    });
+      });
     },
 
     submitSearch() {
+      if (this.searchTerm != null){
         this.$router.push("/search?"+this.searchTerm);
+      }
+        //this.$router.push("/search?" )
     },
 
     loadUser: async function () {
@@ -143,6 +163,7 @@ export default {
 
   data: () => ({
     searchTerm: null,
+    currentpathname: "",
     currentuser: [],
     drawer: null,
     links: [
@@ -158,6 +179,7 @@ export default {
     $route: {
       immediate: true,
       handler(to) {
+        this.currentpathname = window.location.pathname
         this.loadUser();
         document.title = to.meta.title || "Stockpile";
       },

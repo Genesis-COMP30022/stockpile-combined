@@ -54,7 +54,7 @@ itemRoute.route("/").get((req, res, next) => {
 });
 
 //create post
-itemRoute.route("/create-item").post((req, res, next, next) => {
+itemRoute.route("/create-item").post((req, res, next) => {
   if (req.body.datePurchased === "") {
     req.body.datePurchased = moment(Date.now())
       .tz("Australia/Melbourne")

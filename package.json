@@ -10,14 +10,18 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^2.0.0",
     "@marketredesign/auth0-spa-vue": "^1.2.1",
+    "array-querier": "^1.2.1",
     "auth0-js": "^9.19.1",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "fast-decode-uri-component": "^1.0.1",
     "fs": "^0.0.1-security",
     "handy-uploader": "^1.1.8",
+    "js-search": "^2.0.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.38",
     "vue": "^2.6.14",
+    "vue-html-to-paper": "^1.4.4",
     "vue-router": "^2.7.10",
     "vuetify": "^2.6.0"
   },
