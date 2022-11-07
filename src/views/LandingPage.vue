@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
 <div v-if="!$auth.state.isAuthenticated">
-    <v-app-bar app dark color="sDarkBlue">
+    <v-app-bar app dark color="#004d80">
       <!--<v-toolbar-title 
                 class="font-weight-black display-1 sWhiteBlue--text"
             >

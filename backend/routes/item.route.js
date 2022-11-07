@@ -8,7 +8,7 @@ const Storage = require("upload-cloud-storage");
 let ItemModel = require("../models/ItemSchema");
 
 //index
-itemRoute.route("/").get((req, res) => {
+itemRoute.route("/").get((req, res, next) => {
   ItemModel.find((error, data) => {
     if (error) {
       return next(error);
@@ -18,7 +18,7 @@ itemRoute.route("/").get((req, res) => {
   });
 });
 
-itemRoute.route("/getfamilyitems/:family").get((req, res) => {
+itemRoute.route("/getfamilyitems/:family").get((req, res, next) => {
   let query = {family:req.params.family};
 
   let mongoDbQuery = { family: { $in: query.family.split(',') } }
@@ -32,7 +32,7 @@ itemRoute.route("/getfamilyitems/:family").get((req, res) => {
 });
 
 
-itemRoute.route("/:id").get((req, res) => {
+itemRoute.route("/:id").get((req, res, next) => {
   console.log(req.params.id);
   ItemModel.findOne({ _id: req.params.id })
     .then((result) => {
@@ -43,7 +43,7 @@ itemRoute.route("/:id").get((req, res) => {
     });
 });
 
-itemRoute.route("/").get((req, res) => {
+itemRoute.route("/").get((req, res, next) => {
   ItemModel.find((error, data) => {
     if (error) {
       return next(error);
@@ -54,7 +54,7 @@ itemRoute.route("/").get((req, res) => {
 });
 
 //create post
-itemRoute.route("/create-item").post((req, res, next) => {
+itemRoute.route("/create-item").post((req, res, next, next) => {
   if (req.body.datePurchased === "") {
     req.body.datePurchased = moment(Date.now())
       .tz("Australia/Melbourne")

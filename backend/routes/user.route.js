@@ -5,7 +5,7 @@ var uuid = require("uuid");
 let UserModel = require("../models/UserSchema");
 
 //index
-userRoute.route("/").get((req, res) => {
+userRoute.route("/").get((req, res, next) => {
   UserModel.find((error, data) => {
     if (error) {
       return next(error);
@@ -15,7 +15,7 @@ userRoute.route("/").get((req, res) => {
   });
 });
 
-userRoute.route("/:id").get((req, res) => {
+userRoute.route("/:id").get((req, res, next) => {
   console.log(req.params.id);
   UserModel.findOne({ _id: req.params.id })
     .then((result) => {
@@ -26,7 +26,7 @@ userRoute.route("/:id").get((req, res) => {
     });
 });
 
-userRoute.route("/getusermail/:email").get((req, res) => {
+userRoute.route("/getusermail/:email").get((req, res, next) => {
     UserModel.findOne({ 'email': req.params.email })
       .then((result) => {
         return res.json(result);
@@ -36,7 +36,7 @@ userRoute.route("/getusermail/:email").get((req, res) => {
       });
   });
 
-  userRoute.route("/getpeopleinfamily/:family").get((req, res) => {
+  userRoute.route("/getpeopleinfamily/:family").get((req, res, next) => {
     let query = {family:req.params.family};
 
     let mongoDbQuery = { family: { $in: query.family.split(',') } }

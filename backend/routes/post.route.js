@@ -4,7 +4,7 @@ const postRoute = express.Router();
 let PostModel = require('../models/Post');
 
 //index
-postRoute.route('/').get((req, res) => {
+postRoute.route('/').get((req, res, next) => {
     PostModel.find((error, data) => {
         if (error) {
             return next(error)
