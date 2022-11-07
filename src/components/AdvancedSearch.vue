@@ -34,23 +34,36 @@
                 <v-text-field
                     ref="searchterm"
                     label="Search term"
+                    :rules="nameRules"
                     prepend-icon="mdi-format-color-text"
                     filled
+                    v-model="sTerm"
                 ></v-text-field>
 
                 <v-text-field
                     v-model="dateRangeText"
-                    label="Date range"
+                    label="Date range (use picker!)"
                     prepend-icon="mdi-calendar"
                     readonly
                     filled
+                    
                 ></v-text-field>
+
+                <v-autocomplete
+                    ref="category"
+                    :items="categories"
+                    label="Category"
+                    filled
+                    prepend-icon="mdi-folder-outline"
+                    v-model="sCat"
+                ></v-autocomplete>
 
                 <v-text-field
                     ref="buyer"
                     label="Buyer"
                     prepend-icon="mdi-account-check"
                     filled
+                    v-model="sBuyer"
                 ></v-text-field>
 
                 <v-text-field
@@ -58,6 +71,7 @@
                     prepend-icon="mdi-currency-usd"
                     suffix="AUD"
                     filled
+                    v-model="sPrice"
                 ></v-text-field>
             </v-col>
 
@@ -66,13 +80,20 @@
                 sm="4"
             >
                 <v-date-picker
-                    v-model="dates"
+                    v-model="sDate"
                     range
                     color="sYellow" 
                     header-color="sLightBlue"
                 ></v-date-picker>
             </v-col>
 
+        </v-row>
+
+        <v-row class="ml-1 pb-12">
+          <v-btn depressed color="primary" class="mr-4" @click="submitAdvancedSearch()">
+            <v-icon left>mdi-check</v-icon>
+            Submit
+          </v-btn>
         </v-row>
       </v-container>
     </v-form>
@@ -162,16 +183,34 @@ export default {
         });
         this.dialogone = false;
     },
+
+    submitAdvancedSearch() {
+        // should do processing on the cards based on what the user entered
+    }
   },
   data: () => ({
     dialogone: true,
+    categories: ["Entertainment", "Furniture", "Food"],
     items: [],
-    dates: [],
-    
+
+    sTerm: "",
+    sDate: [],
+    sCat: "",
+    sBuyer: "",
+    sPrice: "",
+
+    nameRules: [
+      (name) => name.length <= 50 || "Name must be 50 characters or less",
+    ],
+    pricerules: [
+      (price) =>
+        (price && price.toString().length <= 10) || "Price must be 10 digits or less",
+      (price) => isNaN(price) == false || "Price must be numeric",
+    ],
   }),
   computed: {
     dateRangeText () {
-        return this.dates.join(' ~ ')
+        return this.sDate.join(' ~ ')
     },
   },
 };
