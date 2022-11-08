@@ -243,12 +243,8 @@ export default {
         ) {
             this.items.push(ib[i]);
         }
-        //console.log(card.name + ": " + sDateMod[0] + " vs " + cardDate + " (" + (sDateMod[0] == cardDate) + ")");
 
       }
-      console.log(this.itemsBackup);
-      console.log("backups: " + this.itemsBackup.length + ", results: " + this.items.length);
-      console.log("---");
 
     },
 
