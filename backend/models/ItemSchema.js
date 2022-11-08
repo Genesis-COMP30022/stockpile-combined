@@ -16,10 +16,16 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: [true, "buyer is required"],
   },
+  email: {
+    type: String,
+  },
   image: {
     type: String,
   },
   imagetype: {
+    type: String,
+  },
+  family: {
     type: String,
   },
   datePurchased: {

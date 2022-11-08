@@ -1,40 +1,8 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Dashboard</h1>
-<v-card
-      class="text-center"
-      color="#54a3eb"
-      dark
-      max-width="30rem"
-    >
-      <v-card-text>
-        <v-sheet color="rgba(0, 0, 0, .12)">
-          <v-sparkline
-            :value="value"
-            color="rgba(255, 255, 255, .7)"
-            height="100rem"
-            padding="24"
-            stroke-linecap="round"
-            smooth
-          >
-            <template v-slot:label="item">
-              {{ item.value }}
-            </template>
-          </v-sparkline>
-        </v-sheet>
-      </v-card-text>
-  
-      <v-card-text>
-        <div class="text-h">
-          Item additions (past 7 days)
-        </div>
-      </v-card-text>
-  
-      <v-divider></v-divider>
-  
-    </v-card>
-
     <v-data-table
+      ref="myTable"
       :headers="headers"
       :items="posts"
       :search="search"
@@ -92,10 +60,16 @@
         <v-icon small class="mr-2" @click="editItem(item)">
           mdi-file-image
         </v-icon>
-        <v-icon small class="mr-2" @click="deleteItem(item._id)">
+        <v-icon
+          v-if="item.email == currentuser.email || currentuser.role == 'Admin'"
+          small
+          class="mr-2"
+          @click="deleteItem(item._id)"
+        >
           mdi-trash-can
         </v-icon>
       </template>
+
       <template v-slot:no-data>
         <p>No Data Available</p>
         <v-row justify="center">
@@ -119,6 +93,19 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <v-dialog v-model="dialogone" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Loading... Please stand by
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -127,49 +114,28 @@ import axios from "axios";
 
 export default {
   watch: {
-    dialog(val) {
-      val || this.close();
+    $route: {
+      immediate: true,
+      handler() {
+        this.loadUser();
+      },
     },
-    dialogDelete(val) {
-      val || this.closeDelete();
-    },
-  },
-
-  created() {
-    this.loadPosts();
   },
 
   dialog: false,
   dialogDelete: false,
 
-  name: "HomeTemp",
+  name: "DashBoard",
   data: () => ({
-        value: [
-      8,
-      4,
-      7,
-      25,
-      1,
-      2,
-      56,
-    ],
+    currentuser: [],
+    dialogone: true,
     snackbar: false,
     search: "",
-    desserts: [],
+
     editedIndex: -1,
     editedItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
     },
     defaultItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
     },
 
     posts: [],
@@ -185,13 +151,43 @@ export default {
       { text: "Category", value: "category" },
       { text: "Purchase date", value: "datePurchased" },
       { text: "Buyer", value: "buyer" },
-      { text: "Image", value: "actions", sortable: false },
+      { text: "Actions", value: "actions", sortable: false },
     ],
   }),
 
   methods: {
+    loadUser() {
+      let oneUserAPI =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
+        this.$auth.state.user.email;
+      axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+          this.checkNullFamily();
+          this.loadPosts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    checkNullFamily() {
+      if (this.currentuser.family == "null") {
+        window.location.href = "/settings";
+      }
+    },
+
+    login() {
+      this.$auth.loginWithRedirect();
+    },
+
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin,
+      });
+    },
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -204,7 +200,8 @@ export default {
       });
     },
 
-    deleteItem: async function (toDeleteID) {
+    deleteItem(toDeleteID) {
+      this.dialogone = true;
       let toDeleteURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/delete-item/" +
         toDeleteID;
@@ -212,9 +209,7 @@ export default {
       axios
         .delete(toDeleteURL)
         .then(() => {
-          //this.updatePost(toDeleteID);
-          location.reload();
-          // REFESH HERE
+          this.loadPosts();
         })
         .catch((error) => {
           console.log(error);
@@ -224,23 +219,10 @@ export default {
       this.snackbar = true;
     },
 
-    // updatePost(toDeleteID){
-    //   let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/update-item/" + toDeleteID;
-    //   axios.post(apiURL, this.itemData).then((res) => {
-    //     console.log(res)
-    //     this.close();
-    //     this.loadPosts();
-    //     this.color ='info'
-    //     this.text = 'Post has been modified.'
-    //     this.snackbar = true;
-    //   }).catch(error => {
-    //     console.log(error)
-    //     console.log(this.$route.params.id)
-    //   })
-    // },
-
-    loadPosts: async function () {
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
+    loadPosts() {
+      let apiURL =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/" +
+        this.currentuser.family;
       axios
         .get(apiURL)
         .then((res) => {
@@ -249,6 +231,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+      this.dialogone = false;
     },
   },
 };

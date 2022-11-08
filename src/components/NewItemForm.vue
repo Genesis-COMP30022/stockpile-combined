@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Create new purchase...</h1>
-    <v-form @submit.prevent="savePost" v-model="valid" ref="itemData">
+    <v-form @submit.prevent="createItem" v-model="valid" ref="itemData">
       <v-container style="max-width=200px">
         <v-row>
           <v-col cols="12" md="6">
@@ -48,9 +48,7 @@
             <v-autocomplete
               ref="category"
               :items="categories"
-              :rules="catrules"
               label="Category"
-              required
               filled
               prepend-icon="mdi-folder-outline"
               v-model="itemData.category"
@@ -58,19 +56,23 @@
           </v-col>
 
           <v-col cols="12" md="4">
-            <v-autocomplete
+            <v-text-field
               ref="buyer"
-              :items="buyers"
-              :rules="buyrules"
               label="Buyer"
               required
+              disabled
               filled
               prepend-icon="mdi-account-check"
-              v-model="itemData.buyer"
-            ></v-autocomplete>
+              :value="this.$auth.state.user.name"
+            ></v-text-field>
           </v-col>
 
-          <v-col cols="12" md="10">
+          <v-col
+            cols="12"
+            class="col-md-10 pt-2 pb-5 mt-n4"
+            style="display: flex"
+          >
+            <v-icon>mdi-image-size-select-actual</v-icon>
             <handy-uploader
               :documentAttachment.sync="handyAttachments"
               :fileUploaderType="'simple'"
@@ -81,6 +83,9 @@
               :badgeCounter="true"
               :thumb="false"
               :changeFileName="true"
+              class="pb-8"
+              btnColor="sYellow"
+              depressed
             >
             </handy-uploader>
           </v-col>
@@ -126,6 +131,18 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-dialog v-model="dialogone" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Submitting...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -143,19 +160,29 @@ export default {
   },
 
   data: () => ({
+    dialogone: false,
     handyAttachments: [],
     snackbar: false,
+    currentuser: [],
     itemData: {
       name: "",
       price: "",
       desc: "",
       category: "",
+      email: "",
       buyer: "",
       image: "",
       imagetype: "",
       datePurchased: "",
       dateUpdated: Date.now(),
       dateCreated: Date.now(),
+    },
+    huCustom: {
+      custom: {
+        insertFile: "Insert File",
+        insertNewFile: "Insert New File1",
+        add: "Add",
+      },
     },
     valid: false,
     purchasename: "",
@@ -169,32 +196,50 @@ export default {
     pricerules: [
       (price) => !!price || "Price is required",
       (price) =>
-        (price && price.length <= 10) || "Price must be 10 digits or less",
+        (price && price.toString().length <= 10) ||
+        "Price must be 10 digits or less",
       (price) => isNaN(price) == false || "Price must be numeric",
     ],
     daterules: [(date) => !!date || "Date is required"],
-    catrules: [(category) => !!category || "Category is required"],
     descrules: [
       (desc) =>
         desc.length <= 400 || "Description must be 400 characters or less",
     ],
     buyrules: [(buyer) => !!buyer || "Buyer is required"],
   }),
-  methods: {
-    savePost: async function () {
-      //console.log("it is working");
-      this.createItem();
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.loadUser();
+      },
     },
+  },
+  methods: {
     resetForm(newText) {
       this.text = newText;
       this.snackbar = true;
       this.$refs.itemData.reset();
       this.handyAttachments = [];
     },
+    loadUser: async function () {
+      let oneUserAPI =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
+        this.$auth.state.user.email;
+      await axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     createItem() {
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item";
-      //console.log("it is creating");
+
+      this.itemData.email = this.$auth.state.user.email;
 
       if (this.handyAttachments.length === 0) {
         this.itemData.image = "NULL";
@@ -204,13 +249,24 @@ export default {
         this.itemData.imagetype = this.handyAttachments[0].file.format;
       }
 
+      this.itemData.buyer = this.$auth.state.user.name;
+      this.itemData.family = this.currentuser.family;
+
       axios
         .post(apiURL, this.itemData)
         .then(() => {})
         .catch((error) => {
           console.log(error);
         });
-      this.resetForm("New item saved");
+      let waittime = 1;
+      if (this.itemData.image != "NULL") {
+        waittime = (this.itemData.image.length * (3 / 4) - 1) / 1000;
+      }
+      this.dialogone = true;
+      setTimeout(() => {
+        this.dialogone = false;
+        this.resetForm("New item saved");
+      }, waittime);
     },
   },
 };
