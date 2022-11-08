@@ -324,10 +324,10 @@ export default {
         if (
           (this.sBuyer == "" ||
             ib[i].buyer == this.sBuyer ||
-            ib[i].buyer.includes(this.sBuyer)) &&
+            ib[i].buyer.toLowerCase().includes(this.sBuyer.toLowerCase())) &&
           (this.sTerm == "" ||
             ib[i].name == this.sTerm ||
-            ib[i].name.includes(this.sTerm)) &&
+            ib[i].name.toLowerCase().includes(this.sTerm.toLowerCase())) &&
           (sDateMod[0] == null ||
             sDateMod[0] == cardDate ||
             this.isDateBetween(sDateMod[0], sDateMod[1], cardDate) ||
