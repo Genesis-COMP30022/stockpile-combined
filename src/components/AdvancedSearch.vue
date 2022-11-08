@@ -146,11 +146,6 @@
 </template>
 
 <script>
-/* TODO
-- needs to receive a generic search term as a prop, from whichever page in the app you might receive a search
-- need to port over most of the functionality of CardBody where it loads stuff from the db and calls CardItems
-*/
-
 import CardItem from "./CardItem";
 import axios from "axios";
 
