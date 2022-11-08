@@ -47,7 +47,6 @@
                     prepend-icon="mdi-calendar"
                     readonly
                     filled
-                    
                 ></v-text-field>
 
                 <v-autocomplete
@@ -86,6 +85,11 @@
                     color="sYellow" 
                     header-color="sLightBlue"
                 ></v-date-picker>
+
+                <v-btn depressed color="sEhiteBlue" class="mr-4" @click="clearDates()">
+                    <v-icon left>mdi-delete</v-icon>
+                    Clear dates
+                </v-btn>
             </v-col>
 
         </v-row>
@@ -96,9 +100,9 @@
             Submit
           </v-btn>
                   
-          <v-btn depressed color="sWhiteBlue" class="mr-4" @click="print">
+          <v-btn depressed color="sYellow" class="mr-4" @click="print">
             <v-icon left>mdi-printer</v-icon>
-            Print
+            Generate report
           </v-btn>
 
         </v-row>
@@ -128,6 +132,7 @@
           :buyerID="a.buyer"
           :img="replaceBlankImages(a.image)"
           :desc="a.desc != '' ? a.desc : '*No description.'"
+          :showEdit="false"
         />
       </v-col>
     </v-row>
@@ -272,6 +277,10 @@ export default {
       // console.log(searched)
       
         // should do processing on the cards based on what the user entered
+    },
+
+    clearDates() {
+        this.sDate = []
     }
   },
   data: () => ({

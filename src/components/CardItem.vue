@@ -51,6 +51,7 @@
                 <v-dialog
                     v-model="dialog"
                     width="800"
+                    v-if="showEdit==true"
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -127,6 +128,7 @@ export default {
     email: String,
     currUser: String,
     currRole: String,
+    showEdit: Boolean
   },
   methods: {
     numberWithCommas(x) {

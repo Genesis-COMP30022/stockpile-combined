@@ -28,6 +28,7 @@
           :email="a.email"
           :currUser="currentuser.email"
           :currRole="currentuser.role"
+          :showEdit="true"
         />
       </v-col>
     </v-row>
