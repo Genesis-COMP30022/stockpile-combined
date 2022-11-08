@@ -3,6 +3,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router'
 
+
 import { Auth0Plugin} from "@marketredesign/auth0-spa-vue";
 
 Vue.use(Auth0Plugin, {

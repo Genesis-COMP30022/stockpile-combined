@@ -7,8 +7,8 @@
         </v-avatar>
         
         <div v-if="$auth.state.isAuthenticated" style="padding-bottom: 2px;"><b>{{this.$auth.state.user.name}} </b>
-        <span v-if="$auth.state.isAuthenticated && this.currentuser.role == 'Admin'"
-        >[{{this.currentuser.role.charAt(0)}}]</span></div>
+        <span v-if="$auth.state.isAuthenticated"
+        >[{{this.currentuser.role}}]</span></div>
         <div v-if="$auth.state.isAuthenticated && this.currentuser.family == 'null'">Unassigned user</div>
         <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'"
              style="font-size: 14px" 
@@ -166,6 +166,7 @@ export default {
     currentpathname: "",
     currentuser: [],
     drawer: null,
+    items: [],
     links: [
       ["mdi-home", "Home", "/"],
       ["mdi-grid", "Dashboard", "/dashboard"],

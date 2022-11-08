@@ -164,6 +164,7 @@
 
 import CardItem from "./CardItem";
 import axios from "axios";
+import {Querier} from 'array-querier/lib/orbiter';
 
 // print related
 import Vue from 'vue';
@@ -184,14 +185,12 @@ export default {
 
   mounted(){
     this.loadPosts()
-
     if (window.location.href.split('?').pop() == window.location.href){
       this.sTerm = ""
 
     }
     else{
       this.sTerm = window.location.href.split('?').pop()
-      setTimeout(() => {}, 3000)
       this.submitAdvancedSearch();
       
     }
@@ -227,6 +226,7 @@ export default {
         : image;
     },
 
+
     submitAdvancedSearch() {
       this.items = this.itemsCopy
       let originalTerm = this.sTerm
@@ -252,16 +252,16 @@ export default {
         this.sCat = [this.sCat]
       }
 
-      // var filters = {
-      //   name: this.sTerm,
-      //   buyer: this.sBuyer,
-      //   category: this.sCat,
-      // };
+      var filters = {
+        name: this.sTerm,
+        buyer: this.sBuyer,
+        category: this.sCat,
+      };
       
-      // const MyFilteredResult = Querier.filterSimpleArray(this.items, filters);
-      // this.items = MyFilteredResult
+      const MyFilteredResult = Querier.filterSimpleArray(this.items, filters);
+      this.items = MyFilteredResult
 
-      // console.log(MyFilteredResult)
+      console.log(MyFilteredResult)
 
       this.sTerm = originalTerm
       this.sBuyer = originalBuyer
