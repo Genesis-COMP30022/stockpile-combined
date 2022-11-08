@@ -31,7 +31,6 @@ TABLE OF CONTENT
 --------------------------------------------------------------*/
 
 :root {
-
   /*------------------------------------------------------------
   |
   | 1.1 COLOR
@@ -50,13 +49,13 @@ TABLE OF CONTENT
   --ui-color-n-900: #1a1a1a;
 
   /* BACKGROUND COLOR */
-  
+
   --ui-color-background-primary: var(--ui-color-n-000);
 
   /* BORDER COLOR */
 
   --ui-color-border: var(--ui-color-n-100);
-  
+
   /* FORM COLOR */
 
   --ui-color-form-input: var(--ui-color-n-100);
@@ -64,9 +63,9 @@ TABLE OF CONTENT
   /* TYPOGRAPHY COLOR */
 
   --ui-color-typography-heading: var(--ui-color-n-500);
-  --ui-color-typography-body   : var(--ui-color-n-900);
-  --ui-color-typography-note   : var(--ui-color-n-300);
-  --ui-color-typography-button : var(--ui-color-n-000);
+  --ui-color-typography-body: var(--ui-color-n-900);
+  --ui-color-typography-note: var(--ui-color-n-300);
+  --ui-color-typography-button: var(--ui-color-n-000);
 
   /*------------------------------------------------------------
   |
@@ -81,53 +80,56 @@ TABLE OF CONTENT
   --ui-typography-h1: 1.9375rem;
   --ui-typography-h2: 1.5625rem;
   --ui-typography-h4: 1rem;
-  --ui-typography-p : 1rem;
-  --ui-typography-s : .8125rem;
+  --ui-typography-p: 1rem;
+  --ui-typography-s: 0.8125rem;
 
   /* LEADING */
 
   --ui-typography-h1-leading: 1.2;
   --ui-typography-h2-leading: 1.2;
   --ui-typography-h4-leading: 1.25;
-  --ui-typography-p-leading : 1.5;
+  --ui-typography-p-leading: 1.5;
 
   /* MARGIN */
 
-  --ui-typography-margin-heading: .75rem;
-  --ui-typography-margin-body   : 1.125rem;
+  --ui-typography-margin-heading: 0.75rem;
+  --ui-typography-margin-body: 1.125rem;
 
   /*------------------------------------------------------------
   |
   | 1.3 LAYOUT
   |
   ------------------------------------------------------------*/
-  
+
   --ui-layout-container: 1.25rem;
-  --ui-layout-grid     : 3.625rem;
-  --ui-layout-gutter   : 1rem;
+  --ui-layout-grid: 3.625rem;
+  --ui-layout-gutter: 1rem;
 
   /* GAP */
 
-  --ui-gap-cta    : .75rem;
+  --ui-gap-cta: 0.75rem;
   --ui-gap-content: 1.25rem;
 
   /* BORDER RADIUS */
-  
-  --ui-radius-button: 5rem;
-  --ui-radius-input : 5rem;
-  --ui-radius-card  : .5rem;
 
+  --ui-radius-button: 5rem;
+  --ui-radius-input: 5rem;
+  --ui-radius-card: 0.5rem;
 }
 
 /*--------------------------------------------------------------
 2.0 FOUNDATION
 --------------------------------------------------------------*/
 
-html { box-sizing: border-box; }
+html {
+  box-sizing: border-box;
+}
 
 *,
 *:before,
-*:after { box-sizing: inherit; }
+*:after {
+  box-sizing: inherit;
+}
 
 body {
   background-color: var(--ui-color-background-primary);
@@ -154,14 +156,20 @@ a {
 h1,
 h2,
 h4,
-p { margin-top: 0; }
+p {
+  margin-top: 0;
+}
 
 h1,
 h2,
-h4 { color: var(--ui-color-typography-heading); }
+h4 {
+  color: var(--ui-color-typography-heading);
+}
 
 h1,
-h2 { margin-bottom: var(--ui-typography-margin-heading); }
+h2 {
+  margin-bottom: var(--ui-typography-margin-heading);
+}
 
 h1 {
   font-size: var(--ui-typography-h1);
@@ -178,13 +186,21 @@ h4 {
   line-height: var(--ui-typography-h4-leading);
 }
 
-p { margin-bottom: var(--ui-typography-margin-body); }
+p {
+  margin-bottom: var(--ui-typography-margin-body);
+}
 
-p:last-child { margin-bottom: 0; }
+p:last-child {
+  margin-bottom: 0;
+}
 
-strong { font-weight: 700; }
+strong {
+  font-weight: 700;
+}
 
-small { font-size: var(--ui-typography-s); }
+small {
+  font-size: var(--ui-typography-s);
+}
 
 .ui-text-note {
   color: var(--ui-color-typography-note);
@@ -218,9 +234,13 @@ svg {
   justify-content: center;
 }
 
-.ui-layout-flex { display: flex; }
+.ui-layout-flex {
+  display: flex;
+}
 
-.ui-layout-grid { display: grid; }
+.ui-layout-grid {
+  display: grid;
+}
 
 /*--------------------------------------------------------------
 6.0 COMPONENT
@@ -257,28 +277,32 @@ button {
 
 /* FORM */
 
-form { width: 100%; }
+form {
+  width: 100%;
+}
 
 .ui-component-form {
   background-color: var(--ui-color-form-input);
   border-radius: var(--ui-radius-input);
   grid-template-columns: minmax(0, 1fr) auto;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
 /* INPUT */
 
-::placeholder { color: var(--ui-color-typography-note); }
+::placeholder {
+  color: var(--ui-color-typography-note);
+}
 
 .ui-component-input {
   background-color: var(--ui-color-form-input);
-  border: .0625rem solid var(--ui-color-form-input);
+  border: 0.0625rem solid var(--ui-color-form-input);
   border-radius: var(--ui-radius-input);
 }
 
 .ui-component-input-medium {
   height: 2.5rem;
-  padding: .625rem 1rem .75rem;
+  padding: 0.625rem 1rem 0.75rem;
 }
 
 /*--------------------------------------------------------------
@@ -296,7 +320,7 @@ button {
 }
 
 .ui-component-button {
-  border: .0625rem solid var(--ui-color-brand);
+  border: 0.0625rem solid var(--ui-color-brand);
   border-radius: var(--ui-radius-button);
   display: block;
   font-weight: 700;
@@ -310,7 +334,7 @@ button {
 }
 
 .ui-component-button-medium {
-  padding: .625rem .875rem .75rem;
+  padding: 0.625rem 0.875rem 0.75rem;
   width: fit-content;
 }
 
@@ -321,7 +345,7 @@ button {
 --------------------------------------------------------------*/
 
 .ui-component-card {
-  border: .0625rem solid var(--ui-color-border);
+  border: 0.0625rem solid var(--ui-color-border);
   border-radius: var(--ui-radius-card);
   overflow: hidden;
   padding: 2.25rem 1.5rem;
@@ -329,9 +353,13 @@ button {
   width: 100%;
 }
 
-.ui-component-card--image { margin-bottom: 2.25rem; }
+.ui-component-card--image {
+  margin-bottom: 2.25rem;
+}
 
-.ui-component-card--title { margin-bottom: .5rem; }
+.ui-component-card--title {
+  margin-bottom: 0.5rem;
+}
 
 /*--------------------------------------------------------------
 7.0 SECTION
@@ -348,7 +376,9 @@ button {
   padding-top: 1.25rem;
 }
 
-.ui-section-header__layout { justify-content: space-between; }
+.ui-section-header__layout {
+  justify-content: space-between;
+}
 
 /*--------------------------------------------------------------
 |
@@ -373,7 +403,9 @@ button {
   padding-top: 1.25rem;
 }
 
-.ui-section-content__layout { row-gap: var(--ui-gap-content); }
+.ui-section-content__layout {
+  row-gap: var(--ui-gap-content);
+}
 
 /*--------------------------------------------------------------
 |
@@ -418,13 +450,11 @@ button {
 --------------------------------------------------------------*/
 
 @media screen and (min-width: 48rem) {
-
   /*------------------------------------------------------------
   VARIABLE
   ------------------------------------------------------------*/
-  
-  :root {
 
+  :root {
     /*----------------------------------------------------------
     |
     | TYPOGRAPHY
@@ -436,8 +466,8 @@ button {
     --ui-typography-h1: 2.1875rem;
     --ui-typography-h2: 1.75rem;
     --ui-typography-h4: 1.125rem;
-    --ui-typography-p : 1.125rem;
-    --ui-typography-s : .875rem;
+    --ui-typography-p: 1.125rem;
+    --ui-typography-s: 0.875rem;
 
     /* MARGIN */
 
@@ -450,12 +480,11 @@ button {
     ----------------------------------------------------------*/
 
     --ui-layout-container: 4.25rem;
-    --ui-layout-gutter   : 1.5rem;
+    --ui-layout-gutter: 1.5rem;
 
     /* GAP */
 
     --ui-gap-content: 1.5rem;
-
   }
 
   /*------------------------------------------------------------
@@ -480,16 +509,16 @@ button {
     top: calc(50% + (var(--ui-layout-gutter) / 2));
   }
 
-  .ui-layout-grid-2 div:nth-of-type(odd) { justify-self: end; }
+  .ui-layout-grid-2 div:nth-of-type(odd) {
+    justify-self: end;
+  }
 
   .ui-layout-column-4 {
-    width: calc((var(--ui-layout-grid) * 4) +
-           (var(--ui-layout-gutter) * 3));
+    width: calc((var(--ui-layout-grid) * 4) + (var(--ui-layout-gutter) * 3));
   }
 
   .ui-layout-column-6 {
-    width: calc((var(--ui-layout-grid) * 6) +
-           (var(--ui-layout-gutter) * 5));
+    width: calc((var(--ui-layout-grid) * 6) + (var(--ui-layout-gutter) * 5));
   }
 
   /*------------------------------------------------------------
@@ -543,7 +572,6 @@ button {
     padding-bottom: 2rem;
     padding-top: 2rem;
   }
-  
 }
 
 /*--------------------------------------------------------------
@@ -553,13 +581,11 @@ button {
 --------------------------------------------------------------*/
 
 @media screen and (min-width: 64rem) {
-
   /*------------------------------------------------------------
   VARIABLE
   ------------------------------------------------------------*/
 
   :root {
-
     /*----------------------------------------------------------
     |
     | LAYOUT
@@ -567,14 +593,15 @@ button {
     ----------------------------------------------------------*/
 
     --ui-layout-container: 0;
-  
   }
 
   /*------------------------------------------------------------
   TYPOGRAPHY
   ------------------------------------------------------------*/
 
-  a { transition: all 250ms ease; }
+  a {
+    transition: all 250ms ease;
+  }
 
   a:not(.ui-component-button):hover {
     color: var(--ui-color-typography-body);
@@ -583,9 +610,10 @@ button {
   /*------------------------------------------------------------
   LAYOUT
   ------------------------------------------------------------*/
-  
-  .ui-layout-container { width: 60rem; }
 
+  .ui-layout-container {
+    width: 60rem;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -595,13 +623,11 @@ button {
 --------------------------------------------------------------*/
 
 @media screen and (min-width: 75rem) {
-
   /*------------------------------------------------------------
   VARIABLE
   ------------------------------------------------------------*/
 
   :root {
-
     /*----------------------------------------------------------
     |
     | TYPOGRAPHY
@@ -617,7 +643,7 @@ button {
     /* MARGIN */
 
     --ui-typography-margin-heading: 1rem;
-    --ui-typography-margin-body   : 1.75rem;
+    --ui-typography-margin-body: 1.75rem;
 
     /*----------------------------------------------------------
     |
@@ -625,26 +651,29 @@ button {
     |
     ----------------------------------------------------------*/
 
-    --ui-layout-grid  : 4rem;
+    --ui-layout-grid: 4rem;
     --ui-layout-gutter: 2rem;
 
     /* GAP */
-    
+
     --ui-gap-content: 2rem;
-    
   }
 
   /*------------------------------------------------------------
   TYPOGRAPHY
   ------------------------------------------------------------*/
 
-  .ui-text-intro { font-size: var(--ui-typography-h4); }
+  .ui-text-intro {
+    font-size: var(--ui-typography-h4);
+  }
 
   /*------------------------------------------------------------
   LAYOUT
   ------------------------------------------------------------*/
-  
-  .ui-layout-container { width: 70rem; }
+
+  .ui-layout-container {
+    width: 70rem;
+  }
 
   /*------------------------------------------------------------
   SECTION
@@ -693,7 +722,7 @@ button {
     padding-bottom: 7.5rem;
     padding-top: 7.5rem;
   }
-  
+
   /*------------------------------------------------------------
   |
   | FOOTER
@@ -704,5 +733,4 @@ button {
     padding-bottom: 3rem;
     padding-top: 3rem;
   }
-
 }

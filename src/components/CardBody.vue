@@ -2,8 +2,12 @@
   <v-container fluid>
     <h1 align="" class="mb-3 ml-2">Recent submissions</h1>
     <div v-if="this.loaded == true && this.items.length == 0">
-    <p align="" class="mb-3 ml-2">There are no purchases in your family group</p>
-    <p align="" class="mb-3 ml-2">Click <a href="/new">here</a> to add a purchase </p>
+      <p align="" class="mb-3 ml-2">
+        There are no purchases in your family group
+      </p>
+      <p align="" class="mb-3 ml-2">
+        Click <a href="/new">here</a> to add a purchase
+      </p>
     </div>
     <v-row>
       <v-col
@@ -32,26 +36,18 @@
         />
       </v-col>
     </v-row>
-    <v-dialog
-        v-model="dialogone"
-        hide-overlay
-        persistent
-        width="300"
-      >
-        <v-card
-          color="primary"
-          dark
-        >
-          <v-card-text>
-            Loading... Please stand by
-            <v-progress-linear
-              indeterminate
-              color="white"
-              class="mb-0"
-            ></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+    <v-dialog v-model="dialogone" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Loading... Please stand by
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -61,7 +57,7 @@ import axios from "axios";
 export default {
   name: "CardBody",
 
-    watch: {
+  watch: {
     $route: {
       immediate: true,
       handler() {
@@ -76,8 +72,10 @@ export default {
 
   methods: {
     loadUser() {
-      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
-       axios
+      let oneUserAPI =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
+        this.$auth.state.user.email;
+      axios
         .get(oneUserAPI)
         .then((res) => {
           this.currentuser = res.data;
@@ -86,15 +84,16 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        
-  },
+    },
     replaceBlankImages(image) {
       return image == "NULL"
         ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
         : image;
     },
     loadPosts: async function () {
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/"+this.currentuser.family;
+      let apiURL =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/" +
+        this.currentuser.family;
       await axios
         .get(apiURL)
         .then((res) => {
@@ -103,8 +102,8 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        this.dialogone = false;
-        this.loaded = true;
+      this.dialogone = false;
+      this.loaded = true;
     },
   },
   data: () => ({

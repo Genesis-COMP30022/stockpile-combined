@@ -3,16 +3,30 @@
     <v-navigation-drawer v-model="drawer" right app>
       <v-sheet color="#027fd1" class="pa-4">
         <v-avatar class="mb-2" color="sYellow" size="64">
-          <img :src="this.$auth.state.user.picture"/>
+          <img :src="this.$auth.state.user.picture" />
         </v-avatar>
-        
-        <div v-if="$auth.state.isAuthenticated" style="padding-bottom: 2px;"><b>{{this.$auth.state.user.name}} </b>
-        <span v-if="$auth.state.isAuthenticated"
-        >[{{this.currentuser.role}}]</span></div>
-        <div v-if="$auth.state.isAuthenticated && this.currentuser.family == 'null'">Unassigned user</div>
-        <div v-if="$auth.state.isAuthenticated && this.currentuser.family != 'null'"
-             style="font-size: 14px" 
-        >{{this.currentuser.family_name}}<br /></div>
+
+        <div v-if="$auth.state.isAuthenticated" style="padding-bottom: 2px">
+          <b>{{ this.$auth.state.user.name }} </b>
+          <span v-if="$auth.state.isAuthenticated"
+            >[{{ this.currentuser.role }}]</span
+          >
+        </div>
+        <div
+          v-if="
+            $auth.state.isAuthenticated && this.currentuser.family == 'null'
+          "
+        >
+          Unassigned user
+        </div>
+        <div
+          v-if="
+            $auth.state.isAuthenticated && this.currentuser.family != 'null'
+          "
+          style="font-size: 14px"
+        >
+          {{ this.currentuser.family_name }}<br />
+        </div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -35,7 +49,6 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app dark color="#004d80">
@@ -69,7 +82,11 @@
                 Settings
                 <v-icon right>mdi-cog</v-icon>
             </v-btn>-->
-      <v-form v-if="this.currentpathname == '/search'" class="hidden-xs-only" @submit.prevent="submitSearch()"> 
+      <v-form
+        v-if="this.currentpathname == '/search'"
+        class="hidden-xs-only"
+        @submit.prevent="submitSearch()"
+      >
         <v-container>
           <v-text-field
             label="Search..."
@@ -85,7 +102,11 @@
           </v-text-field>
         </v-container>
       </v-form>
-      <v-form v-if="this.currentpathname != '/search'" class="hidden-xs-only" @submit.prevent="submitSearch()"> 
+      <v-form
+        v-if="this.currentpathname != '/search'"
+        class="hidden-xs-only"
+        @submit.prevent="submitSearch()"
+      >
         <v-container>
           <v-text-field
             label="Search..."
@@ -116,9 +137,7 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
-
   </nav>
-  
 </template>
 
 <script>
@@ -126,28 +145,28 @@
 import axios from "axios";
 
 export default {
-
-
-    methods: {
+  methods: {
     login() {
-        this.$auth.loginWithRedirect();
+      this.$auth.loginWithRedirect();
     },
 
     logout() {
-    this.$auth.logout({
-        returnTo: "https://app.stockpileapp.au"
+      this.$auth.logout({
+        returnTo: "https://app.stockpileapp.au",
       });
     },
 
     submitSearch() {
-      if (this.searchTerm != null){
-        this.$router.push("/search?"+this.searchTerm);
+      if (this.searchTerm != null) {
+        this.$router.push("/search?" + this.searchTerm);
       }
-        //this.$router.push("/search?" )
+      //this.$router.push("/search?" )
     },
 
     loadUser: async function () {
-      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+      let oneUserAPI =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
+        this.$auth.state.user.email;
       await axios
         .get(oneUserAPI)
         .then((res) => {
@@ -157,9 +176,7 @@ export default {
           console.log(error);
         });
     },
-
-    },
-  
+  },
 
   data: () => ({
     searchTerm: null,
@@ -174,13 +191,13 @@ export default {
       ["mdi-send", "Recent submissions", "/recent"],
       ["mdi-cog", "Settings", "/settings"],
     ],
-    links2: [["mdi-close", "Logout"]]
+    links2: [["mdi-close", "Logout"]],
   }),
   watch: {
     $route: {
       immediate: true,
       handler(to) {
-        this.currentpathname = window.location.pathname
+        this.currentpathname = window.location.pathname;
         this.loadUser();
         document.title = to.meta.title || "Stockpile";
       },

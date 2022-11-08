@@ -26,7 +26,6 @@
             label="Search"
             single-line
             hide-details
-            
           ></v-text-field>
           <v-dialog persistent v-model="dialog" max-width="20rem">
             <v-card>
@@ -61,11 +60,16 @@
         <v-icon small class="mr-2" @click="editItem(item)">
           mdi-file-image
         </v-icon>
-        <v-icon v-if="item.email==currentuser.email || currentuser.role=='Admin'" small class="mr-2" @click="deleteItem(item._id)">
+        <v-icon
+          v-if="item.email == currentuser.email || currentuser.role == 'Admin'"
+          small
+          class="mr-2"
+          @click="deleteItem(item._id)"
+        >
           mdi-trash-can
         </v-icon>
       </template>
-      
+
       <template v-slot:no-data>
         <p>No Data Available</p>
         <v-row justify="center">
@@ -78,7 +82,7 @@
       </template>
     </v-data-table>
     <v-spacer></v-spacer>
-    <br/>
+    <br />
 
     <v-snackbar v-model="snackbar" color="sDarkBlue" :timeout="timeout">
       {{ text }}
@@ -90,26 +94,18 @@
       </template>
     </v-snackbar>
 
-        <v-dialog
-        v-model="dialogone"
-        hide-overlay
-        persistent
-        width="300"
-      >
-        <v-card
-          color="primary"
-          dark
-        >
-          <v-card-text>
-            Loading... Please stand by
-            <v-progress-linear
-              indeterminate
-              color="white"
-              class="mb-0"
-            ></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+    <v-dialog v-model="dialogone" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Loading... Please stand by
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -117,8 +113,7 @@
 import axios from "axios";
 
 export default {
-
-    watch: {
+  watch: {
     $route: {
       immediate: true,
       handler() {
@@ -171,37 +166,37 @@ export default {
   }),
 
   methods: {
-
     loadUser() {
-      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
-       axios
+      let oneUserAPI =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
+        this.$auth.state.user.email;
+      axios
         .get(oneUserAPI)
         .then((res) => {
           this.currentuser = res.data;
-          this.checkNullFamily()
+          this.checkNullFamily();
           this.loadPosts();
         })
         .catch((error) => {
           console.log(error);
         });
-        
-  },
+    },
 
-checkNullFamily(){
-  if (this.currentuser.family == "null"){
-    window.location.href = "/settings";
-  }
-},
+    checkNullFamily() {
+      if (this.currentuser.family == "null") {
+        window.location.href = "/settings";
+      }
+    },
 
-login() {
-  this.$auth.loginWithRedirect();
-},
+    login() {
+      this.$auth.loginWithRedirect();
+    },
 
-logout() {
-  this.$auth.logout({
-    returnTo: window.location.origin
-  });
-},
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin,
+      });
+    },
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -217,7 +212,7 @@ logout() {
     },
 
     deleteItem(toDeleteID) {
-      this.dialogone = true
+      this.dialogone = true;
       let toDeleteURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/delete-item/" +
         toDeleteID;
@@ -226,7 +221,7 @@ logout() {
         .delete(toDeleteURL)
         .then(() => {
           //this.updatePost(toDeleteID);
-          this.loadPosts()
+          this.loadPosts();
         })
         .catch((error) => {
           console.log(error);
@@ -251,24 +246,19 @@ logout() {
     //   })
     // },
 
-
-
-
-
-
-    loadPosts () {
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/"+this.currentuser.family;
+    loadPosts() {
+      let apiURL =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/" +
+        this.currentuser.family;
       axios
         .get(apiURL)
         .then((res) => {
           this.posts = res.data;
-          
         })
         .catch((error) => {
           console.log(error);
         });
-      this.dialogone= false;
-        
+      this.dialogone = false;
     },
   },
 };

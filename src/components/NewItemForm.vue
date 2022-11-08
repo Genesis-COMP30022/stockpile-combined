@@ -69,7 +69,11 @@
             ></v-text-field>
           </v-col>
 
-          <v-col cols="12" class="col-md-10 pt-2 pb-5 mt-n4" style="display: flex;">
+          <v-col
+            cols="12"
+            class="col-md-10 pt-2 pb-5 mt-n4"
+            style="display: flex"
+          >
             <v-icon>mdi-image-size-select-actual</v-icon>
             <handy-uploader
               :documentAttachment.sync="handyAttachments"
@@ -129,26 +133,18 @@
         </v-btn>
       </template>
     </v-snackbar>
-            <v-dialog
-        v-model="dialogone"
-        hide-overlay
-        persistent
-        width="300"
-      >
-        <v-card
-          color="primary"
-          dark
-        >
-          <v-card-text>
-            Submitting...
-            <v-progress-linear
-              indeterminate
-              color="white"
-              class="mb-0"
-            ></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+    <v-dialog v-model="dialogone" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Submitting...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -183,13 +179,13 @@ export default {
       dateUpdated: Date.now(),
       dateCreated: Date.now(),
     },
-    huCustom : {
-              custom : {
-                insertFile: 'Insert File',
-                insertNewFile: 'Insert New File1',
-                add: 'Add',
-                }
-            },
+    huCustom: {
+      custom: {
+        insertFile: "Insert File",
+        insertNewFile: "Insert New File1",
+        add: "Add",
+      },
+    },
     valid: false,
     purchasename: "",
     lastname: "",
@@ -202,7 +198,8 @@ export default {
     pricerules: [
       (price) => !!price || "Price is required",
       (price) =>
-        (price && price.toString().length <= 10) || "Price must be 10 digits or less",
+        (price && price.toString().length <= 10) ||
+        "Price must be 10 digits or less",
       (price) => isNaN(price) == false || "Price must be numeric",
     ],
     daterules: [(date) => !!date || "Date is required"],
@@ -213,7 +210,7 @@ export default {
     ],
     buyrules: [(buyer) => !!buyer || "Buyer is required"],
   }),
-    watch: {
+  watch: {
     $route: {
       immediate: true,
       handler() {
@@ -229,7 +226,9 @@ export default {
       this.handyAttachments = [];
     },
     loadUser: async function () {
-      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+      let oneUserAPI =
+        "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
+        this.$auth.state.user.email;
       await axios
         .get(oneUserAPI)
         .then((res) => {
@@ -238,13 +237,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-  },
+    },
     createItem() {
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/create-item";
 
-
-      this.itemData.email = this.$auth.state.user.email
+      this.itemData.email = this.$auth.state.user.email;
 
       if (this.handyAttachments.length === 0) {
         this.itemData.image = "NULL";
@@ -263,16 +261,15 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      let waittime = 1
-      if (this.itemData.image != "NULL"){
-        waittime = (((this.itemData.image.length) * (3/4)) - 1)/1000
+      let waittime = 1;
+      if (this.itemData.image != "NULL") {
+        waittime = (this.itemData.image.length * (3 / 4) - 1) / 1000;
       }
-      this.dialogone = true
-      setTimeout(() => { 
-        this.dialogone = false 
+      this.dialogone = true;
+      setTimeout(() => {
+        this.dialogone = false;
         this.resetForm("New item saved");
       }, waittime);
-      
     },
   },
 };

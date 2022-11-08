@@ -19,18 +19,18 @@ itemRoute.route("/").get((req, res, next) => {
 });
 
 itemRoute.route("/getfamilyitems/:family").get((req, res, next) => {
-  let query = {family:req.params.family};
+  let query = { family: req.params.family };
 
-  let mongoDbQuery = { family: { $in: query.family.split(',') } }
+  let mongoDbQuery = { family: { $in: query.family.split(",") } };
 
-  ItemModel.find(mongoDbQuery).then((result) => {
+  ItemModel.find(mongoDbQuery)
+    .then((result) => {
       return res.json(result);
     })
     .catch((err) => {
       return next(err);
     });
 });
-
 
 itemRoute.route("/:id").get((req, res, next) => {
   console.log(req.params.id);
@@ -137,7 +137,6 @@ itemRoute.route("/update-item/:id").put((req, res, next) => {
     }
   );
 });
-
 
 // delete post
 itemRoute.route("/delete-item/:id").delete((req, res, next) => {
