@@ -5,28 +5,10 @@
     <v-form @submit.prevent="savePost" v-model="valid" ref="itemData">
       <v-container style="max-width=200px">
         <v-row class="ml-0">
-          <p>Fill in the optional fields below to see filtered search results.</p>
+          <p>Fill in the optional fields below to see filtered search results. 
+            <b style="color: red">LACHLAN'S DEV VERSION!</b></p>
          </v-row>
         <v-row>
-
-          <!--<v-col cols="12" md="2">
-            <v-text-field
-              ref="date"
-              label="Minimum date"
-              prepend-icon="mdi-calendar-range"
-              type="date"
-              filled
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12" md="2">
-            <v-text-field
-              ref="date"
-              label="Maximum date"
-              type="date"
-              filled
-            ></v-text-field>
-          </v-col>-->
 
             <v-col
                 cols="12"
@@ -114,6 +96,14 @@
     <v-divider class="mb-10"></v-divider>
 
     <v-row>
+      <v-col sm="12">
+        <h1 align="" class="mb-3 ml-2">Search results</h1>
+        <p class="mb-3 ml-2 pb-10" v-if="items.length == 0 && submitStart">
+            There are no results for your query. Check whether you misspelled something, 
+            and make sure that you really do want all of the filters you've set.</p>
+        <p class="mb-3 ml-2 pb-10" v-if="submitStart == false">
+            Click the "submit" button to search.</p>
+      </v-col>
       <v-col
         v-bind:key="a._id"
         v-for="a in items.slice().reverse()"
@@ -169,7 +159,6 @@
 
 import CardItem from "./CardItem";
 import axios from "axios";
-import {Querier} from 'array-querier/lib/orbiter';
 
 // print related
 import Vue from 'vue';
@@ -184,7 +173,7 @@ export default {
 
 
   created() {
-    this.loadPosts()
+    this.loadPosts();
     this.dialogone = false;
   },
 
@@ -194,8 +183,7 @@ export default {
       this.sTerm = ""
     }
     else{
-      this.sTerm = window.location.href.split('?').pop()
-      this.submitAdvancedSearch();
+      this.sTerm = window.location.href.split('?').pop();
       
     }
     
@@ -214,71 +202,74 @@ export default {
       axios
         .get(apiURL)
         .then((res) => {
-          this.items = res.data;
-          this.itemsCopy = res.data;
+          this.itemsBackup = res.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    // thanks to the absolute fucking legend who wrote this https://stackoverflow.com/a/16080662
+    isDateBetween(dateFrom, dateTo, dateCheck) {
+        var d1 = dateFrom.split("/");
+        var d2 = dateTo.split("/");
+        var c = dateCheck.split("/");
+
+        var from = new Date(d1[2], parseInt(d1[1])-1, d1[0]);  // -1 because months are from 0 to 11
+        var to   = new Date(d2[2], parseInt(d2[1])-1, d2[0]);
+        var check = new Date(c[2], parseInt(c[1])-1, c[0]);
+
+        return check > from && check < to;
+    },
+
+    submitAdvancedSearch() {
+      this.items = [];
+      this.submitStart = true;
+
+      for (var i = 0; i < this.itemsBackup.length; i++) { 
+
+        var ib = this.itemsBackup;
+
+        var cardDate = new Date(ib[i].datePurchased).toLocaleDateString('en-AU');
+        var sDateMod = this.sDate.map(x => new Date(x).toLocaleDateString('en-AU'));
+
+        if (   ( this.sBuyer == "" || ib[i].buyer == this.sBuyer || ib[i].buyer.includes(this.sBuyer) )
+            && ( this.sTerm == "" || ib[i].name == this.sTerm || ib[i].name.includes(this.sTerm) )
+            && ( sDateMod[0] == null || sDateMod[0] == cardDate || this.isDateBetween(sDateMod[0], sDateMod[1], cardDate) || this.isDateBetween(sDateMod[1], sDateMod[0], cardDate) )
+            && ( this.sCat == "" || this.sCat == ib[i].category )
+            && ( this.sPrice == "" || this.sPrice == ib[i].price )
+        ) {
+            this.items.push(ib[i]);
+        }
+        //console.log(card.name + ": " + sDateMod[0] + " vs " + cardDate + " (" + (sDateMod[0] == cardDate) + ")");
+
+      }
+      console.log(this.itemsBackup);
+      console.log("backups: " + this.itemsBackup.length + ", results: " + this.items.length);
+      console.log("---");
+
+    },
+
+    clearDates() {
+        this.sDate = []
+    },
+
     print () {
       this.$htmlToPaper('results');
     },
+
     replaceBlankImages(image) {
       return image == "NULL"
         ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
         : image;
     },
-
-
-    submitAdvancedSearch() {
-      this.items = this.itemsCopy;
-
-      if (this.sTerm == ""){
-        this.sTerm = []
-      }
-      if (this.sTerm != ""){
-        this.sTerm = [this.sTerm]
-      }
-      if (this.sBuyer == ""){
-        this.sBuyer = []
-      }
-      if (this.sBuyer != ""){
-        this.sBuyer = [this.sBuyer]
-      }
-      if (this.sCat == ""){
-        this.sCat = []
-      }
-      if (this.sCat != ""){
-        this.sCat = [this.sCat]
-      }
-
-      var filters = {
-        name: this.sTerm,
-        buyer: this.sBuyer,
-        category: this.sCat,
-      };
-      
-      const MyFilteredResult = Querier.filterSimpleArray(this.items, filters);
-      this.items = MyFilteredResult
-      console.log(MyFilteredResult)
-
-
-      // this.items = searched
-      // console.log(searched)
-      
-        // should do processing on the cards based on what the user entered
-    },
-
-    clearDates() {
-        this.sDate = []
-    }
   },
   data: () => ({
+    submitStart: false,
     dialogone: true,
-    itemsCopy: [],
     categories: ["Entertainment", "Furniture", "Food"],
     items: [],
+    itemsBackup: [],
     sTerm: "",
     sDate: [],
     sCat: "",
