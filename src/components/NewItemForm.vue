@@ -74,6 +74,7 @@
           >
             <v-icon>mdi-image-size-select-actual</v-icon>
             <handy-uploader
+              v-if="this.resetThis == true"
               :documentAttachment.sync="handyAttachments"
               :fileUploaderType="'simple'"
               :fileAccept="'image/png,image/jpeg'"
@@ -161,6 +162,7 @@ export default {
 
   data: () => ({
     dialogone: false,
+    resetThis: true,
     handyAttachments: [],
     snackbar: false,
     currentuser: [],
@@ -267,10 +269,12 @@ export default {
         waittime = (this.itemData.image.length * (3 / 4) - 1) / 1000;
       }
       this.dialogone = true;
+      this.resetThis = false
       setTimeout(() => {
         this.dialogone = false;
         this.resetForm("New item saved");
-        window.location.reload();
+        this.resetThis = true
+
       }, waittime);
     },
   },
