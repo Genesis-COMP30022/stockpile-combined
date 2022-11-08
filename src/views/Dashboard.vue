@@ -125,7 +125,7 @@ export default {
   dialog: false,
   dialogDelete: false,
 
-  name: "HomeTemp",
+  name: "DashBoard",
   data: () => ({
     currentuser: [],
     dialogone: true,

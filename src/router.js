@@ -35,7 +35,7 @@ var router = new Router({
     {
       path: "/dashboard",
       name: "dashboard",
-      component: () => import("./views/HomeTemp.vue"),
+      component: () => import("./views/Dashboard.vue"),
       meta: { title: "Dashboard" + SUFFIX },
       beforeEnter: authGuard,
     },
