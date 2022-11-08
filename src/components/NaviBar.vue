@@ -141,7 +141,6 @@
 </template>
 
 <script>
-//import { defineComponent } from '@vue/composition-api'
 import axios from "axios";
 
 export default {
@@ -160,7 +159,6 @@ export default {
       if (this.searchTerm != null) {
         this.$router.push("/search?" + this.searchTerm);
       }
-      //this.$router.push("/search?" )
     },
 
     loadUser: async function () {

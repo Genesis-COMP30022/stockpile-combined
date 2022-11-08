@@ -4,7 +4,7 @@ var uuid = require("uuid");
 
 let UserModel = require("../models/UserSchema");
 
-//index
+// index
 userRoute.route("/").get((req, res, next) => {
   UserModel.find((error, data) => {
     if (error) {
@@ -16,7 +16,6 @@ userRoute.route("/").get((req, res, next) => {
 });
 
 userRoute.route("/:id").get((req, res, next) => {
-  console.log(req.params.id);
   UserModel.findOne({ _id: req.params.id })
     .then((result) => {
       return res.json(result);
@@ -60,9 +59,8 @@ userRoute.route("/").get((req, res) => {
   });
 });
 
-//update post
+// update user
 userRoute.route("/update-user/:id").put((req, res, next) => {
-  console.log(req.params._id);
   UserModel.findByIdAndUpdate(
     req.params.id,
     {
@@ -79,7 +77,7 @@ userRoute.route("/update-user/:id").put((req, res, next) => {
   );
 });
 
-// delete post
+// delete user
 userRoute.route("/delete-user/:id").delete((req, res, next) => {
   UserModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {

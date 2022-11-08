@@ -220,7 +220,6 @@ export default {
       axios
         .delete(toDeleteURL)
         .then(() => {
-          //this.updatePost(toDeleteID);
           this.loadPosts();
         })
         .catch((error) => {
@@ -230,21 +229,6 @@ export default {
       this.text = "Item deleted!";
       this.snackbar = true;
     },
-
-    // updatePost(toDeleteID){
-    //   let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/update-item/" + toDeleteID;
-    //   axios.post(apiURL, this.itemData).then((res) => {
-    //     console.log(res)
-    //     this.close();
-    //     this.loadPosts();
-    //     this.color ='info'
-    //     this.text = 'Post has been modified.'
-    //     this.snackbar = true;
-    //   }).catch(error => {
-    //     console.log(error)
-    //     console.log(this.$route.params.id)
-    //   })
-    // },
 
     loadPosts() {
       let apiURL =

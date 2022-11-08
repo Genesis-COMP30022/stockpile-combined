@@ -12,7 +12,6 @@
 <script>
 import NaviBar from "./components/NaviBar";
 import axios from "axios";
-// import CardBody from './components/CardBody';
 
 export default {
   name: "App",

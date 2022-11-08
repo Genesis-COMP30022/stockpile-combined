@@ -150,20 +150,14 @@
 </template>
 
 <script>
-/* eslint-disable */
 import axios from "axios";
-const moment = require("moment");
-var tz = require("moment-timezone");
-//import handyUploader from "handy-uploader/src/components/handyUploader";
 
 export default {
   name: "CardModal",
   mounted() {
     this.copyItemData("init");
   },
-  components: {
-    //handyUploader
-  },
+  components: {},
 
   data: () => ({
     valid: false,
@@ -235,7 +229,6 @@ export default {
     },
 
     copyItemData(message) {
-      // console.log(this.itemName)
       this.itemData.name = this.itemName;
       this.itemData.price = this.price;
       this.itemData.desc = this.desc;
@@ -261,9 +254,7 @@ export default {
     },
 
     editItem() {
-      //this.$refs.form.validate();
       this.dialogone = true;
-      console.log(this.itemData.datePurchased);
 
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/update-item/" +
@@ -288,12 +279,8 @@ export default {
           price: this.itemData.price,
           desc: this.itemData.desc,
           category: this.itemData.category,
-          //buyer: this.buyer,
-          //image: this.image,
-          //imagetype: this.imagetype,
           datePurchased: this.itemData.datePurchased,
           dateUpdated: Date.now(),
-          //dateCreated: "",
         })
         .then(() => {})
         .catch((error) => {
@@ -319,7 +306,6 @@ export default {
       axios
         .delete(toDeleteURL)
         .then(() => {
-          //this.updatePost(toDeleteID);
           this.loadPosts();
         })
         .catch((error) => {

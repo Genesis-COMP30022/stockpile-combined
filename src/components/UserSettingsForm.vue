@@ -301,7 +301,6 @@ export default {
       if (index > -1) {
         // only splice array when item is found
         this.itemData.peopleinfamily.splice(index, 1); // 2nd parameter means remove one item only
-        //this.itemData.peopleinfamilyID.splice(index, 1)
         this.itemData.removefromfamily.push(
           this.itemData.peopleinfamilyID[index]
         );
@@ -353,15 +352,12 @@ export default {
     },
     saveUser() {
       if (this.currentuser.family == "null") {
-        console.log("yeah its null");
         this.newFamily();
         return;
       }
-      console.log("null check failed");
       this.dialogone = true;
       this.addUserToFamily();
       this.removeUserFromFamily();
-      console.log("reached");
       this.reload(1000);
     },
 
@@ -369,19 +365,11 @@ export default {
       this.dialogone = true;
       this.reload(1);
     },
-
-    // resetForm(newText) {
-    //   this.text = newText;
-    //   this.snackbar = true;
-    //   this.$refs.itemData.reset();
-    // },
     leaveFamily() {
       this.dialogone = true;
       if (this.currentuser.role == "Admin") {
-        console.log("admin detected");
         for (var index in this.itemData.peopleinfamilyID) {
           let userToLeave = this.itemData.peopleinfamilyID[index];
-          console.log(userToLeave);
           let apiURL =
             "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/" +
             userToLeave._id;
@@ -421,9 +409,6 @@ export default {
     newFamily() {
       this.dialogone = true;
       this.itemData.family = uuidv4().replace(/-/g, "");
-
-      console.log(this.itemData);
-
       this.itemData.role = "Admin";
 
       let apiURL =
@@ -453,15 +438,11 @@ export default {
           "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
           userEmail;
 
-        console.log(apiURL);
-        //var user;
         let userID = "123";
         await axios
           .get(apiURL)
           .then((res) => {
             userID = res.data._id;
-            // console.log("in axios")
-            // console.log(userID);
           })
           .catch((error) => {
             console.log(error);
@@ -471,20 +452,14 @@ export default {
           return; // user not registered in database
         }
 
-        console.log("passed check");
-
         apiURL =
           "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/" +
           userID;
-
-        console.log("outside axios");
-        console.log(apiURL);
 
         await axios
           .put(apiURL, {
             family: this.currentuser.family,
             family_name: this.currentuser.family_name,
-            //addtofamily: this.itemData.addtofamily,
           })
           .then(() => {})
           .catch((error) => {
@@ -493,26 +468,19 @@ export default {
       }
 
       return;
-
-      // this.text = this.id + "yeah";
-      // this.snackbar = true;
-      // this.dialogone = false;
-      // this.$refs.itemData.reset();
     },
 
     removeUserFromFamily() {
       for (var index in this.itemData.removefromfamily) {
         let userID = this.itemData.removefromfamily[index]._id;
-        console.log(userID);
         let apiURL =
           "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/update-user/" +
           userID;
 
         axios
           .put(apiURL, {
-            family: "null", //this.itemData.family,
-            family_name: "null", //this.itemData.family_name,
-            //addtofamily: this.itemData.addtofamily,
+            family: "null",
+            family_name: "null",
           })
           .then(() => {})
           .catch((error) => {
@@ -521,13 +489,6 @@ export default {
       }
 
       return;
-
-      // console.log("yeah")
-
-      //   this.text = this.id + "yeah";
-      //   this.snackbar = true;
-      //   this.dialogone = false;
-      //   this.$refs.itemData.reset();
     },
   },
 

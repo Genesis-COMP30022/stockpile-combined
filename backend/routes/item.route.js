@@ -7,7 +7,6 @@ const Storage = require("upload-cloud-storage");
 
 let ItemModel = require("../models/ItemSchema");
 
-//index
 itemRoute.route("/").get((req, res, next) => {
   ItemModel.find((error, data) => {
     if (error) {
@@ -33,7 +32,6 @@ itemRoute.route("/getfamilyitems/:family").get((req, res, next) => {
 });
 
 itemRoute.route("/:id").get((req, res, next) => {
-  console.log(req.params.id);
   ItemModel.findOne({ _id: req.params.id })
     .then((result) => {
       return res.json(result);
@@ -53,7 +51,7 @@ itemRoute.route("/").get((req, res, next) => {
   });
 });
 
-//create post
+// create post
 itemRoute.route("/create-item").post((req, res, next) => {
   if (req.body.datePurchased === "") {
     req.body.datePurchased = moment(Date.now())
@@ -89,7 +87,7 @@ itemRoute.route("/create-item").post((req, res, next) => {
       console.log(err);
     });
 
-    //UPLOAD HERE
+    // upload image
 
     const Google = Storage.init({
       type: "google",
@@ -106,7 +104,6 @@ itemRoute.route("/create-item").post((req, res, next) => {
     })
       .then((result) => {
         req.body.image = result.slice();
-        console.log(result); //result contain metadata of file
 
         ItemModel.create(req.body, (error, data) => {
           if (error) {
@@ -120,7 +117,7 @@ itemRoute.route("/create-item").post((req, res, next) => {
   }
 });
 
-//update post
+// update post
 itemRoute.route("/update-item/:id").put((req, res, next) => {
   ItemModel.findByIdAndUpdate(
     req.params.id,

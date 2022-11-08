@@ -154,8 +154,6 @@
 import CardItem from "./CardItem";
 import axios from "axios";
 
-// print related
-
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
