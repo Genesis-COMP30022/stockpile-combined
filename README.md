@@ -13,8 +13,6 @@ Note that the application is divided into two:
 
 ## Project setup
 
-
-=======
 On each directory ```/src``` and ```/backend```:
 
 ```
@@ -22,7 +20,7 @@ npm install
 ```
 
 ## Locally hosting the front-end
-Run in directory ```/src```:
+Run in root directory ```/```:
 
 ### Compiles and hot-reloads for development
 
@@ -31,22 +29,15 @@ npm run serve
 ```
 
 ### Compiles and minifies for production
-
 ```
 npm run build
 ```
 
 ### Lints and fixes files
-
 ```
 npm run lint
 ```
 
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
 ## Locally hosting the back-end
 Run in directory ```/backend```:
 ```
@@ -67,5 +58,3 @@ Team Genesis / Team047
 Stockpile is developed as part of the Univeristy of Melbourne's IT Project (COMP30022).
 
 25 July ~ 10 November, 2022.
-
-
