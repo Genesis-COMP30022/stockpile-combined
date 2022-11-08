@@ -1,4 +1,5 @@
 # Stockpile
+![Stockpile](https://user-images.githubusercontent.com/54831890/200502707-e3f967fc-ba6e-445d-ad31-7beee53cf2fc.svg)
 
 Stockpile is an home inventory management CRUD app that can manage inventory/costs, user privilages, and generate reports based on usage.
 
