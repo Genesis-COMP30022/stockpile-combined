@@ -25,6 +25,9 @@
           :buyerID="a.buyer"
           :img="replaceBlankImages(a.image)"
           :desc="a.desc != '' ? a.desc : '*No description.'"
+          :email="a.email"
+          :currUser="currentuser.email"
+          :currRole="currentuser.role"
           :showEdit="true"
         />
       </v-col>

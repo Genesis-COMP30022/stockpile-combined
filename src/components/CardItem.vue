@@ -55,13 +55,14 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
+                            v-if="email==currUser || 'Admin'==currRole"
                             color="sYellow"
                             elevation="0"
                             v-bind="attrs"
                             v-on="on"
                         >
                             <v-icon left>mdi-wrench</v-icon>
-                            Edit
+                            Edit 
                         </v-btn>
                     </template>
 
@@ -101,7 +102,6 @@
 <script>
 
 import CardModal from './CardModal';
-
 export default {
   name: 'CardItem',
 
@@ -125,6 +125,9 @@ export default {
     img: String,
     desc: String,
     rawDate: String,
+    email: String,
+    currUser: String,
+    currRole: String,
     showEdit: Boolean
   },
   methods: {
@@ -135,7 +138,8 @@ export default {
         ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
         : image;
     },
-  }
+  },
+
 };
 
 

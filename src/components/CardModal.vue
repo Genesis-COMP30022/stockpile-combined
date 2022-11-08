@@ -132,12 +132,16 @@
           <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
             Close
           </v-btn>
-          </template>
+        </template>
       </v-snackbar>
       <v-divider></v-divider>
 
       <v-card-actions>
       <v-spacer></v-spacer>
+        <v-icon color="primary" class="mr-4" @click="deleteItem(id)">
+          mdi-trash-can
+        </v-icon>
+
         <v-btn depressed color="primary" class="mr-4" @click="editItem">
           <v-icon left>mdi-check</v-icon>
           Submit
@@ -194,7 +198,6 @@ data: () => ({
     dateCreated: "",
     family: "",
   },
-
   purchasename: "",
   lastname: "",
   categories: ["Entertainment", "Furniture", "Food"],
@@ -238,6 +241,7 @@ methods: {
         window.location.reload()
       }, value);
     },
+  
   copyItemData(message){
     // console.log(this.itemName)
     this.itemData.name = this.itemName
@@ -323,12 +327,29 @@ methods: {
     
 
   },
+  deleteItem(toDeleteID) {
+    this.dialogone = true
+    let toDeleteURL =
+      "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/delete-item/" +
+      toDeleteID;
 
+    axios
+      .delete(toDeleteURL)
+      .then(() => {
+        //this.updatePost(toDeleteID);
+        this.loadPosts()
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    this.text = "Item deleted!";
+    this.snackbar = true;
+    this.reload(1000);
+  },
   close () {
     this.$emit('close');        
   }
-
-
 }
 };
 
