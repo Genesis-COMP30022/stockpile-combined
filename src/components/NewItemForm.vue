@@ -219,8 +219,8 @@ export default {
     resetForm(newText) {
       this.text = newText;
       this.snackbar = true;
-      this.$refs.itemData.reset();
       this.handyAttachments = [];
+      this.$refs.itemData.reset();
     },
     loadUser: async function () {
       let oneUserAPI =
