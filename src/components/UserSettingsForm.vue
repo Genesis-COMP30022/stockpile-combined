@@ -284,7 +284,7 @@ export default {
     $route: {
       immediate: true,
       handler() {
-        this.loadPosts();
+        this.loadUsers();
       },
     },
   },
@@ -324,7 +324,7 @@ export default {
     isAdmin() {
       return this.currentuser.role == "Admin";
     },
-    loadPosts: async function () {
+    loadUsers: async function () {
       let oneUserAPI =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/" +
         this.$auth.state.user.email;

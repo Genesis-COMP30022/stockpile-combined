@@ -11,7 +11,6 @@
       class="pt-4 px-2"
       ref="itemData"
     >
-      <p>{{ buyer }}, {{ itemData.name }} {{ date }} {{ rawDate }}</p>
       <v-container style="max-width=200px">
         <v-row>
           <v-col cols="12" md="8">
@@ -306,7 +305,7 @@ export default {
       axios
         .delete(toDeleteURL)
         .then(() => {
-          this.loadPosts();
+          this.loadItems();
         })
         .catch((error) => {
           console.log(error);
