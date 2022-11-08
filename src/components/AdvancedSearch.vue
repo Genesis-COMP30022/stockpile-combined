@@ -171,30 +171,24 @@ const fastDecode = require('fast-decode-uri-component')
 
 export default {
   name: "CardBody",
+    watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        if (window.location.href.split('?').pop() == window.location.href){
+          this.sTerm = ""
 
-
-  created() {
-    this.loadPosts();
-    this.dialogone = false;
+        }
+        else{
+          this.sTerm = window.location.href.split('?').pop();
+          
+        }
+        
+        this.sTerm = fastDecode(this.sTerm)
+        this.loadUser();
+      },
+    },
   },
-
-  mounted(){
-    this.loadPosts()
-
-    if (window.location.href.split('?').pop() == window.location.href){
-      this.sTerm = ""
-
-    }
-    else{
-      this.sTerm = window.location.href.split('?').pop();
-      
-    }
-    
-    this.sTerm = fastDecode(this.sTerm)
-    
-    
-  },
-
   components: {
     CardItem,
   },
@@ -228,8 +222,23 @@ export default {
             doc.save(pdfName + '.pdf');
         },
 
+    loadUser() {
+      let oneUserAPI = "https://stockpile-api-reqn7ab5ea-as.a.run.app/userAPI/getusermail/"+this.$auth.state.user.email;
+       axios
+        .get(oneUserAPI)
+        .then((res) => {
+          this.currentuser = res.data;
+          this.loadPosts();
+          this.dialogone = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        
+  },
+
     loadPosts(){
-      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI";
+      let apiURL = "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/"+this.currentuser.family;
       axios
         .get(apiURL)
         .then((res) => {
