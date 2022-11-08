@@ -115,8 +115,6 @@
 
 <script>
 import axios from "axios";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 export default {
 
