@@ -25,6 +25,7 @@
           :buyerID="a.buyer"
           :img="replaceBlankImages(a.image)"
           :desc="a.desc != '' ? a.desc : '*No description.'"
+          :showEdit="true"
         />
       </v-col>
     </v-row>
