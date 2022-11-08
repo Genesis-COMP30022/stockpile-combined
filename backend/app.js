@@ -36,7 +36,6 @@ app.use(
 app.use(cors());
 
 //API
-app.use("/postAPI", postAPI);
 app.use("/itemAPI", itemAPI);
 app.use("/userAPI", userAPI);
 
