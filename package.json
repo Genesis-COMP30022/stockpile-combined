@@ -24,6 +24,7 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.38",
     "printable-data-table": "^1.0.7",
+    "upload-cloud-storage": "^1.0.5",
     "vue": "^2.6.14",
     "vue-html-to-paper": "^1.4.4",
     "vue-materialize-datatable": "^1.0.4",

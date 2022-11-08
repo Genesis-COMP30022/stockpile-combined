@@ -81,7 +81,7 @@
               :imageCompressor="false"
               :maxFileCount="1"
               :badgeCounter="true"
-              :thumb="false"
+              :thumb="true"
               :changeFileName="true"
               class="pb-8"
               btnColor="sYellow"
@@ -215,6 +215,10 @@ export default {
       },
     },
   },
+
+// updated() {
+//   console.log(this.handyAttachments)
+// },
   methods: {
     resetForm(newText) {
       this.text = newText;
@@ -266,6 +270,7 @@ export default {
       setTimeout(() => {
         this.dialogone = false;
         this.resetForm("New item saved");
+        window.location.reload();
       }, waittime);
     },
   },
