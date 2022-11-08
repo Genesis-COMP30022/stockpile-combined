@@ -185,6 +185,7 @@ export default {
     links: [
       ["mdi-home", "Home", "/"],
       ["mdi-grid", "Dashboard", "/dashboard"],
+      ["mdi-magnify", "Search", "/search"],
       ["mdi-pencil", "Create purchase", "/new"],
       ["mdi-send", "Recent submissions", "/recent"],
       ["mdi-cog", "Settings", "/settings"],
