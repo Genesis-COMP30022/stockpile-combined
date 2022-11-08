@@ -272,7 +272,7 @@ export default {
         .get(oneUserAPI)
         .then((res) => {
           this.currentuser = res.data;
-          this.loadPosts();
+          this.loadItems();
           this.dialogone = false;
         })
         .catch((error) => {
@@ -280,7 +280,7 @@ export default {
         });
     },
 
-    loadPosts() {
+    loadItems() {
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/" +
         this.currentuser.family;

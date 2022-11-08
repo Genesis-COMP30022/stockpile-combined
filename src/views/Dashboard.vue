@@ -4,7 +4,7 @@
     <v-data-table
       ref="myTable"
       :headers="headers"
-      :items="posts"
+      :items="items"
       :search="search"
       sort-by="name"
       class="elevation-1"
@@ -148,7 +148,7 @@ export default {
       protein: 0,
     },
 
-    posts: [],
+    items: [],
     headers: [
       {
         text: "Item name",
@@ -175,7 +175,7 @@ export default {
         .then((res) => {
           this.currentuser = res.data;
           this.checkNullFamily();
-          this.loadPosts();
+          this.loadItems();
         })
         .catch((error) => {
           console.log(error);
@@ -220,7 +220,7 @@ export default {
       axios
         .delete(toDeleteURL)
         .then(() => {
-          this.loadPosts();
+          this.loadItems();
         })
         .catch((error) => {
           console.log(error);
@@ -230,7 +230,7 @@ export default {
       this.snackbar = true;
     },
 
-    loadPosts() {
+    loadItems() {
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/" +
         this.currentuser.family;

@@ -48,9 +48,7 @@
             <v-autocomplete
               ref="category"
               :items="categories"
-              :rules="catrules"
               label="Category"
-              required
               filled
               prepend-icon="mdi-folder-outline"
               v-model="itemData.category"
@@ -203,7 +201,6 @@ export default {
       (price) => isNaN(price) == false || "Price must be numeric",
     ],
     daterules: [(date) => !!date || "Date is required"],
-    catrules: [(category) => !!category || "Category is required"],
     descrules: [
       (desc) =>
         desc.length <= 400 || "Description must be 400 characters or less",

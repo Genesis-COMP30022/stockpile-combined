@@ -79,7 +79,7 @@ export default {
         .get(oneUserAPI)
         .then((res) => {
           this.currentuser = res.data;
-          this.loadPosts();
+          this.loadItems();
         })
         .catch((error) => {
           console.log(error);
@@ -90,7 +90,7 @@ export default {
         ? "https://storage.googleapis.com/stockpileapp/StockpileBLUENOTXT.png"
         : image;
     },
-    loadPosts: async function () {
+    loadItems: async function () {
       let apiURL =
         "https://stockpile-api-reqn7ab5ea-as.a.run.app/itemAPI/getfamilyitems/" +
         this.currentuser.family;
