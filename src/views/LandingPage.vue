@@ -2,12 +2,6 @@
 <v-container fluid>
 <div v-if="!$auth.state.isAuthenticated">
     <v-app-bar app dark color="#004d80">
-      <!--<v-toolbar-title 
-                class="font-weight-black display-1 sWhiteBlue--text"
-            >
-                <span>STOCKPILE</span>
-                <span class="font-weight-light">APP</span>
-            </v-toolbar-title>-->
       <router-link to="/"
         ><v-img
           src="../assets/nologolargewhite.svg"
@@ -19,73 +13,75 @@
         </v-img
       ></router-link>
       <v-spacer></v-spacer>
-            <v-btn text color="sWhite"  @click="login()">
+            <v-btn v-if="!$auth.state.isAuthenticated" text color="sWhite"  @click="login()">
         <v-icon>mdi-login-variant</v-icon>&nbsp; Login
       </v-btn>
     </v-app-bar>
     </div>
-        <v-row dense align="stretch" >
-          <v-col
-            align="center"
-            cols="12"
-          >
-            <v-card>
-
-  <v-img
-                      max-height="auto"
-                      max-width="15rem"
-                      src="../assets/SquareNoBG_animated.svg"
-                    ></v-img
-                  >
-              <v-card-actions>
-                <v-spacer></v-spacer>
-  
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col
-            cols="6"
-          >
-            <v-card
-            style="overflow-y: auto; height:100%"
-      class="mx-auto"
-    >
-      <v-card-text>
-        <p class="text-h5 text--primary">
-          About
-        </p>
-        <div class="text--primary">
-          Stockpile is a simple inventory tracking solution that enables families to easily track what they have, and who purchased it. Anytime, anywhere, on any device.
-<br>
-Unlike other inventory management systems, you won’t need a 100-page guide or lengthy training sessions to figure out Stockpile. It’s built so you can have it up and running in minutes, all on your own.
-<br><br>
-Get started now!
+<head>
+    <!-- PERFORMANCE -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/stockpileapp/style.css">
+  </head>
+  <body>
+    <main role="main">
+      <section class="ui-section-hero">
+        <div class="ui-layout-container">
+          <!-- COPYWRITING -->
+          <div class="ui-layout-column-6 ui-layout-column-center">
+          <img src="https://storage.googleapis.com/stockpileapp/SquareNoBG_animated.svg" style="width:10rem">
+            <h1>Welcome to Stockpile.</h1>
+            <p class="ui-text-intro">Stockpile is a simple inventory tracking solution that enables families to easily track what they have, and who purchased it.</p>
+            <!-- CTA -->
+            <div class="ui-component-cta ui-layout-flex">
+              <v-btn v-if="!$auth.state.isAuthenticated" text color="sWhite"  @click="login()">
+                    <v-icon>mdi-login-variant</v-icon>&nbsp; Sign Up
+                </v-btn>
+              <p class="ui-text-note"><small>Available on any device with an internet connection</small></p>
+            </div>
+          </div>
         </div>
-      </v-card-text>
-      <v-card-actions>
-          <div v-if="!$auth.state.loading">
-      <!-- show login when not authenticated -->
-      <v-btn text color="deep-purple accent-4" v-if="!$auth.state.isAuthenticated" @click="login">Sign Up</v-btn>
-    </div>
-      </v-card-actions>
-    </v-card>
-          </v-col>
-          <v-col
-            cols="6"
-          >
-            <v-card style="overflow-y: auto; height:100%">
-              <v-img
-                src="../assets/whiteblue.svg"
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                height="100%"
-              >
-                <v-card-title>Organize your inventory at the touch of a button.</v-card-title>
-              </v-img>
+      </section>
+      <section class="ui-section-content">
+        <div class="ui-layout-container">
+          <div class="ui-section-content__layout ui-layout-grid ui-layout-grid-2">
+            <div class="ui-component-card ui-layout-column-4">
+              <img src="https://storage.googleapis.com/stockpileapp/michal-balog-66NaCdBrkCs-unsplash.jpg" alt="#" loading="lazy" class="ui-component-card--image">
+              <h4 class="ui-component-card--title">Start organising faster.</h4>
+              <p>Organize your inventory at the touch of a button.</p>
+            </div>
+            <div class="ui-component-card ui-layout-column-4">
+              <img src="https://storage.googleapis.com/stockpileapp/vu-anh-TiVPTYCG_3E-unsplash.jpg" alt="#" loading="lazy" class="ui-component-card--image">
+              <h4 class="ui-component-card--title">Simple user management.</h4>
+              <p>Create, join or delete a family whenever you want.</p>
+            </div>
+            <div class="ui-component-card ui-layout-column-4">
+              <img src="https://storage.googleapis.com/stockpileapp/isaac-smith-6EnTPvPPL6I-unsplash.jpg" alt="#" loading="lazy" class="ui-component-card--image">
+              <h4 class="ui-component-card--title">Detailed reports.</h4>
+              <p>Generate PDF reports easily for your records.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="ui-section-close">
+        <div class="ui-layout-container">
+          <div class="ui-layout-column-6 ui-layout-column-center">
+            <h2>Ready to start?</h2>
 
-            </v-card>
-          </v-col>
-        </v-row>
+            <!-- CTA -->
+            <div class="ui-component-cta ui-layout-flex">
+              <v-btn v-if="!$auth.state.isAuthenticated" text color="sWhite"  @click="login()">
+        <v-icon>mdi-login-variant</v-icon>&nbsp; Sign Up
+      </v-btn>
+              <p class="ui-text-note"><small>Available on any device with an internet connection.</small></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <footer>
+  Images provided by Unsplash <a href="https://unsplash.com/photos/TiVPTYCG_3E">(1)</a>, <a href="https://unsplash.com/photos/6EnTPvPPL6I">(2)</a>, <a href="https://unsplash.com/photos/66NaCdBrkCs">(3)</a>
+  </footer>
       </v-container>
 
 </template>
