@@ -222,7 +222,7 @@ export default {
       doc.setFont(undefined, "italic");
       doc.text(15, 30, "Search filters - ");
       doc.setFont(undefined, "normal");
-      var txtLocation = 30;
+      var txtLocation = 35;
 
       if (this.sTerm != "") {
         doc.text(35, txtLocation, "Item Name: " + this.sTerm);

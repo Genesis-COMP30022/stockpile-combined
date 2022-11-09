@@ -460,6 +460,7 @@ export default {
           .put(apiURL, {
             family: this.currentuser.family,
             family_name: this.currentuser.family_name,
+            role: "User",
           })
           .then(() => {})
           .catch((error) => {
